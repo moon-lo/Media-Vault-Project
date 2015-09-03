@@ -26,9 +26,18 @@
     <td width="25%">Last modified</td>
     <td width="25%">Size</td>
   </tr>
-  <tr>
-    <td height="163" colspan="3"></td>
-  </tr>
+	
+	<?php
+		require_once 'sql_functions.php';
+		
+		// Get metadata table info
+		$metadata = read_table("SELECT * FROM metadata;");
+		// Define desired columns
+		$columns = array('filename', 'timestamp', 'filesize');
+		// Write to HTML table
+		write_table($metadata, $columns);		
+	?>
+	
 </table>
 <table width="25%" height="100%" border="1" style="float: right;">
   <tr>
