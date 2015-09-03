@@ -38,7 +38,7 @@
 	 *
 	 * @author James Galloway
 	 */
-	function add_record() {
+	function add_record() {	
 		$filename = $_FILES["file"]["name"];
 		$filetype = $_FILES["file"]["type"];
 		$filesize = $_FILES["file"]["size"];
@@ -46,7 +46,7 @@
 		$sql = "INSERT INTO metadata (filename, filetype, filesize)
 				VALUES (:filename, :filetype, :filesize)";
 		
-		$pdo = new PDO('mysql:host=54.206.80.50:3306;dbname=mediavault', 'root', 'password');
+		$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'Jimbo', 'brisbane123');
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$result = $pdo->query('SELECT * FROM metadata');
@@ -57,7 +57,7 @@
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindValue(':filename', $filename);
 		$stmt->bindValue(':filetype', $filetype);
-		$stmt->bindValue(':fiesize', $filesize);
+		$stmt->bindValue(':filesize', $filesize);
 		$stmt->execute();
 
 		$pdo = null;

@@ -22,6 +22,7 @@
     <td width="24%">&nbsp;</td>
   </tr>
   
+  <tr>
   <?php
 	require_once 'upload_files.php';
 	
@@ -32,6 +33,7 @@
 		}
 	}
   ?>
+  </tr>
   
   <tr>
     <td height="235">&nbsp;</td>
