@@ -7,28 +7,34 @@
 function upload_file() {
 	$dir = "/var/www/html/uploads/";
 	$file = $dir . basename($_FILES["file"]["name"]);
-	$filetype = $_FILES["file"]["type"];
-	$uploadOk = 1;
+	$fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+	$validFile = true;
 	
 	// Check if file already exists
 	if (file_exists($file)) {
 		echo "<p>File already exists.</p>";
-		$uploadOk = 0;
+		$validFile = false;
+	}
+	
+	// Check file extension against extension whitelist
+	$whitelist = file('file_extension_whitelist.txt', FILE_IGNORE_NEW_LINES);
+	if (!in_array($fileExtension, $whitelist)) {
+		echo "<p>File is not of a valid type.</p>";
+		$validFile = false;
+	}
+	
+	if (!$validFile) {
+		return false;
 	}
 	
 	// Upload file
-	if ($uploadOk == 0) {
-		echo "<p>File could not uploaded.</p>";
-		return false;
+	if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
+		echo "<p>File: " . basename($_FILES["file"]["name"]) . " was successfully uploaded.</p>";
+		return true;
 	} else {
-		if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
-			echo "<p>File: " . basename($_FILES["file"]["name"]) . " was successfully uploaded.</p>";
-			return true;
-		} else {
-			echo "<p>There was an error in uploading the file.</p>";
-			print_r(error_get_last());
-			return false;
-		}
+		echo "<p>There was an error in uploading the file.</p>";
+		print_r(error_get_last());
+		return false;
 	}
 } // end upload_file
 	
