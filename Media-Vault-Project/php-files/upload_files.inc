@@ -5,7 +5,7 @@
 	 * @author James Galloway
 	 */ 
 function uploadFile() {
-	$dir = "/var/www/html/Media-Vault-Project/Media-Vault-Project/uploads/";
+	$dir = ROOT_DIR . '/uploads/';
 	$file = $dir . basename($_FILES["file"]["name"]);
 	$fileExtension = pathinfo($file, PATHINFO_EXTENSION);
 	$validFile = true;
@@ -29,7 +29,7 @@ function uploadFile() {
 	
 	// Upload file
 	if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
-		echo "<p>File: " . basename($_FILES["file"]["name"]) . " was successfully uploaded.</p>";
+		echo "<p>File:  " . basename($_FILES["file"]["name"]) . " was successfully uploaded.</p>";
 		return true;
 	} else {
 		echo "<p>There was an error in uploading the file.</p>";
