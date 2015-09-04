@@ -24,12 +24,13 @@
   
   <tr>
   <?php
-	require_once '/php-files/upload_files.php';
+	define('ROOT_DIR', dirname(__FILE__));
+	require_once ROOT_DIR . '/php-files/upload_files.inc';
 	
 	// Check to see if file is set - Attempt to upload file - Add record upon success
 	if (isset($_FILES['file'])) {
-		if (upload_file()) {
-			add_record();
+		if (uploadFile()) {
+			addUploadRecord();
 		}
 	}
   ?>

@@ -26,7 +26,7 @@ function read_table($sql) {
 	 *
 	 * @param (PDO) - $pdo - the PDO to be written to the table.
 	 * @param (array) - $columns - the String values of the PDO's columns to be written.
-	 * These strings are also written as column headers for the table.
+	 * * NOTE: If 'filename' is provided as a column, that cell will be hyperlinked 
 	 *
 	 * @author James Galloway
 	 */
@@ -34,7 +34,12 @@ function write_table($pdo, $columns) {
 	foreach ($pdo as $row) {
 		echo "<tr>";
 		foreach ($columns as $column) {
-			echo "<td>" . $row[$column] . "</td>";
+			if ($column == 'filename') {
+				echo "<td><a href='directory.php?email=blank&selectedFile="
+					. $row[$column] . "'>" . $row[$column] . "</a></td>"; 
+			} else {
+				echo "<td>" . $row[$column] . "</td>";
+			}
 		}
 		echo "</tr>";
 	}

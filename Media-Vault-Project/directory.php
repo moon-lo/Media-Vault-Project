@@ -1,3 +1,20 @@
+<?php
+	// Define root directory for use in strings later
+	define('ROOT_DIR', dirname(__FILE__));
+	// Assign selected file
+	$selectedFile = $_GET['selectedFile'];
+	
+	include ROOT_DIR . '/php-files/delete_files.inc'; 
+	
+	// Delete file if set
+	if (isset($_POST['deleteButton'])) {
+		$file = $_POST['deleteButton'];
+		if (deleteFile($file)) {
+			deleteFileRecord($file);
+		}
+	}
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -28,20 +45,27 @@
   </tr>
 	
 	<?php
-		require_once '/php-files/sql_functions.php';
-		
+		require_once ROOT_DIR . '/php-files/sql_functions.inc';
 		// Get metadata table info
 		$metadata = read_table("SELECT * FROM metadata;");
 		// Define desired columns
 		$columns = array('filename', 'timestamp', 'filesize');
 		// Write to HTML table
-		write_table($metadata, $columns);		
+		write_table($metadata, $columns);
 	?>
 	
 </table>
 <table width="25%" height="100%" border="1" style="float: right;">
   <tr>
-    <td height="47" colspan="2">[PLACEHOLDER FILE NAME]</td>
+    <td height="47" colspan="2">
+    <?php
+    	if (isset($selectedFile)) {
+    		echo $selectedFile;
+    	} else {
+    		echo "No file selected";
+    	}
+    ?> 
+    </td>
   </tr>
   <tr>
     <td height="38" colspan="2"><strong>Description:</strong></td>
@@ -61,7 +85,12 @@
   </tr>
   <tr>
     <td><div align="center"><button name="shareButton" type="button">Share</button></div></td>
-    <td><div align="center"><button name="deleteButton" type="button">Delete</button></div></td>
+    <td><div align="center">
+			<form action="directory.php" method="post">
+    			<button name="deleteButton" type="submit" value="<?php echo $selectedFile; ?>">Delete</button>
+    		</form>
+    	</div>
+    </td>
   </tr>
 </table>
 <p>&nbsp;</p>

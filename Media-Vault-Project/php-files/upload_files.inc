@@ -4,8 +4,8 @@
 	 *
 	 * @author James Galloway
 	 */ 
-function upload_file() {
-	$dir = "/var/www/html/uploads/";
+function uploadFile() {
+	$dir = "/var/www/html/Media-Vault-Project/Media-Vault-Project/uploads/";
 	$file = $dir . basename($_FILES["file"]["name"]);
 	$fileExtension = pathinfo($file, PATHINFO_EXTENSION);
 	$validFile = true;
@@ -44,7 +44,7 @@ function upload_file() {
 	 *
 	 * @author James Galloway
 	 */
-function add_record() {	
+function addUploadRecord() {	
 	$filename = $_FILES["file"]["name"];
 	$filetype = $_FILES["file"]["type"];
 	$filesize = $_FILES["file"]["size"];
