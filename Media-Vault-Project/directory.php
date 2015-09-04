@@ -28,7 +28,7 @@
   </tr>
 	
 	<?php
-		require_once 'sql_functions.php';
+		require_once '/php-files/sql_functions.php';
 		
 		// Get metadata table info
 		$metadata = read_table("SELECT * FROM metadata;");
