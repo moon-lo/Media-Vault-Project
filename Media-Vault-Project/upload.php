@@ -1,3 +1,16 @@
+<?php
+    // Define root directory for use in strings later
+	define('ROOT_DIR', dirname(__FILE__));
+    include ROOT_DIR . '/php-files/file_management.inc';
+    
+    // Check to see if file is set - Attempt to upload file - Add record upon success
+	if (isset($_FILES['file'])) {
+		if (uploadFile()) {
+			addUploadRecord();
+		}
+	}
+?>
+
 <!-- Author: Lok Sum (Moon) Lo -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,21 +34,6 @@
     <td width="65%"><font size="+2">Upload file</font></td>
     <td width="24%">&nbsp;</td>
   </tr>
-  
-  <tr>
-  <?php
-	define('ROOT_DIR', dirname(__FILE__));
-	require_once ROOT_DIR . '/php-files/upload_files.inc';
-	
-	// Check to see if file is set - Attempt to upload file - Add record upon success
-	if (isset($_FILES['file'])) {
-		if (uploadFile()) {
-			addUploadRecord();
-		}
-	}
-  ?>
-  </tr>
-  
   <tr>
     <td height="235">&nbsp;</td>
     <td><form action="upload.php" method="post" enctype="multipart/form-data">

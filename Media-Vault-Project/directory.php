@@ -1,18 +1,30 @@
 <?php
 	// Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
+    include ROOT_DIR . '/php-files/file_management.inc'; 
+    
 	// Assign selected file
-	$selectedFile = $_GET['selectedFile'];
-	
-	include ROOT_DIR . '/php-files/delete_files.inc'; 
+	$selectedFile = $_POST['selectedFile'];
 	
 	// Delete file if set
 	if (isset($_POST['deleteButton'])) {
-		$file = $_POST['deleteButton'];
-		if (deleteFile($file)) {
-			deleteFileRecord($file);
+		if (deleteFile($selectedFile)) {
+			deleteFileRecord($selectedFile);
 		}
 	}
+    
+    // Rename file if set
+    if (isset($_POST['editButton'])) {
+        echo "<form action='' 'method='get' name='newNameForm'>
+                <input type='text' name='newName'>
+                <input type='submit' name='nameSet' value='Rename'>
+            </form>";
+        
+        $newName = $_GET['newName'];
+  		if (renameFile($selectedFile, $newName)) {
+			renameFileRecord($selectedFile, $newName);
+		}
+    }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -39,17 +51,17 @@
 </table>
 <table width="75%" border="1" style="float: left;">
   <tr>
-    <td width="50%">Name</td>
+    <td width="25%">Name</td>
+    <td width="25%">Type</td>
     <td width="25%">Last modified</td>
     <td width="25%">Size</td>
   </tr>
 	
 	<?php
-		require_once ROOT_DIR . '/php-files/sql_functions.inc';
 		// Get metadata table info
 		$metadata = read_table("SELECT * FROM metadata;");
 		// Define desired columns
-		$columns = array('filename', 'timestamp', 'filesize');
+		$columns = array('filename', 'filetype', 'timestamp', 'filesize');
 		// Write to HTML table
 		write_table($metadata, $columns);
 	?>
@@ -79,19 +91,17 @@
   <tr>
     <td colspan="2">[PLACEHOLDER TAG]</td>
   </tr>
-  <tr>
-    <td width="133"><div align="center"><button name="downloadButton" type="button" onclick="alert('The file is downloading.')">Download</button></div></td>
-    <td width="132"><div align="center"><button name="editButton" type="button">Edit</button></div></td>
-  </tr>
-  <tr>
-    <td><div align="center"><button name="shareButton" type="button">Share</button></div></td>
-    <td><div align="center">
-			<form action="directory.php" method="post">
-    			<button name="deleteButton" type="submit" value="<?php echo $selectedFile; ?>">Delete</button>
-    		</form>
-    	</div>
-    </td>
-  </tr>
+    <form action="directory.php" method="post">
+        <input type="hidden" value="<?php echo $selectedFile; ?>" name="selectedFile">
+        <tr>
+            <td width="133"><div align="center"><input type="submit" value="Download" name="downloadButton"></div></td>
+            <td width="132"><div align="center"><input type="submit" value="Edit" name="editButton"></div></td>
+        </tr>
+        <tr>
+            <td><div align="center"><input type="submit" value="Share" name="shareButton"></div></td>
+            <td><div align="center"><input type="submit" value="Delete" name="deleteButton"></div></td>
+        </tr>
+    </form>
 </table>
 <p>&nbsp;</p>
 <p>&nbsp;</p>

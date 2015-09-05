@@ -26,7 +26,7 @@ function read_table($sql) {
 	 *
 	 * @param (PDO) - $pdo - the PDO to be written to the table.
 	 * @param (array) - $columns - the String values of the PDO's columns to be written.
-	 * * NOTE: If 'filename' is provided as a column, that cell will be hyperlinked 
+	 * * NOTE: If 'filename' is provided as a column, that cell will be hyperlinked
 	 *
 	 * @author James Galloway
 	 */
