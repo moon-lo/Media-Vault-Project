@@ -127,7 +127,7 @@ function deleteFileRecord($file) {
 function renameFile($oldName, $newName) {
     $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
 
-    if (rename(ROOT_DIR . '\uploads\\' . $oldName, ROOT_DIR . '\uploads\\' . $newName . '.' . $fileExtension)) {
+    if (rename(ROOT_DIR . '/uploads/' . $oldName, ROOT_DIR . '/uploads/' . $newName . '.' . $fileExtension)) {
         echo "<p>File successfully renamed</p>";
         return true;
     }
