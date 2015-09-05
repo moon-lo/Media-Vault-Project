@@ -1,8 +1,8 @@
 <?php
 	// Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
-    include ROOT_DIR . '\php-files\file_management.php';
-    include ROOT_DIR . '\php-files\sql_functions.php';
+    include ROOT_DIR . '/php-files/file_management.php';
+    include ROOT_DIR . '/php-files/sql_functions.php';
     
     // Assign selected file if set & not null
     $fileFlag = false;
