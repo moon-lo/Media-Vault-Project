@@ -8,7 +8,7 @@
 	 * 
 	 * @author James Galloway
 	 */
-function read_table($sql) {
+function readTable($sql) {
 	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	try {
@@ -30,13 +30,12 @@ function read_table($sql) {
 	 *
 	 * @author James Galloway
 	 */
-function write_table($pdo, $columns) {
+function writeTable($pdo, $columns) {
 	foreach ($pdo as $row) {
 		echo "<tr>";
 		foreach ($columns as $column) {
 			if ($column == 'filename') {
-				echo "<td><a href='directory.php?email=blank&selectedFile="
-					. $row[$column] . "'>" . $row[$column] . "</a></td>"; 
+				echo "<td><input type='submit' value='" . $row[$column] . "' name='selectedFile'></td>"; 
 			} else {
 				echo "<td>" . $row[$column] . "</td>";
 			}

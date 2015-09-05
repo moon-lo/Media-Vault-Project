@@ -1,29 +1,41 @@
 <?php
 	// Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
-    include ROOT_DIR . '/php-files/file_management.inc'; 
+    include ROOT_DIR . '\php-files\file_management.php';
+    include ROOT_DIR . '\php-files\sql_functions.php';
     
-	// Assign selected file
-	$selectedFile = $_POST['selectedFile'];
-	
-	// Delete file if set
-	if (isset($_POST['deleteButton'])) {
-		if (deleteFile($selectedFile)) {
-			deleteFileRecord($selectedFile);
-		}
-	}
-    
-    // Rename file if set
-    if (isset($_POST['editButton'])) {
+    // Assign selected file if set & not null
+    $fileFlag = false;
+    if (isset($_POST['selectedFile'])) {
+        if ($_POST['selectedFile'] !== '') {
+            $selectedFile = $_POST['selectedFile'];
+            $fileFlag = true;
+        }
+    }
+
+    // Delete file if delete & file are set
+	if (isset($_POST['deleteButton']) && $fileFlag) {
+	    if (deleteFile($selectedFile)) {
+		    deleteFileRecord($selectedFile);
+        }
+    }
+
+    // Write rename form is edit & file are set
+    if (isset($_POST['editButton']) && $fileFlag) {
         echo "<form action='' 'method='get' name='newNameForm'>
+                <input type='hidden' value='" . $selectedFile . "' name='oldName'>
                 <input type='text' name='newName'>
                 <input type='submit' name='nameSet' value='Rename'>
             </form>";
-        
+    }
+
+    // Rename file if new name & file are set
+    if (isset($_GET['nameSet'])) {
+        $oldName = $_GET['oldName'];
         $newName = $_GET['newName'];
-  		if (renameFile($selectedFile, $newName)) {
-			renameFileRecord($selectedFile, $newName);
-		}
+  		    if (renameFile($oldName, $newName)) {
+			    renameFileRecord($oldName, $newName);
+		    }
     }
 ?>
 
@@ -38,7 +50,7 @@
   <tr>
     <td width="929"><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></td>
     <td width="182">email@address.com</td>
-    <td width="119"><a href="index.html">Log out</a></td>
+    <td width="119"><a href="index.php">Log out</a></td>
   </tr>
 </table>
 <hr>
@@ -56,16 +68,17 @@
     <td width="25%">Last modified</td>
     <td width="25%">Size</td>
   </tr>
-	
+  <!--File Selection Form -->
+  <form action="directory.php" method="post">
 	<?php
 		// Get metadata table info
-		$metadata = read_table("SELECT * FROM metadata;");
+		$metadata = readTable("SELECT * FROM metadata;");
 		// Define desired columns
 		$columns = array('filename', 'filetype', 'timestamp', 'filesize');
 		// Write to HTML table
-		write_table($metadata, $columns);
+		writeTable($metadata, $columns);
 	?>
-	
+</form>
 </table>
 <table width="25%" height="100%" border="1" style="float: right;">
   <tr>
@@ -91,8 +104,9 @@
   <tr>
     <td colspan="2">[PLACEHOLDER TAG]</td>
   </tr>
+    <!--File Management Form -->
     <form action="directory.php" method="post">
-        <input type="hidden" value="<?php echo $selectedFile; ?>" name="selectedFile">
+        <input type="hidden" value="<?php if (isset($selectedFile)) { echo $selectedFile; } ?>" name="selectedFile">
         <tr>
             <td width="133"><div align="center"><input type="submit" value="Download" name="downloadButton"></div></td>
             <td width="132"><div align="center"><input type="submit" value="Edit" name="editButton"></div></td>

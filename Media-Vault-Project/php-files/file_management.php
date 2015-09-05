@@ -125,7 +125,9 @@ function deleteFileRecord($file) {
      * @author James Galloway
      */
 function renameFile($oldName, $newName) {
-    if (rename("ROOT_DIR . '/uploads/' . $oldName", "ROOT_DIR . '/uploads/' . $newName")) {
+    $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
+
+    if (rename(ROOT_DIR . '\uploads\\' . $oldName, ROOT_DIR . '\uploads\\' . $newName . '.' . $fileExtension)) {
         echo "<p>File successfully renamed</p>";
         return true;
     }
@@ -141,6 +143,7 @@ function renameFile($oldName, $newName) {
      * @author James Galloway
      */
 function renameFileRecord($oldName, $newName) {
+    $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
     $sql = "UPDATE metadata SET filename = :newName WHERE filename = :oldName";
 	
 	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
@@ -152,7 +155,7 @@ function renameFileRecord($oldName, $newName) {
 	}
 	
 	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':newName', $newName);
+	$stmt->bindValue(':newName', $newName . '.' . $fileExtension);
 	$stmt->bindValue(':oldName', $oldName);
 	$stmt->execute();
 
