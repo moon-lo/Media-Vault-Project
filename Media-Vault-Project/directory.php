@@ -35,6 +35,20 @@
 		        }
         }
     }
+
+    // Write folder naming form is create folder is set
+    if (isset($_GET['newFolder'])) {
+        writeNewFolderForm();
+    }
+
+    // Create new folder if create button is set
+    if (isset($_GET['newFolder'])) {
+        if ($_GET['newFolder'] == 'Create') {
+            if (newFolder($_GET['folderName'])) {
+                newFolderRecord($_GET['folderName']);
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -111,16 +125,18 @@
         <!--File Management Form -->
         <form action="directory.php" method="get">
             <input type="hidden" value="<?php if (isset($selectedFile)) { echo $selectedFile; } ?>" name="selectedFile">
-            <tr id="fileManButtons1">
-                <td><div align="center" id="fileManDiv"><input type="submit" value="Download" name="download" id="fileManButton"></div></td>
-                <td><div align="center" id="fileManDiv"><input type="submit" value="Edit" name="edit" id="fileManButton"></div></td>
+            <tr id="fileManButtons">
+                <td><div id="fileManDiv"><input type="submit" value="Download" name="download" id="fileManButton"></div></td>
+                <td><div id="fileManDiv"><input type="submit" value="Edit" name="edit" id="fileManButton"></div></td>
             </tr>
-            <tr id="fileManButtons2">
-                <td><div align="center" id="fileManDiv"><input type="submit" value="Share" name="share" id="fileManButton"></div></td>
-                <td><div align="center" id="fileManDiv"><input type="submit" value="Delete" name="delete" id="fileManButton"></div></td>
+            <tr id="fileManButtons">
+                <td><div id="fileManDiv"><input type="submit" value="Share" name="share" id="fileManButton"></div></td>
+                <td><div id="fileManDiv"><input type="submit" value="Delete" name="delete" id="fileManButton"></div></td>
+            </tr>
+            <tr id="fileManButtons">
+                <td><div id="fileManDiv"><input type="submit" value="Create Folder" name="newFolder" id="fileManButton"></div></td>
             </tr>
         </form>
-
     </table>
 </div>
 

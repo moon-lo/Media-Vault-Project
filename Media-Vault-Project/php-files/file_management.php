@@ -82,10 +82,18 @@ function addUploadRecord() {
 	 * @author Christian Ruiz
 	 */
 function deleteFile($file) {
-	if (unlink(ROOT_DIR . '/uploads/' . $file)) {
-		echo "<p>File successfully deleted</p>";
-		return true;
-	}
+	$file = ROOT_DIR . '/uploads/' . $file;
+    if (is_dir($file)) {
+        if (rmdir($file)) {
+            echo "<p>Folder successfully deleted</p>";
+            return true;
+        }
+    } else {
+        if (unlink($file)) {
+		    echo "<p>File successfully deleted</p>";
+		    return true;
+	    } 
+    }
 	return false;
 } // end deleteFile
 
@@ -125,7 +133,7 @@ function deleteFileRecord($file) {
      */
     function writeRenameForm($selectedFile) {
         echo "<div class='simpleInputDiv'>
-            <form action='' 'method='get' class='renameForm'>
+            <form action='' 'method='get' class='simpleInputForm'>
                 <input type='hidden' value='" . $selectedFile . "' name='oldName'>
                 <input type='text' name='newName'>
                 <input type='submit' name='newNameSet' value='Rename'>
@@ -179,5 +187,66 @@ function renameFileRecord($oldName, $newName) {
 
 	$pdo = null;
 } // end renameFileRecord
+
+/** Create Folder Related Functions **/
+
+    /**
+     * Write input form for user to name new folder.
+     *
+     * @author James Galloway
+     */
+function writeNewFolderForm() {
+    echo "<div class='simpleInputDiv'>
+            <form action='' 'method='get' class='simpleInputForm'>
+                <input type='text' name='folderName'>
+                <input type='submit' name='newFolder' value='Create'>
+                <input type='submit' name='newFolder' value='Cancel'>
+            </form>
+        </div>";
+} // end writeNewFolderForm
+
+    /**
+     * Create new folder in the /uploads/ directory.
+     * * NOTE: Folder is currently created with widest possible privilege.
+     *
+     * @param $name - string - the name of the folder to be created.
+     *
+     * @author James Galloway
+     */
+function newFolder($name) {
+    if (mkdir(ROOT_DIR . '/uploads/' . $name, 0777)) {
+        echo "<p>Folder succesfully created.</p>";
+        return true;
+    }
+    return false;
+} // end newFolder
+
+    /**
+     * Add record for new folder into metadata table.
+     *
+     * @param $name - string - the name of the folder to be created.
+     *
+     * @author James Galloway
+     */
+function newFolderRecord($name) {
+	$sql = "INSERT INTO metadata (filename, filetype, filesize)
+			VALUES (:filename, :filetype, :filesize)";
+	
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$result = $pdo->query('SELECT * FROM metadata');
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	
+	$stmt = $pdo->prepare($sql);
+	$stmt->bindValue(':filename', $name);
+	$stmt->bindValue(':filetype', 'folder');
+	$stmt->bindValue(':filesize', '0');
+	$stmt->execute();
+
+	$pdo = null;
+} // end newFolderRecord
 
 ?>

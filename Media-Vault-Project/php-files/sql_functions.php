@@ -26,7 +26,9 @@ function readTable($sql) {
 	 *
 	 * @param (PDO) - $pdo - the PDO to be written to the table.
 	 * @param (array) - $columns - the String values of the PDO's columns to be written.
-	 * * NOTE: If 'filename' is provided as a column, that cell will be hyperlinked
+	 * * NOTE: All cells are hyperlinked individually
+     *         Date string is reformatted
+     *         Size string is reformatted
 	 *
 	 * @author James Galloway
 	 */
@@ -34,6 +36,13 @@ function writeTable($pdo, $columns) {
 	foreach ($pdo as $row) {
 		echo "<tr  id='listingRow'>";
 		foreach ($columns as $column) {
+                if ($column == 'timestamp') {
+                    $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
+                }
+                if ($column == 'filesize') {
+                    $row[$column] = round($row[$column] / 1024);
+                    $row[$column] = $row[$column] . " KB";
+                }
 				echo "<td><a href='directory.php?selectedFile=" . $row['filename'] . "'>" . $row[$column] . "</a></td>";
 		}
 		echo "</tr>";
