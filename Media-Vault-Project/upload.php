@@ -44,7 +44,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>&nbsp;</td>
+    <td><a href="directory.php">Directory</a></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>

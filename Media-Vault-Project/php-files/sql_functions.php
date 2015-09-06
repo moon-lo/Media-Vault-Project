@@ -32,13 +32,9 @@ function readTable($sql) {
 	 */
 function writeTable($pdo, $columns) {
 	foreach ($pdo as $row) {
-		echo "<tr>";
+		echo "<tr  id='listingRow'>";
 		foreach ($columns as $column) {
-			if ($column == 'filename') {
-				echo "<td><input type='submit' value='" . $row[$column] . "' name='selectedFile'></td>"; 
-			} else {
-				echo "<td>" . $row[$column] . "</td>";
-			}
+				echo "<td><a href='directory.php?selectedFile=" . $row['filename'] . "'>" . $row[$column] . "</a></td>";
 		}
 		echo "</tr>";
 	}

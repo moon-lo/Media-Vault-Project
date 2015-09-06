@@ -117,6 +117,24 @@ function deleteFileRecord($file) {
 /** Rename Related Functions **/
     
     /**
+     * Simple function to echo text input form onto page for user to input new file name.
+     *
+     * @param $selectedFile - string - file name of selected file - stored in hidden input
+     *
+     * @author James Galloway
+     */
+    function writeRenameForm($selectedFile) {
+        echo "<div class='simpleInputDiv'>
+            <form action='' 'method='get' class='renameForm'>
+                <input type='hidden' value='" . $selectedFile . "' name='oldName'>
+                <input type='text' name='newName'>
+                <input type='submit' name='newNameSet' value='Rename'>
+                <input type='submit' name='newNameSet' value='Cancel'>
+            </form>
+        </div>";
+    } // end writeRenameForm
+
+    /**
      * Rename selected file.
      * 
      * @param $oldName - string - the original name of the file.
