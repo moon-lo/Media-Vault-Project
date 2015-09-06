@@ -309,7 +309,7 @@ function writeFolderDropdown($selectedFile) {
      */
 function moveFile($file, $destination) {
     $filePath = ROOT_DIR . '/uploads/' . $file;
-    $destinationPath = ROOT_DIR . '/uploads/' . $destination;    
+    $destinationPath = ROOT_DIR . '/uploads/' . $destination . '/' . $file;
 
     if (is_dir($file)) {
         echo "<p>File must not be a folder.</p>";
