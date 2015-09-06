@@ -33,6 +33,11 @@ function uploadFile() {
 	// Upload file
 	if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
 		echo "<p>File:  " . basename($_FILES["file"]["name"]) . " was successfully uploaded.</p>";
+        
+        echo $file;
+        chown($file, 'iis apppool\defaultapppool');
+        echo substr(sprintf('%o', fileperms($file)), -4);
+
 		return true;
 	} else {
 		echo "<p>There was an error in uploading the file.</p>";
@@ -214,7 +219,7 @@ function writeNewFolderForm() {
      * @author James Galloway
      */
 function newFolder($name) {
-    if (mkdir(ROOT_DIR . '/uploads/' . $name, 0777)) {
+    if (mkdir(ROOT_DIR . '/uploads/' . $name, 0755)) {
         echo "<p>Folder succesfully created.</p>";
         return true;
     }
@@ -248,5 +253,74 @@ function newFolderRecord($name) {
 
 	$pdo = null;
 } // end newFolderRecord
+
+/** Move File Related Functions **/
+    
+    /**
+     * Retrieves list of all valid destination folders from metadagetFolders* 
+     * 
+     * @return $result - PDO - contains list of all valid folders.
+     *
+     * @author James Galloway
+     */
+function getFolders() {
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$result = $pdo->query('SELECT * FROM metadata WHERE filetype = "folder"');
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+    return $result;
+} // end getFolderOptions
+
+    /**
+     * Writes list of all valid destination folders to a getFoldersr user selection.
+     *
+     * @param $selectedFile - string - file name of selected file - stored in hidden input
+     *
+     * @author James Galloway
+     */
+function writeFolderDropdown($selectedFile) {
+    $folders = getFolders();
+    echo "<div class='simpleInputDiv'>
+            <form action='' 'method='get' class='simpleInputForm'>
+                <input type='hidden' value='" . $selectedFile . "' name='fileToMove'>
+                <select name='folderMenu'>";
+
+    foreach ($folders as $folder) {
+        echo "<option value='" . $folder['filename'] . "'>" . $folder['filename'] . "</option>";
+    }
+                    
+    echo "      </select>
+                <input type='submit' name='selectFolder' value='Move'>
+                <input type='submit' name='selectFolder' value='Cancel'>
+            </form>
+          </div>";
+} // end writeFolderDropdown
+
+    /**
+     * Moves file from current position to destination folder.
+     *
+     * @param $file - string - file to be moved.
+     * @param $destination - string - destination folder.
+     *
+     * @author James Galloway
+     */
+function moveFile($file, $destination) {
+    $filePath = ROOT_DIR . '/uploads/' . $file;
+    $destinationPath = ROOT_DIR . '/uploads/' . $destination;    
+
+    if (is_dir($file)) {
+        echo "<p>File must not be a folder.</p>";
+        return false;
+    }
+
+    if (rename($filePath, $destinationPath)) {
+        echo "<p>File: " . $file . " has been successfully moved to " . $destination . "</p>";
+        return true;
+    }
+    return false;
+} // end moveFile
 
 ?>

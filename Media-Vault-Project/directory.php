@@ -1,5 +1,5 @@
 <?php
-	// Define root directory for use in strings later
+    // Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
     include ROOT_DIR . '/php-files/file_management.php';
     include ROOT_DIR . '/php-files/sql_functions.php';
@@ -47,6 +47,18 @@
             if (newFolder($_GET['folderName'])) {
                 newFolderRecord($_GET['folderName']);
             }
+        }
+    }
+
+    // Write dropdown menu containing valid folders to move a file into
+    if (isset($_GET['moveTo'])) {
+        writeFolderDropdown($selectedFile);
+    }
+
+    // Move file if folder is set
+    if (isset($_GET['selectFolder'])) {
+        if ($_GET['selectFolder'] == 'Move') {
+            moveFile($_GET['fileToMove'], $_GET['folderMenu']);
         }
     }
 ?>
@@ -134,7 +146,8 @@
                 <td><div id="fileManDiv"><input type="submit" value="Delete" name="delete" id="fileManButton"></div></td>
             </tr>
             <tr id="fileManButtons">
-                <td><div id="fileManDiv"><input type="submit" value="Create Folder" name="newFolder" id="fileManButton"></div></td>
+                <td><div id="fileManDiv"><input type="submit" value="New Folder" name="newFolder" id="fileManButton"></div></td>
+                <td><div id="fileManDiv"><input type="submit" value="Move To..." name="moveTo" id="fileManButton"></div></td>
             </tr>
         </form>
     </table>
