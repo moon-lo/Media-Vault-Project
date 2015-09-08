@@ -70,7 +70,7 @@ function downloadFile($filename, $location = NULL) {
 	//download file
 	header('Content-Type: '.$mType);
 	header('Content-Disposition: attachment; filename="'.$filename.'"');
-	readfile($location.$filename);
+	readfile(ROOT_DIR.$location.$filename);
 	exit;
 	
 }
