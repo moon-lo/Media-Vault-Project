@@ -75,5 +75,19 @@ function downloadFile($filename, $location = NULL) {
 	
 }
 
+if(isset($_POST['filename'])){
+    
+    $fname = $_POST['filename'];
+    $flocation = NULL;
+    //do the action
+    downloadFile($fname, $flocation);
+}
 
 ?>
+
+
+<form action="download_functions.php" method="post" name = "downloadform">  
+    <input name="filename" value="test.txt" type = "hidden">
+    <input name="location" value="" >   
+    <input type="submit" name="Download" > 
+</form>
