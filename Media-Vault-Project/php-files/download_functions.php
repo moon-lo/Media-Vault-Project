@@ -17,7 +17,7 @@ function ownFile($fileid, $id = NULL){
 	if(is_null(id)){
 		return true;
 	}else{
-		$sql = "SELECT id FROM metadata WHERE fileid :fileid"
+		$sql = "SELECT id FROM metadata WHERE fileid :fileid";
 		
 		$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
