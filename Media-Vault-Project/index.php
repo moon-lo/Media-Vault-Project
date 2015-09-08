@@ -57,7 +57,7 @@
   <br /><br />
           Password:
           <input type="password" value="" />
-          <br />
+          <br /><br />
           <input type="submit" value="Sign in" />
         </p>
       </form>
