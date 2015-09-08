@@ -3,6 +3,7 @@
 	define('ROOT_DIR', dirname(__FILE__));
     include ROOT_DIR . '/php-files/file_management.php';
     include ROOT_DIR . '/php-files/sql_functions.php';
+	include ROOT_DIR . '/php-files/download_functions.php';
     
     // Assign selected file if set & not null
     $fileFlag = false;
@@ -61,6 +62,20 @@
             moveFile($_GET['fileToMove'], $_GET['folderMenu']);
         }
     }
+	
+	//download file if download button is clicked
+	if(isset($_GET['download'])){
+		if(fileFlag){
+			//$fname = $_GET['filename'];
+			$fname = $selectedFile;
+			//$flocation = NULL;
+		
+			downloadFile($fname);
+		}
+
+		
+	}
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
