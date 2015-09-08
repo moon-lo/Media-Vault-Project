@@ -98,9 +98,11 @@
 <hr>
 <table width="100%" border="0" style="float: centre;">
   <tr>
-    <td width="818">[NAV BAR PLACEHOLDER]</td>
-    <td width="107"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
-    <td width="305">View: List, Grid</td>
+    <td width="1097">[NAV BAR PLACEHOLDER]</td>
+    <td width="144"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
+    <td width="177">View: List, Grid</td>
+    <td width="233">
+  <input type="search" name="searchBar" value="" /><input type="button" name="searchButton" value="Search" /></td>
   </tr>
 </table>
 <table class="directoryTable" width="75%" border="1" style="float: left;">
