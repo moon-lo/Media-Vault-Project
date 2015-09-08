@@ -65,12 +65,14 @@
 	
 	//download file if download button is clicked
 	if(isset($_GET['download'])){
-		if(fileFlag){
-			//$fname = $_GET['filename'];
-			$fname = $selectedFile;
-			//$flocation = NULL;
-		
-			downloadFile($fname);
+		if($_GET['selectedFile']){
+			if($_GET['selectedFile'] !== ''){
+				//$fname = $_GET['filename'];
+				$fname = $selectedFile;
+				//$flocation = NULL;
+			
+				downloadFile($fname);
+			}
 		}
 
 		
