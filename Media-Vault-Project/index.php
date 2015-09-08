@@ -54,7 +54,7 @@
       <form action="directory.php">
         <p>Email address:
   <input type="text" name="email" value="" />
-  <br />
+  <br /><br />
           Password:
           <input type="password" value="" />
           <br />
