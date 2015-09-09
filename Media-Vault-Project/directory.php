@@ -51,18 +51,6 @@
         }
     }
 
-    // Write dropdown menu containing valid folders to move a file into
-    if (isset($_GET['moveTo'])) {
-        writeFolderDropdown($selectedFile);
-    }
-
-    // Move file if folder is set
-    if (isset($_GET['selectFolder'])) {
-        if ($_GET['selectFolder'] == 'Move') {
-            moveFile($_GET['fileToMove'], $_GET['folderMenu']);
-        }
-    }
-	
 	//download file if download button is clicked
 	if(isset($_GET['download'])){
 		if($_GET['selectedFile']){
