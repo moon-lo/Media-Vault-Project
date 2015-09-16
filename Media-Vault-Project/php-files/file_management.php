@@ -33,11 +33,6 @@ function uploadFile() {
 	// Upload file
 	if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
 		echo "<p>File:  " . basename($_FILES["file"]["name"]) . " was successfully uploaded.</p>";
-        
-        echo $file;
-        chown($file, 'iis apppool\defaultapppool');
-        echo substr(sprintf('%o', fileperms($file)), -4);
-
 		return true;
 	} else {
 		echo "<p>There was an error in uploading the file.</p>";
@@ -158,10 +153,16 @@ function deleteFileRecord($file) {
 function renameFile($oldName, $newName) {
     $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
 
+    if (file_exists(ROOT_DIR . '/uploads/' . $newName . '.' . $fileExtension)) {
+        echo "<p>A file of that name already exists.  Please choose a different name.</p>";
+        return false;
+    }
+
     if (rename(ROOT_DIR . '/uploads/' . $oldName, ROOT_DIR . '/uploads/' . $newName . '.' . $fileExtension)) {
         echo "<p>File successfully renamed</p>";
         return true;
     }
+    echo "<p>There was an error in renaming the file.</p>";
     return false;
 } // end renameFile
 
