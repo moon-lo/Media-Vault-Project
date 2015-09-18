@@ -7,11 +7,21 @@
     
     // Assign selected file if set & not null
     $fileFlag = false;
-    if (isset($_GET['selectedFile'])) {
-        if ($_GET['selectedFile'] !== '') {
-            $selectedFile = $_GET['selectedFile'];
-            $fileFlag = true;
+    if (isset($_GET['selectedFile']) && $_GET['selectedFile'] !== '') {
+        $query = 'SELECT * FROM metadata WHERE filename = "' . $_GET['selectedFile'] . '"';
+        $fileRecord = readTable($query);
+        $selectedFile = $fileRecord[0]['filename'];
+        $fileType = $fileRecord[0]['filetype'];
+        $currentLocation = $fileRecord[0]['location'];
+            
+        // If the selected file is a folder, add that folder to the file path.  
+        // When this path is used for the directory listing, it will return only files inside that folder.
+        if ($fileType == "folder") {
+            $currentLocation = $currentLocation . $selectedFile;
         }
+        $fileFlag = true;
+    } else {
+        $currentLocation = "uploads/";
     }
 
     // Delete file if delete & file are set
@@ -57,14 +67,24 @@
 			if($_GET['selectedFile'] !== ''){
 				//$fname = $_GET['filename'];
 				$fname = $selectedFile;
-				//$flocation = NULL;
-			
+				//$flocation = NULL;	
 				downloadFile($fname);
 			}
 		}
-
-		
 	}
+
+    // If the 'move to...' button is clicked AND a file is selected
+    if(isset($_GET['moveTo']) && $fileFlag) {
+        writeFolders(null, $selectedFile); // Passing 'null' into the function for now because no user stuff has been implemented.
+    }
+
+    if (isset($_GET['selectFolderButton'])) {
+        if ($_GET['selectFolderButton'] == 'Move') { // if the Move button was clicked (as opposed to 'Cancel')
+            if (moveFile($selectedFile, $currentLocation, $_GET['folderMenu'])) {
+                renameFileLocationRecord($selectedFile, $currentLocation, $_GET['folderMenu']);
+            } 
+        }
+    }
 
 ?>
 
@@ -105,7 +125,7 @@
     <form action="directory.php" method="post">
 	    <?php
 		    // Get metadata table info
-		    $metadata = readTable("SELECT * FROM metadata;");
+		    $metadata = readTable('SELECT * FROM metadata WHERE location = "' . $currentLocation . '"');
 		    // Define desired columns
 		    $columns = array('filename', 'filetype', 'timestamp', 'filesize');
 		    // Write to HTML table

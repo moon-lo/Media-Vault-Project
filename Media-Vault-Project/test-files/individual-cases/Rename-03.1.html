@@ -64,7 +64,7 @@
 <tr>
 	<td>type</td>
 	<td>name=newName</td>
-	<td>rename-test-file</td>
+	<td>test-file-text</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -72,13 +72,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>link=FAIL</td>
-	<td>FAIL</td>
+	<td>css=p</td>
+	<td>A file of that name already exists. Please choose a different name.</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text-02.txt</td>
 	<td></td>
 </tr>
 <tr>

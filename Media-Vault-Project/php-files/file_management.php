@@ -1,5 +1,37 @@
 <?php
 
+	/**
+	 * Writes the entire contents of a given PDO to rows of a table.
+	 *
+	 * @param (PDO) - $pdo - the PDO to be written to the table.
+	 * @param (array) - $columns - the String values of the PDO's columns to be written.
+	 * * NOTE: All cells are hyperlinked individually
+     *         Date string is reformatted
+     *         Size string is reformatted
+	 *
+	 * @author James Galloway
+	 */
+function writeTable($pdo, $columns) {
+	if ($pdo == null) {
+        echo "<tr id='listingRow'><td>No files to display</td></tr>";
+    } else {
+        foreach ($pdo as $row) {
+		    echo "<tr  id='listingRow'>";
+		    foreach ($columns as $column) {
+                    if ($column == 'timestamp') {
+                        $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
+                    }
+                    if ($column == 'filesize') {
+                        $row[$column] = round($row[$column] / 1024);
+                        $row[$column] = $row[$column] . " KB";
+                    }
+				    echo "<td><a href='directory.php?selectedFile=" . $row['filename'] . "'>" . $row[$column] . "</a></td>";
+		    }
+		    echo "</tr>";
+	    }
+    }
+} // end write_table
+
 /** Upload Related Functions **/
 
 	/**
@@ -40,37 +72,6 @@ function uploadFile() {
 		return false;
 	}
 } // end uploadFile
-	 
-	/**
-	 * Add file record to MySQL DB - 'metadata' table.
-	 * * Only includes file name, type and size at the moment *
-	 *
-	 * @author James Galloway
-	 */
-function addUploadRecord() {	
-	$filename = $_FILES["file"]["name"];
-	$filetype = $_FILES["file"]["type"];
-	$filesize = $_FILES["file"]["size"];
-	
-	$sql = "INSERT INTO metadata (filename, filetype, filesize)
-			VALUES (:filename, :filetype, :filesize)";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':filename', $filename);
-	$stmt->bindValue(':filetype', $filetype);
-	$stmt->bindValue(':filesize', $filesize);
-	$stmt->execute();
-
-	$pdo = null;
-} // end addUploadRecord
 
 /** Delete Related Functions **/
     
@@ -96,31 +97,6 @@ function deleteFile($file) {
     }
 	return false;
 } // end deleteFile
-
-	/**
-	 * Delete a file's associated record in the metadata table.
-	 *
-	 * @param $file - string - the file name of the record to be deleted.
-	 *
-	 * @author James Galloway
-	 */
-function deleteFileRecord($file) {	
-	$sql = "DELETE FROM metadata WHERE filename = :filename";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':filename', $file);
-	$stmt->execute();
-
-	$pdo = null;
-} // end deleteFileRecord
 
 /** Rename Related Functions **/
     
@@ -166,34 +142,6 @@ function renameFile($oldName, $newName) {
     return false;
 } // end renameFile
 
-    /**
-     * Rename a file's asscoiated record in the metadata table.
-     * 
-     * @param $oldName - string - the original name of the file.
-     * @param $newName - string - the new name for the file.
-     * 
-     * @author James Galloway
-     */
-function renameFileRecord($oldName, $newName) {
-    $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
-    $sql = "UPDATE metadata SET filename = :newName WHERE filename = :oldName";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':newName', $newName . '.' . $fileExtension);
-	$stmt->bindValue(':oldName', $oldName);
-	$stmt->execute();
-
-	$pdo = null;
-} // end renameFileRecord
-
 /** Create Folder Related Functions **/
 
     /**
@@ -227,32 +175,65 @@ function newFolder($name) {
     return false;
 } // end newFolder
 
-    /**
-     * Add record for new folder into metadata table.
-     *
-     * @param $name - string - the name of the folder to be created.
-     *
-     * @author James Galloway
-     */
-function newFolderRecord($name) {
-	$sql = "INSERT INTO metadata (filename, filetype, filesize)
-			VALUES (:filename, :filetype, :filesize)";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':filename', $name);
-	$stmt->bindValue(':filetype', 'folder');
-	$stmt->bindValue(':filesize', '0');
-	$stmt->execute();
+/** Move File Related Functions **/
 
-	$pdo = null;
-} // end newFolderRecord
+    /**
+     * Retrieve a list of valid folders from the database and write them
+     * to a dropdown menu.
+     *
+     * @param $currentUserID - the $_SESSION ID of the current user. Used to compare table values.
+     * @param $selectedFile - string name of the selected file.
+     *
+     * @author Christian Ruiz 
+     */
+function writeFolders($currentUserID, $selectedFile) {       
+    // Get valid folders.
+    $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        $folders = $pdo->prepare('SELECT * FROM metadata WHERE filetype = "folder"');
+        $folders->execute();
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+
+    // Write dropdown menu.
+    echo "<div class='simpleInputDiv'>
+            <form action='' 'method='get' class='simpleInputForm'>
+                <input type='hidden' value='" . $selectedFile . "' name='selectedFile'>
+                <select name='folderMenu'>";
+
+    foreach ($folders as $singleFolder) {
+        echo "<option value='" . $singleFolder['filename'] . "'>" . $singleFolder['filename'] . "</option>";
+    }
+
+    echo "     </select>
+               <input type='submit' name='selectFolderButton' value='Move'>
+               <input type='submit' name='selectFolderButton' value='Cancel'>
+            </form>
+         </div>";
+} // end writeFolders
+
+
+    /**
+    * Moves file from current position to destination folder.
+    *
+    * @param $file - string - file to be moved.
+    * @param $location - string - the location of the file to be moved.
+    * @param $folder - string - destination folder.
+    *
+    * @author Christian Ruiz & James Galloway
+    */
+function moveFile($file, $location, $folder) {
+    $filePath = ROOT_DIR . '/' . $location . $file;
+    $folderPath = ROOT_DIR . '/' . $location . $folder . '/' . $file;
+
+    if (rename($filePath, $folderPath)) {
+        echo "<p>File: " . $file . " has been successfully moved to " . $folder . "</p>";
+        return true;
+    }
+
+    return false;
+} // end moveFile
 
 ?>
