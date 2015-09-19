@@ -147,7 +147,7 @@ function newFolderRecord($name, $location) {
      * @author James Galloway
      */
 function renameFileLocationRecord($file, $currentLocation, $newLocation) {
-    $location = $currentLocation . $newLocation;
+    $location = $currentLocation . $newLocation . '/';
     $sql = "UPDATE metadata SET location = :newLocation WHERE filename = :file";
 	
 	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
