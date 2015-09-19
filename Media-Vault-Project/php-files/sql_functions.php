@@ -115,9 +115,9 @@ function renameFileRecord($oldName, $newName) {
      *
      * @author James Galloway
      */
-function newFolderRecord($name) {
-	$sql = "INSERT INTO metadata (filename, filetype, filesize)
-			VALUES (:filename, :filetype, :filesize)";
+function newFolderRecord($name, $location) {
+	$sql = "INSERT INTO metadata (filename, filetype, filesize, location)
+			VALUES (:filename, :filetype, :filesize, :location)";
 	
 	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -131,6 +131,7 @@ function newFolderRecord($name) {
 	$stmt->bindValue(':filename', $name);
 	$stmt->bindValue(':filetype', 'folder');
 	$stmt->bindValue(':filesize', '0');
+    $stmt->bindValue(':location', $location);
 	$stmt->execute();
 
 	$pdo = null;

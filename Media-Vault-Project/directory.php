@@ -17,7 +17,8 @@
         // If the selected file is a folder, add that folder to the file path.  
         // When this path is used for the directory listing, it will return only files inside that folder.
         if ($fileType == "folder") {
-            $currentLocation = $currentLocation . $selectedFile;
+            $currentLocation = $currentLocation . $selectedFile . '/';
+            echo "<p>" . $currentLocation . "</p>";
         }
         $fileFlag = true;
     } else {
@@ -56,7 +57,7 @@
     if (isset($_GET['newFolder'])) {
         if ($_GET['newFolder'] == 'Create') {
             if (newFolder($_GET['folderName'])) {
-                newFolderRecord($_GET['folderName']);
+                newFolderRecord($_GET['folderName'], $currentLocation);
             }
         }
     }
