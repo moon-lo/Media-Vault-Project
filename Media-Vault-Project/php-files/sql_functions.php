@@ -59,8 +59,8 @@ function addUploadRecord() {
 	$filetype = $_FILES["file"]["type"];
 	$filesize = $_FILES["file"]["size"];
 	
-	$sql = "INSERT INTO metadata (filename, filetype, filesize)
-			VALUES (:filename, :filetype, :filesize)";
+	$sql = "INSERT INTO metadata (filename, filetype, filesize, location)
+			VALUES (:filename, :filetype, :filesize, :location)";
 	
 	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -74,6 +74,7 @@ function addUploadRecord() {
 	$stmt->bindValue(':filename', $filename);
 	$stmt->bindValue(':filetype', $filetype);
 	$stmt->bindValue(':filesize', $filesize);
+    $stmt->bindValue(':location', 'uploads/');
 	$stmt->execute();
 
 	$pdo = null;
