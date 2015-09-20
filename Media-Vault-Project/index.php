@@ -1,3 +1,50 @@
+<?php
+	//Set error variable.
+	$error = '';
+	
+	//Determine if the Login button has been pressed.
+	if (isset($_POST['Login']))
+	{
+		//Set the username and password values to a variable.
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		
+		//Check if the username and password fields are empty. Return an error if they are, otherwise search the users table for the inputted username and password.
+		if (empty($username) || empty($password))
+		{
+			$error = 'Username or Password is invalid!';
+		}
+		else
+		{
+			try
+			{
+				//Use a prepared statement to search the users table for the requested username and password.
+				$stmt = $pdo->prepare('SELECT * FROM users '.
+				'WHERE username = :username AND password = SHA2(CONCAT(:password, salt), 0)');
+				$stmt->bindValue(':username', $username);
+				$stmt->bindValue(':password', $password);
+				$stmt->execute();
+			}
+			catch (PDOException $e)
+			{
+				echo $e->getMessage();
+			}
+			//Determine if the query returned any rows. If it did then the user will be redirected to their directory and they will be signed-in. Otherwise return an error.
+			$row = $stmt->rowCount();
+			if ($row > 0)
+			{
+				session_start();
+				$_SESSION['isUser'] = $username;
+				header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/directory.php");
+				exit();
+			}
+			else
+			{
+				$error = 'Username or Password is invalid!';
+			}
+		}
+	}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -51,14 +98,16 @@
   </tr>
   <tr>
     <td height="114" colspan="2"><div align="left">
-      <form action="directory.php">
-        <p>Email address:
-  <input type="text" name="email" value="" />
-  <br /><br />
+      <form action="index.php" method="POST" name="SignIn">
+        <p>Username:
+		  <input type="text" name="username" value="" />
+		  <br /><br />
           Password:
           <input type="password" value="" />
           <br /><br />
-          <input type="submit" value="Sign in" />
+          <input type="submit" name="Login" value="Sign in" />
+		  <br /><br />
+		  <span><?php echo $error; ?></span>
         </p>
       </form>
     </div></td>
@@ -70,7 +119,7 @@
     <td height="27" colspan="2"><strong><font size="3">New user</font></strong></td>
   </tr>
   <tr>
-    <td height="38" colspan="2"><font size="3"><a href="signup.html">Sign up</a></font></td>
+    <td height="38" colspan="2"><font size="3"><a href="signup.php">Sign up</a></font></td>
   </tr>
   <tr>
     <td height="138">&nbsp;</td>
