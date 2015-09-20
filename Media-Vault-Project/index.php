@@ -1,4 +1,6 @@
 <?php
+	unset($_SESSION['isUser']);
+	
 	//Set error variable.
 	$error = '';
 	
