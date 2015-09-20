@@ -1,4 +1,5 @@
 <?php
+	session_start();
     // Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
     include ROOT_DIR . '/php-files/file_management.php';
