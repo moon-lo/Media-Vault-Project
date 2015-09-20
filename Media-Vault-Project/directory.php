@@ -1,10 +1,16 @@
 <?php
-	session_start();
     // Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
     include ROOT_DIR . '/php-files/file_management.php';
     include ROOT_DIR . '/php-files/sql_functions.php';
 	include ROOT_DIR . '/php-files/download_functions.php';
+    
+    session_start();
+    //Determine the username of the account
+    if (isset($_POST['Login']))
+    {
+    	$accountName = $_POST['username'];
+    }
     
     // Assign selected file if set & not null
     $fileFlag = false;
@@ -101,7 +107,7 @@
 <table width="100%" border="0" style="float: centre;">
   <tr>
     <td width="929"><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></td>
-    <td width="182">email@address.com</td>
+    <td width="182"><?php echo $accountName ?></td>
     <td width="119"><a href="index.php">Log out</a></td>
   </tr>
 </table>
