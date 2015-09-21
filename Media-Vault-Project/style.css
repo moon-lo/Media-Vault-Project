@@ -47,7 +47,7 @@
 
 .simpleInputDiv {
     position: fixed;
-	left: 0;
+	right: 0;
     bottom: 200px;
 	border: 2px solid #00CC66;
 }
