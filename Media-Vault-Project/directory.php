@@ -106,16 +106,15 @@
 <body>
 <table width="100%" border="0" style="float: centre;">
   <tr>
-    <td width="1306"><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></td>
-    <td width="107"><?php echo $accountName ?></td>
-    <td width="154">Remaining space: </td>
-    <td width="90"><a href="index.php">Log out</a></td>
+    <td width="929"><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></td>
+    <td width="182"><?php echo $accountName ?></td>
+    <td width="119"><a href="index.php">Log out</a></td>
   </tr>
 </table>
 <hr>
 <table width="100%" border="0" style="float: centre;">
   <tr>
-    <td width="1097"><strong><a href="directory.php">Home</a> &gt;</strong> [folder] <strong>&gt;</strong> [folder]</td>
+    <td width="1097">[NAV BAR PLACEHOLDER]</td>
     <td width="144"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
     <td width="177">View: List, Grid</td>
     <td width="233">
