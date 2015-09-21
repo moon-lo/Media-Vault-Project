@@ -46,11 +46,9 @@
     }
 
 .simpleInputDiv {
-    position: relative;
-	left: 50%;
-    bottom: 30%;
-	width:auto;
-	height:auto;
+    position: fixed;
+	left: 0;
+    bottom: 200px;
 	border: 2px solid #00CC66;
 }
 
