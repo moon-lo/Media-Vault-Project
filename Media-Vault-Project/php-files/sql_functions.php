@@ -1,27 +1,47 @@
 <?php 
 
 	/**
-	 * Establishes a connection with a database and executes the specified query.
+	 * Establishes a connection with a database and returns the results of the specified query.
 	 *
 	 * @param (String) - $sql - the MySQL query to be executed.
 	 * @return (PDO) - $result - the PDO result of the query.
 	 * 
 	 * @author James Galloway
 	 */
-function readTable($sql) {
+function queryDB($sql) {
 	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	try {
-		$result = $pdo->prepare($sql);
-        $result->execute();
+		$result = $pdo->query($sql);
 	} catch (PDOException $e) {
 		echo $e->getMessage();
 	}
 	
-    $result = $result->fetchAll();
 	$pdo = null;
-	return $result;
-} // end read_table
+	return $result->fetchAll();
+} // end queryDB
+
+    /**
+     * Establishes a connection with a database and executes the specificied prepared statement.
+     * 
+     * @param (String) - $sql - the MySQL statement to be executed.
+     * @param (Array) - $parameters - array of values to be bound.  Must be in the following format: array(':bindString' => $bindValue)
+     *
+     * @author James Galloway
+     */
+function alterDB($sql, $parameters) {
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$result = $pdo->query('SELECT * FROM metadata');
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute($parameters);
+	$pdo = null;
+} // end alterTable
 
 	/**
 	 * Delete a file's associated record in the metadata table.
@@ -32,20 +52,10 @@ function readTable($sql) {
 	 */
 function deleteFileRecord($file) {	
 	$sql = "DELETE FROM metadata WHERE filename = :filename";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':filename', $file);
-	$stmt->execute();
-
-	$pdo = null;
+    $parameters = array(
+        ':filename' => $file
+    );
+    alterDB($sql, $parameters);
 } // end deleteFileRecord
 
 	/**
@@ -55,29 +65,15 @@ function deleteFileRecord($file) {
 	 * @author James Galloway
 	 */
 function addUploadRecord() {	
-	$filename = $_FILES["file"]["name"];
-	$filetype = $_FILES["file"]["type"];
-	$filesize = $_FILES["file"]["size"];
-	
-	$sql = "INSERT INTO metadata (filename, filetype, filesize, location)
-			VALUES (:filename, :filetype, :filesize, :location)";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':filename', $filename);
-	$stmt->bindValue(':filetype', $filetype);
-	$stmt->bindValue(':filesize', $filesize);
-    $stmt->bindValue(':location', 'uploads/');
-	$stmt->execute();
-
-	$pdo = null;
+    $sql = "INSERT INTO metadata (filename, filetype, filesize, location)
+	        VALUES (:filename, :filetype, :filesize, :location)";
+    $parameters = array(
+        ':filename' => $_FILES["file"]["name"],
+        ':filetype' => $_FILES["file"]["type"],
+        ':filesize' => $_FILES["file"]["size"],
+        ':location' => 'uploads/'
+    );
+	alterDB($sql, $parameters);
 } // end addUploadRecord
 
 
@@ -89,53 +85,34 @@ function addUploadRecord() {
      * 
      * @author James Galloway
      */
-function renameFileRecord($oldName, $newName) {
-    $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
+function renameFileRecord($oldName, $newName) { 
     $sql = "UPDATE metadata SET filename = :newName WHERE filename = :oldName";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':newName', $newName . '.' . $fileExtension);
-	$stmt->bindValue(':oldName', $oldName);
-	$stmt->execute();
-
-	$pdo = null;
+    $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
+    $parameters = array(
+        ':newName' => $newName . '.' . $fileExtension,
+        ':oldName' => $oldName
+    );
+    alterDB($sql, $parameters);
 } // end renameFileRecord
 
     /**
      * Add record for new folder into metadata table.
      *
      * @param $name - string - the name of the folder to be created.
+     * @param $location - string - directory of where the folder is being created.
      *
      * @author James Galloway
      */
 function newFolderRecord($name, $location) {
 	$sql = "INSERT INTO metadata (filename, filetype, filesize, location)
 			VALUES (:filename, :filetype, :filesize, :location)";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':filename', $name);
-	$stmt->bindValue(':filetype', 'folder');
-	$stmt->bindValue(':filesize', '0');
-    $stmt->bindValue(':location', $location);
-	$stmt->execute();
-
-	$pdo = null;
+    $parameters = array(
+        ':filename' => $name,
+        ':filetype' => 'folder',
+        ':filesize' => '0',
+        ':location' => $location
+    );
+    alterDB($sql, $parameters);
 } // end newFolderRecord
 
     /**
@@ -147,24 +124,13 @@ function newFolderRecord($name, $location) {
      * @author James Galloway
      */
 function renameFileLocationRecord($file, $currentLocation, $newLocation) {
-    $location = $currentLocation . $newLocation . '/';
     $sql = "UPDATE metadata SET location = :newLocation WHERE filename = :file";
-	
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$result = $pdo->query('SELECT * FROM metadata');
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
-	
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':newLocation', $location);
-	$stmt->bindValue(':file', $file);
-	$stmt->execute();
-
-	$pdo = null;
+    $location = $currentLocation . $newLocation . '/';
+    $parameters = array(
+        ':newLocation' => $location,
+        ':file' => $file
+    );
+    alterDB($sql, $parameters);
 } // end renameFileLocationRecord
-
 
 ?>

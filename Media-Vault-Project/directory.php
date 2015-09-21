@@ -1,99 +1,9 @@
 <?php
     // Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
-    include ROOT_DIR . '/php-files/file_management.php';
-    include ROOT_DIR . '/php-files/sql_functions.php';
-	include ROOT_DIR . '/php-files/download_functions.php';
-    
+
     session_start();
-    //Determine the username of the account
-    if (isset($_POST['Login']))
-    {
-    	$accountName = $_POST['username'];
-    }
-    
-    // Assign selected file if set & not null
-    $fileFlag = false;
-    if (isset($_GET['selectedFile']) && $_GET['selectedFile'] !== '') {
-        $query = 'SELECT * FROM metadata WHERE filename = "' . $_GET['selectedFile'] . '"';
-        $fileRecord = readTable($query);
-        $selectedFile = $fileRecord[0]['filename'];
-        $fileType = $fileRecord[0]['filetype'];
-        $currentLocation = $fileRecord[0]['location'];
-            
-        // If the selected file is a folder, add that folder to the file path.  
-        // When this path is used for the directory listing, it will return only files inside that folder.
-        if ($fileType == "folder") {
-            $currentLocation = $currentLocation . $selectedFile . '/';
-            echo "<p>" . $currentLocation . "</p>";
-        }
-        $fileFlag = true;
-    } else {
-        $currentLocation = "uploads/";
-    }
-
-    // Delete file if delete & file are set
-	if (isset($_GET['delete']) && $fileFlag) {
-	    if (deleteFile($selectedFile)) {
-		    deleteFileRecord($selectedFile);
-        }
-    }
-
-    // Write rename form is edit & file are set
-    if (isset($_GET['edit']) && $fileFlag) {
-        writeRenameForm($selectedFile);
-    }
-
-    // Rename file if new name & file are set
-    if (isset($_GET['newNameSet'])) {
-        if ($_GET['newNameSet'] == 'Rename') {
-            $oldName = $_GET['oldName'];
-            $newName = $_GET['newName'];
-  		        if (renameFile($oldName, $newName)) {
-			        renameFileRecord($oldName, $newName);
-		        }
-        }
-    }
-
-    // Write folder naming form is create folder is set
-    if (isset($_GET['newFolder'])) {
-        writeNewFolderForm();
-    }
-
-    // Create new folder if create button is set
-    if (isset($_GET['newFolder'])) {
-        if ($_GET['newFolder'] == 'Create') {
-            if (newFolder($_GET['folderName'])) {
-                newFolderRecord($_GET['folderName'], $currentLocation);
-            }
-        }
-    }
-
-	//download file if download button is clicked
-	if(isset($_GET['download'])){
-		if($_GET['selectedFile']){
-			if($_GET['selectedFile'] !== ''){
-				//$fname = $_GET['filename'];
-				$fname = $selectedFile;
-				//$flocation = NULL;	
-				downloadFile($fname);
-			}
-		}
-	}
-
-    // If the 'move to...' button is clicked AND a file is selected
-    if(isset($_GET['moveTo']) && $fileFlag) {
-        writeFolders(null, $selectedFile); // Passing 'null' into the function for now because no user stuff has been implemented.
-    }
-
-    if (isset($_GET['selectFolderButton'])) {
-        if ($_GET['selectFolderButton'] == 'Move') { // if the Move button was clicked (as opposed to 'Cancel')
-            if (moveFile($selectedFile, $currentLocation, $_GET['folderMenu'])) {
-                renameFileLocationRecord($selectedFile, $currentLocation, $_GET['folderMenu']);
-            } 
-        }
-    }
-
+    include ROOT_DIR . '/php-files/directory_header.php';
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -101,6 +11,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="javascript/display_functions.js"></script>
 </head>
 
 <body>
@@ -134,11 +45,11 @@
     <form action="directory.php" method="post">
 	    <?php
 		    // Get metadata table info
-		    $metadata = readTable('SELECT * FROM metadata WHERE location = "' . $currentLocation . '"');
+		    $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentLocation . '"');
 		    // Define desired columns
 		    $columns = array('filename', 'filetype', 'timestamp', 'filesize');
 		    // Write to HTML table
-		    writeTable($metadata, $columns);
+		    writeTable($metadata, $columns, $selectedFile, $isFolder);
 	    ?>
     </form>
 
@@ -149,11 +60,13 @@
       <tr>
         <td id="fileNameCell" colspan="2">
         <?php
+            echo "<b>";
     	    if (isset($selectedFile)) {
     		    echo $selectedFile;
     	    } else {
     		    echo "No file selected";
     	    }
+            echo "</b>";
         ?> 
         </td>
       </tr>
@@ -171,8 +84,10 @@
       </tr>
     
         <!--File Management Form -->
-        <form action="directory.php" method="get">
-            <input type="hidden" value="<?php if (isset($selectedFile)) { echo $selectedFile; } ?>" name="selectedFile">
+        <form action="directory.php" method="get" id="fileManForm">
+            <input type="hidden" value="<?php if ($isSelected) { echo $selectedFile; } ?>" name="selectedFile">
+            <input type="hidden" value="<?php echo $currentLocation; ?>" name="currentLocation">
+
             <tr id="fileManButtons">
                 <td><div id="fileManDiv"><input type="submit" value="Download" name="download" id="fileManButton"></div></td>
                 <td><div id="fileManDiv"><input type="submit" value="Edit" name="edit" id="fileManButton"></div></td>
@@ -182,10 +97,12 @@
                 <td><div id="fileManDiv"><input type="submit" value="Delete" name="delete" id="fileManButton"></div></td>
             </tr>
             <tr id="fileManButtons">
-                <td><div id="fileManDiv"><input type="submit" value="New Folder" name="newFolder" id="fileManButton"></div></td>
+                <td><div id="fileManDiv"><input type="submit" value="New Folder" name="newFolder" id="newFolderButton" class="active"></div></td>
                 <td><div id="fileManDiv"><input type="submit" value="Move To..." name="moveTo" id="fileManButton"></div></td>
             </tr>
+            <script> setFileManButtons(<?php echo JSON_encode(!$isSelected); ?>); </script>
         </form>
+
     </table>
 </div>
 

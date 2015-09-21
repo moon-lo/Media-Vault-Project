@@ -11,7 +11,7 @@
 	 *
 	 * @author James Galloway
 	 */
-function writeTable($pdo, $columns) {
+function writeTable($pdo, $columns, $selectedFile, $isFolder) {
 	if ($pdo == null) {
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
@@ -25,12 +25,16 @@ function writeTable($pdo, $columns) {
                         $row[$column] = round($row[$column] / 1024);
                         $row[$column] = $row[$column] . " KB";
                     }
-				    echo "<td><a href='directory.php?selectedFile=" . $row['filename'] . "'>" . $row[$column] . "</a></td>";
+                    if ($row['filename'] == $selectedFile && $isFolder) {
+                        echo "<td><a href='directory.php?selectedFolder=" . $row['filename'] . "'>" . $row[$column] . "</a></td>";
+                    } else {
+				        echo "<td><a href='directory.php?selectedFile=" . $row['filename'] . "'>" . $row[$column] . "</a></td>";
+                    }
 		    }
 		    echo "</tr>";
 	    }
     }
-} // end write_table
+} // end writeTable
 
 /** Upload Related Functions **/
 
@@ -82,8 +86,8 @@ function uploadFile() {
 	 *
 	 * @author Christian Ruiz
 	 */
-function deleteFile($file) {
-	$file = ROOT_DIR . '/uploads/' . $file;
+function deleteFile($file, $currentLocation) {
+	$file = ROOT_DIR . '/' . $currentLocation . $file;
     if (is_dir($file)) {
         if (rmdir($file)) {
             echo "<p>Folder successfully deleted</p>";
@@ -153,8 +157,8 @@ function writeNewFolderForm() {
     echo "<div class='simpleInputDiv'>
             <form action='' 'method='get' class='simpleInputForm'>
                 <input type='text' name='folderName'>
-                <input type='submit' name='newFolder' value='Create'>
-                <input type='submit' name='newFolder' value='Cancel'>
+                <input type='submit' name='newFolderForm' value='Create'>
+                <input type='submit' name='newFolderForm' value='Cancel'>
             </form>
         </div>";
 } // end writeNewFolderForm
@@ -204,14 +208,15 @@ function writeFolders($currentUserID, $selectedFile) {
                 <select name='folderMenu'>";
 
     foreach ($folders as $singleFolder) {
-        echo "<option value='" . $singleFolder['filename'] . "'>" . $singleFolder['filename'] . "</option>";
+        echo '<option value="' . $singleFolder['filename'] . '">' . $singleFolder['filename'] . '</option>';
     }
 
-    echo "     </select>
-               <input type='submit' name='selectFolderButton' value='Move'>
-               <input type='submit' name='selectFolderButton' value='Cancel'>
+    echo '          <option value="uploads">Uploads</option>";
+                </select>
+               <input type="submit" name="selectFolderButton" value="Move">
+               <input type="submit" name="selectFolderButton" value="Cancel">
             </form>
-         </div>";
+         </div>';
 } // end writeFolders
 
 
