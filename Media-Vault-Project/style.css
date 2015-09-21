@@ -46,8 +46,10 @@
     }
 
 .simpleInputDiv {
-    position: fixed;
-    bottom: 0;
+    position: relative;
+	right: 50px;
+    bottom: 400px;
+	border: 3px solid #00CC66;
 }
 
 /* File Infomation Style */
