@@ -114,10 +114,11 @@
 <hr>
 <table width="100%" border="0" style="float: centre;">
   <tr>
-    <td width="1097">[NAV BAR PLACEHOLDER]</td>
-    <td width="144"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
-    <td width="177">View: List, Grid</td>
-    <td width="233">
+    <td width="1053"><strong><a href="directory.php">Home</a></strong> <strong>&gt;</strong> [folder] <strong>&gt;</strong> [folder}</td>
+    <td width="142"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
+    <td width="135">Remaining space:</td>
+    <td width="88">View: List, Grid</td>
+    <td width="235">
   <input type="search" name="searchBar" value="" /><input type="button" name="searchButton" value="Search" /></td>
   </tr>
 </table>
