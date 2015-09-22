@@ -4,6 +4,9 @@
     include ROOT_DIR . '/php-files/file_management.php';
     include ROOT_DIR . '/php-files/sql_functions.php';
     
+    $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
     session_start();
     
     // Check to see if file is set - Attempt to upload file - Add record upon success
