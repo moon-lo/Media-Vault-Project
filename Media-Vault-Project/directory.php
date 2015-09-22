@@ -70,7 +70,7 @@
 		    // Define desired columns
 		    $columns = array('filename', 'filetype', 'timestamp', 'filesize');
 		    // Write to HTML table
-		    writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $username);
+		    writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName);
 	    ?>
     </form>
 
