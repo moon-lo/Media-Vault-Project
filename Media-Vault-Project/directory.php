@@ -37,13 +37,14 @@
     <td width="142"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
     <?php 
 	try {
-		$result = $pdo->query("select current_storage, max_storage from users where username = '$accountname'");
+		$result = $pdo->query("select current_storage, max_storage from users where username = '$accountName'");
 	} catch (PDOException $e) {
 		echo $e->getMessage();
 	}
 	
 	$pdo = null;
-	$row = $result->fetchAll()[0];
+	$rows = $result->fetchAll();
+	$row = $rows[0];
 	$space = $row['current_storage'] . ' / ' . $row['max_storage'];
 	?>
 	<td width="135">Remaining space: <?php echo $space; ?> </td>
