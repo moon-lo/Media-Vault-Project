@@ -4,12 +4,6 @@
     include ROOT_DIR . '/php-files/sql_functions.php';
 	include ROOT_DIR . '/php-files/download_functions.php';
 
-    //Determine the username of the account
-    if (isset($_POST['Login']))
-    {
-    	$accountName = $_POST['username'];
-    }
-
     $isSelected = false;
     $isFolder = false;
     $selectedFile = null;
