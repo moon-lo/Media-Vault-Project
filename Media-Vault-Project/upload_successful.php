@@ -18,7 +18,7 @@
 <table width="100%" border="0" style="float: centre;">
   <tr>
     <td width="929"><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></td>
-    <td width="182"><? echo $accountName ?></td>
+    <td width="182"><?php echo $accountName ?></td>
     <td width="119"><a href="index.html">Log out</a></td>
   </tr>
 </table>
