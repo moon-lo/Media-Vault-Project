@@ -25,7 +25,7 @@
 <hr>
 <table width="100%" border="0" style="float: centre;">
   <tr>
-    <td width="1053"><strong><a href="directory.php?currentDir=uploads/">Home</a></strong> <strong>&gt;</strong> [folder] <strong>&gt;</strong> [folder]</td>
+    <td width="1053"><class=navBar><strong><a href="directory.php?currentDir=uploads/">Home</a></strong> <strong>&gt;</strong> [folder] <strong>&gt;</strong> [folder]</class></td>
     <td width="142"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
     <td width="135">Remaining space:</td>
     <td width="88">View: List, Grid</td>

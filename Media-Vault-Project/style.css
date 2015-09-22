@@ -13,6 +13,11 @@
     text-align: center;
 }
 
+	.directory th {
+		background-color: green;
+    	color: white;
+	}
+
     .directoryTable td {
         border: 1px solid;
     }
@@ -32,7 +37,7 @@
     }
 
     #listingRow:hover {
-        background-color: #a7cfff;
+        background-color: #CCFF99;
     }
 
 #clickableCell {
@@ -42,7 +47,7 @@
 }
 
     #clickableCell:hover {
-        background-color: #a7cfff;
+        background-color: #CCFF99;
     }
 
 .simpleInputDiv {
@@ -50,6 +55,10 @@
 	right: 0;
     bottom: 200px;
 	border: 2px solid #00CC66;
+}
+
+.navBar {
+	background-color: #CCFF99;
 }
 
 /* File Infomation Style */
