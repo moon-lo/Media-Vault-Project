@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="individual-cases/Rename-01.1.html">Rename - 01.1 - Simple Rename</a></td></tr>
+<tr><td><a href="individual-cases/Rename-01.2.html">Rename - 01.2 - Simple Rename</a></td></tr>
+<tr><td><a href="individual-cases/Rename-02.1.html">Rename - 02.1 - Change Extension .pdf</a></td></tr>
+<tr><td><a href="individual-cases/Rename-02.2.html">Rename - 02.2 - Change Extension .exe</a></td></tr>
+<tr><td><a href="individual-cases/Rename-03.1.html">Rename - 03.1 - Rename to Existing File Name</a></td></tr>
+<tr><td><a href="individual-cases/Rename-03.3.html">Rename - 03.3 - Rename Different File Type to Same Name</a></td></tr>
+<tr><td><a href="individual-cases/Rename-03.2.html">Rename - 03.2 - Rename to Existing File Name</a></td></tr>
+</tbody></table>
+</body>
+</html>
