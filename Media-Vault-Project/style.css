@@ -13,11 +13,6 @@
     text-align: center;
 }
 
-	.directory th {
-		background-color: green;
-    	color: white;
-	}
-
     .directoryTable td {
         border: 1px solid;
     }
@@ -27,7 +22,7 @@
     }
 
         .directoryTable tr:nth-child(even) {
-            background-color: #eaeaea;
+            background-color:#EFFBBF;
         }
 
     .directoryTable a {
@@ -72,7 +67,8 @@
 }
 
 .fileInfoTable {
-    width: 100%;
+    border-collapse: collapse;
+	width: 100%;
     height: 100%;
     text-align: center;
 }
@@ -83,6 +79,8 @@
 
     #descriptionTagCell {
         height: 10%;
+		color:white;
+		background-color:#099;
     }
 
     #descriptionCell {
@@ -91,6 +89,8 @@
 
     #colourTagCell {
         height: 10%;
+		color:white;
+		background-color:#099;
     }
 
     #tagCell {
@@ -118,13 +118,13 @@
             display: table-cell;
             width: 100%;
             height: 100%;
-            background-color: #ffffff;
+            background-color:#9DE6CC;
         }
 
         .active:hover {
-            background-color: #a7cfff;
+            background-color: #CCFF99;
         }
 
 .selectedFile {
-    background-color: #a7cfff;
+    background-color: #CCFF99;
 }

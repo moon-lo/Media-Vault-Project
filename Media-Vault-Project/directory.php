@@ -39,10 +39,10 @@
 
 <table class="directoryTable"  id="directoryTable" width="75%" border="1" style="float: left;">
   <tr>
-    <td width="25%">Name</td>
-    <td width="25%">Type</td>
-    <td width="25%">Last modified</td>
-    <td width="25%">Size</td>
+    <th width="25%">Name</th>
+    <th width="25%">Type</th>
+    <th width="25%">Last modified</th>
+    <th width="25%">Size</th>
   </tr>
   
     <!--File Selection Form -->
