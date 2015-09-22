@@ -1,5 +1,10 @@
 <?php
-	unset($_SESSION['isUser']);
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	
+	if (isset($_SESSION['isUser'])) {
+		unset($_SESSION['isUser']);
+	}
 	
 	//Set error variable.
 	$error = '';
