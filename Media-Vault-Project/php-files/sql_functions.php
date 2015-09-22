@@ -104,14 +104,15 @@ function renameFileRecord($oldName, $newName) {
      *
      * @author James Galloway
      */
-function newFolderRecord($name, $location) {
-	$sql = "INSERT INTO metadata (filename, filetype, filesize, location)
-			VALUES (:filename, :filetype, :filesize, :location)";
+function newFolderRecord($name, $location, $owner) {
+	$sql = "INSERT INTO metadata (filename, filetype, filesize, location, owner)
+			VALUES (:filename, :filetype, :filesize, :location, :owner)";
     $parameters = array(
         ':filename' => $name,
         ':filetype' => 'folder',
         ':filesize' => '0',
-        ':location' => $location
+        ':location' => $location,
+        ':owner' => $owner,
     );
     alterDB($sql, $parameters);
 } // end newFolderRecord

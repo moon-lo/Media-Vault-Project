@@ -73,7 +73,7 @@
     if (isset($_GET['newFolderForm'])) {
         if ($_GET['newFolderForm'] == 'Create') {
             if (newFolder($_GET['folderName'], $currentDir)) {
-                newFolderRecord($_GET['folderName'], $currentDir);
+                newFolderRecord($_GET['folderName'], $currentDir, $accountName);
             }
         }
     }
@@ -90,7 +90,7 @@
     // MOVE FILE
     // If the 'move to...' button is clicked AND a file is selected
     if(isset($_GET['moveTo']) && $isSelected) {
-        writeFolders(null, $selectedFile); // Passing 'null' into the function for now because no user stuff has been implemented.
+        writeFolders($accountName, $selectedFile);
     }
 
     if (isset($_GET['selectFolderButton'])) {
