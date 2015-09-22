@@ -1,6 +1,7 @@
 ﻿html, body {
 	font-family: Arial;
 	font-size: 16px;
+	color:#114040;
 	margin: 0;
 	padding: 5px;
 	height: 100%;
@@ -53,16 +54,18 @@ a:hover {
     .directoryTable tr {
         background-color: white;
 		border-color:6CC8C1;
+		color:#114040;
     }
 
         .directoryTable tr:nth-child(even) {
             background-color:#EFFBBF;
 			border-color:6CC8C1;
+			color:#114040;
         }
 
     .directoryTable a {
         display: block;
-        color: black;
+        color: #114040;
         text-decoration: none;
 		border-color:6CC8C1;
     }
@@ -153,6 +156,7 @@ a:hover {
         #fileManButton {
             border: 0px;
             display: table-cell;
+			color:#114040;
             width: 100%;
             height: 100%;
         }
@@ -160,6 +164,7 @@ a:hover {
         .active {
             border: 0px;
             display: table-cell;
+			color:#114040;
             width: 100%;
             height: 100%;
             background-color:#9DE6CC;

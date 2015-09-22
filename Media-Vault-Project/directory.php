@@ -24,7 +24,7 @@
 <table class="topBar" style="float: centre;">
   <tr>
     <td width="707"><p>&nbsp;</p>
-    <p><strong><font size="2">TEAM 12 MEDIA VAULT</font></strong></p></td>
+    <p><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></p></td>
     <td width="86"><p>&nbsp;</p>      <?php echo $accountName ?></td>
     <td width="66"><p>&nbsp;</p>
     <p><a href="index.php">Log out</a></p></td>
