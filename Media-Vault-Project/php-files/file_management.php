@@ -11,31 +11,34 @@
 	 *
 	 * @author James Galloway
 	 */
-function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir) {
+function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $username) {
 	if ($pdo == null) {
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
         foreach ($pdo as $row) {
-		    echo "<tr  id='listingRow'>";
-		    foreach ($columns as $column) {
-                    if ($column == 'timestamp') {
-                        $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
-                    }
-                    if ($column == 'filesize') {
-                        $row[$column] = round($row[$column] / 1024);
-                        $row[$column] = $row[$column] . " KB";
-                    }
-                    if ($row['filename'] == $selectedFile && $isFolder) {
-                        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
-                    } else if ($row['filename'] == $selectedFile && !$isFolder) {
-				        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
-                    } else {
-                        echo '<td><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
-                    }
-		    }
-		    echo "</tr>";
+		    if ($row['owner'] == $username) {
+                echo "<tr  id='listingRow'>";
+		        foreach ($columns as $column) {
+                        if ($column == 'timestamp') {
+                            $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
+                        }
+                        if ($column == 'filesize') {
+                            $row[$column] = round($row[$column] / 1024);
+                            $row[$column] = $row[$column] . " KB";
+                        }
+                        if ($row['filename'] == $selectedFile && $isFolder) {
+                            echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
+                        } else if ($row['filename'] == $selectedFile && !$isFolder) {
+				            echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
+                        } else {
+                            echo '<td><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                        }
+		        }
+		        echo "</tr>";
+            }
 	    }
     }
+
 } // end writeTable
 
 /** Upload Related Functions **/

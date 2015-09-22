@@ -14,7 +14,7 @@
     // Check to see if file is set - Attempt to upload file - Add record upon success
 	if (isset($_FILES['file'])) {
 		if (uploadFile()) {
-			addUploadRecord();
+			addUploadRecord($accountName);
 		}
 	}
 ?>

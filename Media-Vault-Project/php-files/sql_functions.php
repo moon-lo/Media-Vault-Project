@@ -64,14 +64,15 @@ function deleteFileRecord($file) {
 	 *
 	 * @author James Galloway
 	 */
-function addUploadRecord() {	
-    $sql = "INSERT INTO metadata (filename, filetype, filesize, location)
-	        VALUES (:filename, :filetype, :filesize, :location)";
+function addUploadRecord($owner) {	
+    $sql = "INSERT INTO metadata (filename, filetype, filesize, location, owner)
+	        VALUES (:filename, :filetype, :filesize, :location, :owner)";
     $parameters = array(
         ':filename' => $_FILES["file"]["name"],
         ':filetype' => $_FILES["file"]["type"],
         ':filesize' => $_FILES["file"]["size"],
-        ':location' => 'uploads/'
+        ':location' => 'uploads/',
+        ':owner' => $owner,
     );
 	alterDB($sql, $parameters);
 } // end addUploadRecord
