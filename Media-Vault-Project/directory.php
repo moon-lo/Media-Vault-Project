@@ -45,7 +45,7 @@
 	$pdo = null;
 	$rows = $result->fetchAll();
 	$row = $rows[0];
-	$space = $row['current_storage'] . ' / ' . $row['max_storage'];
+	$space = $row['current_storage'] . 'MB / ' . $row['max_storage'] . "MB";
 	?>
 	<td width="135">Remaining space: <?php echo $space; ?> </td>
     <td width="88">View: List, Grid</td>
