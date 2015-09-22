@@ -9,6 +9,8 @@
     
     session_start();
     
+    $accountName = $_SESSION['isUser'];
+    
     // Check to see if file is set - Attempt to upload file - Add record upon success
 	if (isset($_FILES['file'])) {
 		if (uploadFile()) {
@@ -30,7 +32,7 @@
 <table class="topBar" width="100%" border="0" style="float: centre;">
   <tr>
     <td width="929"><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></td>
-    <td width="182">email@address.com</td>
+    <td width="182"><?php echo $accountName ?></td>
     <td width="119"><a href="index.php">Log out</a></td>
   </tr>
 </table>
