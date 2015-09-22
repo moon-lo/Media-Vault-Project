@@ -110,7 +110,7 @@
 		  <input type="text" name="username" value="" />
 		  <br /><br />
           Password:
-          <input type="password" value="" />
+          <input type="password" name="password" value="" />
           <br /><br />
           <input type="submit" name="Login" value="Sign in" />
 		  <br /><br />
