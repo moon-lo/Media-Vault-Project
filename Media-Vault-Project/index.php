@@ -55,11 +55,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="stylesheet" type="text/css" href="style.css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Team 12 Media Vault</title>
 </head>
 
-<body>
+<body class="indexPage">
 <table width="100%" height="83" border="0">
   <tr>
     <td width="7%" rowspan="2">&nbsp;</td>
@@ -78,8 +79,8 @@
   </tr>
   <tr>
     <td height="286">&nbsp;</td>
-    <td><p><font size="+2">About</font></p>
-      <p><font size="4">Welcome to Team 12 Media Vault - your free and easy perosnal cloud storage system. Simply sign up today to access your files from anywhere.</font></p>
+    <td id="aboutText"><p><font size="+2">About</font></p>
+      <p><font size="4">Welcome to Team 12 Media Vault - your free and easy personal cloud storage system. Simply sign up today to access your files from anywhere.</font></p>
     <p><font size="4">Features:</p>
     <p><font size="4"> * Supports Androids, iPhones and tablets</font></p>
     <p><font size="4">* Max. storage of 1GB per user</font></p>
@@ -100,7 +101,7 @@
   </tr>
   <tr>
     <td height="285" rowspan="5">&nbsp;</td>
-    <td height="26" colspan="2"><p><strong><font size="3">Existing user</font></strong></p></td>
+    <td id="emphasisText" height="26" colspan="2"><p><strong><font size="3">Existing user</font></strong></p></td>
     <td rowspan="5">&nbsp;</td>
   </tr>
   <tr>
@@ -123,7 +124,7 @@
     <td height="22" colspan="2"><hr /></td>
   </tr>
   <tr>
-    <td height="27" colspan="2"><strong><font size="3">New user</font></strong></td>
+    <td id="emphasisText" height="27" colspan="2"><strong><font size="3">New user</font></strong></td>
   </tr>
   <tr>
     <td height="38" colspan="2"><font size="3"><a href="signup.php">Sign up</a></font></td>

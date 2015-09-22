@@ -20,13 +20,14 @@
     <script type="text/javascript" src="javascript/display_functions.js"></script>
 </head>
 
-<body link="#78DECA">
+<body>
 <table class="topBar" style="float: centre;">
   <tr>
-    <td width="841"><p>&nbsp;</p>
-    <p><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></p></td>
-    <td width="722"><?php echo $accountName ?></td>
-    <td width="189"><a href="index.php">Log out</a></td>
+    <td width="707"><p>&nbsp;</p>
+    <p><strong><font size="2">TEAM 12 MEDIA VAULT</font></strong></p></td>
+    <td width="86"><p>&nbsp;</p>      <?php echo $accountName ?></td>
+    <td width="66"><p>&nbsp;</p>
+    <p><a href="index.php">Log out</a></p></td>
   </tr>
 </table>
 <hr>

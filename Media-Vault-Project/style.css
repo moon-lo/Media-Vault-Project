@@ -4,7 +4,32 @@
 	margin: 0;
 	padding: 5px;
 	height: 100%;
+	
 }
+
+a:link, a:active, a:visited {
+	color:#78DECA;
+}
+
+a:hover {
+	color:#CCFF99;
+}
+
+/* Index page style */
+
+.indexPage{
+	color:white;
+	background-color:#114040;
+}
+
+	#aboutText{
+		color:#9DE6CC;
+	}
+	
+	#emphasisText{
+		color:#EFFBBF;
+	}
+
 
 .directoryTable {
     border-collapse: collapse;
@@ -17,28 +42,34 @@
 	.directoryTable th {
 		color:white;
 		background-color:#099;
+		border-color:6CC8C1;
 	}
 
     .directoryTable td {
         border: 1px solid;
+		border-color:6CC8C1;
     }
 
     .directoryTable tr {
         background-color: white;
+		border-color:6CC8C1;
     }
 
         .directoryTable tr:nth-child(even) {
             background-color:#EFFBBF;
+			border-color:6CC8C1;
         }
 
     .directoryTable a {
         display: block;
         color: black;
         text-decoration: none;
+		border-color:6CC8C1;
     }
 
     #listingRow:hover {
         background-color: #CCFF99;
+		border-color:6CC8C1;
     }
 
 #clickableCell {
