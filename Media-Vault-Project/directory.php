@@ -35,7 +35,18 @@
   <tr>
     <td width="1053"><strong><a href="directory.php?currentDir=uploads/">Home</a></strong> <strong>&gt;</strong> [folder] <strong>&gt;</strong> [folder]</td>
     <td width="142"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
-    <td width="135">Remaining space:</td>
+    <?php 
+	try {
+		$result = $pdo->query("select current_storage, max_storage from users where username = '$accountname'");
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	
+	$pdo = null;
+	$row = $result->fetchAll()[0];
+	$space = $row['current_storage'] . ' / ' . $row['max_storage'];
+	?>
+	<td width="135">Remaining space: <?php echo $space; ?> </td>
     <td width="88">View: List, Grid</td>
     <td width="235">
   <input type="search" name="searchBar" value="" /><input type="button" name="searchButton" value="Search" /></td>
