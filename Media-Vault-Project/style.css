@@ -13,6 +13,11 @@
     text-align: center;
 }
 
+	.directoryTable th {
+		color:white;
+		background-color:#099;
+	}
+
     .directoryTable td {
         border: 1px solid;
     }
@@ -52,9 +57,6 @@
 	border: 2px solid #00CC66;
 }
 
-.navBar {
-	background-color: #CCFF99;
-}
 
 /* File Infomation Style */
 
@@ -127,4 +129,8 @@
 
 .selectedFile {
     background-color: #CCFF99;
+}
+
+.navBar {
+	background-color: #CCFF99;
 }
