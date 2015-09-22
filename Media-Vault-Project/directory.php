@@ -2,6 +2,9 @@
     // Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
 
+    $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
     session_start();
     include ROOT_DIR . '/php-files/directory_header.php';
 ?>
