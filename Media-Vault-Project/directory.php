@@ -20,18 +20,19 @@
     <script type="text/javascript" src="javascript/display_functions.js"></script>
 </head>
 
-<body>
-<table width="100%" border="0" style="float: centre;">
+<body link="#78DECA">
+<table class="topBar" style="float: centre;">
   <tr>
-    <td width="929"><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></td>
-    <td width="182"><?php echo $accountName ?></td>
-    <td width="119"><a href="index.php">Log out</a></td>
+    <td width="841"><p>&nbsp;</p>
+    <p><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></p></td>
+    <td width="722"><?php echo $accountName ?></td>
+    <td width="189"><a href="index.php">Log out</a></td>
   </tr>
 </table>
 <hr>
 <table width="100%" border="0" style="float: centre;">
   <tr>
-    <td width="1053"><class=navBar><strong><a href="directory.php?currentDir=uploads/">Home</a></strong> <strong>&gt;</strong> [folder] <strong>&gt;</strong> [folder]</class></td>
+    <td width="1053"><strong><a href="directory.php?currentDir=uploads/">Home</a></strong> <strong>&gt;</strong> [folder] <strong>&gt;</strong> [folder]</td>
     <td width="142"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
     <td width="135">Remaining space:</td>
     <td width="88">View: List, Grid</td>
