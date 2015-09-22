@@ -123,11 +123,10 @@ function newFolderRecord($name, $location) {
      *
      * @author James Galloway
      */
-function renameFileLocationRecord($file, $currentLocation, $newLocation) {
+function renameFileLocationRecord($file, $newLocation) {
     $sql = "UPDATE metadata SET location = :newLocation WHERE filename = :file";
-    $location = $currentLocation . $newLocation . '/';
     $parameters = array(
-        ':newLocation' => $location,
+        ':newLocation' => $newLocation,
         ':file' => $file
     );
     alterDB($sql, $parameters);

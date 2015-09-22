@@ -14,20 +14,23 @@
     $isFolder = false;
     $selectedFile = null;
     $selectedFolder = null;
-    $currentLocation = 'uploads/';
+
+    if (isSetAndNotEmpty($_GET, 'currentDir')) {
+        $currentDir = $_GET['currentDir'];
+    } else {
+        $currentDir = 'uploads/';
+    }
 
     // Process the file's DB record - set isFolder flag if file is folder
-    if (isset($_GET['selectedFile']) && $_GET['selectedFile'] !== '') {
+    if (isSetAndNotEmpty($_GET, 'selectedFile')) {
         $query = 'SELECT * FROM metadata WHERE filename = "' . $_GET['selectedFile'] . '"';
         $fileRecord = queryDB($query);
         if ($fileRecord == null) {
             return;   
         }
-
         $selectedFile = $fileRecord[0]['filename'];
         $fileID = $fileRecord[0]['fileid'];
         $fileType = $fileRecord[0]['filetype'];
-        $currentLocation = $fileRecord[0]['location'];
         
         if ($fileType == 'folder') {
             $isFolder = true;
@@ -36,18 +39,15 @@
     }
 
     // Process the folder's DB record if folder has been clicked twice - set location to inside folder
-    if (isset($_GET['selectedFolder']) && $_GET['selectedFolder'] !== '') {
+    if (isSetAndNotEmpty($_GET, 'selectedFolder')) {
         $query = 'SELECT * FROM metadata WHERE filename = "' . $_GET['selectedFolder'] . '"';
         $folderRecord = queryDB($query);
-        $currentLocation = $folderRecord[0]['location'] . $folderRecord[0]['filename'] . '/';
     }
-
-    echo $currentLocation;
 
     // DELETE
     // Delete file if delete & file are set
     if (isset($_GET['delete'])) {
-        if (deleteFile($selectedFile, $currentLocation)) {
+        if (deleteFile($selectedFile, $currentDir)) {
             deleteFileRecord($selectedFile);
         }
     }
@@ -72,14 +72,14 @@
     // NEW FOLDER
     // Write folder naming form is create folder is set
     if (isset($_GET['newFolder'])) {
-        writeNewFolderForm();
+        writeNewFolderForm($currentDir);
     }
 
     // Create new folder if create button is set
     if (isset($_GET['newFolderForm'])) {
         if ($_GET['newFolderForm'] == 'Create') {
-            if (newFolder($_GET['folderName'])) {
-                newFolderRecord($_GET['folderName'], $currentLocation);
+            if (newFolder($_GET['folderName'], $currentDir)) {
+                newFolderRecord($_GET['folderName'], $currentDir);
             }
         }
     }
@@ -101,10 +101,12 @@
 
     if (isset($_GET['selectFolderButton'])) {
         if ($_GET['selectFolderButton'] == 'Move') { // if the Move button was clicked (as opposed to 'Cancel')
-            if (moveFile($selectedFile, $currentLocation, $_GET['folderMenu'])) {
-                renameFileLocationRecord($selectedFile, $currentLocation, $_GET['folderMenu']);
-            } 
+            if ($folderPath = moveFile($selectedFile, $_GET['folderMenu'])) {
+                renameFileLocationRecord($selectedFile, $folderPath);
+            }
         }
     }
+
+    echo $currentDir;
 
 ?>

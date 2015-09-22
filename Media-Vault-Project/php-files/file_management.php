@@ -11,7 +11,7 @@
 	 *
 	 * @author James Galloway
 	 */
-function writeTable($pdo, $columns, $selectedFile, $isFolder) {
+function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir) {
 	if ($pdo == null) {
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
@@ -26,9 +26,11 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder) {
                         $row[$column] = $row[$column] . " KB";
                     }
                     if ($row['filename'] == $selectedFile && $isFolder) {
-                        echo "<td><a href='directory.php?selectedFolder=" . $row['filename'] . "'>" . $row[$column] . "</a></td>";
+                        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
+                    } else if ($row['filename'] == $selectedFile && !$isFolder) {
+				        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
                     } else {
-				        echo "<td><a href='directory.php?selectedFile=" . $row['filename'] . "'>" . $row[$column] . "</a></td>";
+                        echo '<td><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
                     }
 		    }
 		    echo "</tr>";
@@ -86,8 +88,8 @@ function uploadFile() {
 	 *
 	 * @author Christian Ruiz
 	 */
-function deleteFile($file, $currentLocation) {
-	$file = ROOT_DIR . '/' . $currentLocation . $file;
+function deleteFile($file, $currentDir) {
+	$file = ROOT_DIR . '/' . $currentDir . $file;
     if (is_dir($file)) {
         if (rmdir($file)) {
             echo "<p>Folder successfully deleted</p>";
@@ -153,9 +155,10 @@ function renameFile($oldName, $newName) {
      *
      * @author James Galloway
      */
-function writeNewFolderForm() {
+function writeNewFolderForm($currentDir) {
     echo "<div class='simpleInputDiv'>
             <form action='' 'method='get' class='simpleInputForm'>
+                <input type='hidden' name='currentDir' value='" . $currentDir . "'>
                 <input type='text' name='folderName'>
                 <input type='submit' name='newFolderForm' value='Create'>
                 <input type='submit' name='newFolderForm' value='Cancel'>
@@ -171,8 +174,8 @@ function writeNewFolderForm() {
      *
      * @author James Galloway
      */
-function newFolder($name) {
-    if (mkdir(ROOT_DIR . '/uploads/' . $name, 0755)) {
+function newFolder($name, $currentDir) {
+    if (mkdir(ROOT_DIR . '/' . $currentDir . $name, 0755)) {
         echo "<p>Folder succesfully created.</p>";
         return true;
     }
@@ -229,16 +232,44 @@ function writeFolders($currentUserID, $selectedFile) {
     *
     * @author Christian Ruiz & James Galloway
     */
-function moveFile($file, $location, $folder) {
-    $filePath = ROOT_DIR . '/' . $location . $file;
-    $folderPath = ROOT_DIR . '/' . $location . $folder . '/' . $file;
+function moveFile($file, $folder) {
+    $sql = "SELECT * FROM metadata WHERE filename = '$file'";
+    $tempPath = queryDB($sql);
+    $filePath = ROOT_DIR . '/' . $tempPath[0]['location'];
 
-    if (rename($filePath, $folderPath)) {
+    
+    $sql = "SELECT location FROM metadata WHERE filename = '$folder'";
+    $tempPath = queryDB($sql);
+    if ($tempPath == null) {
+        $DBentry = 'uploads/';
+        $folderPath = ROOT_DIR . '/' . $DBentry;
+    } else {
+        $DBentry = $tempPath[0]['location'] . $folder . '/';
+        $folderPath = ROOT_DIR . '/' . $DBentry;
+    }
+
+    if (rename($filePath . $file, $folderPath . $file)) {
         echo "<p>File: " . $file . " has been successfully moved to " . $folder . "</p>";
-        return true;
+        return $DBentry;
     }
 
     return false;
 } // end moveFile
+
+    /**
+     * Simple helper method to determine whether a particular $_GET element is set and not empty.
+     *
+     * @param $element - string - the name of the element to be checked.
+     *
+     * @return - Boolean - true if element is set and not empty - false if not.
+     *
+     * @author James Galloway
+     */
+function isSetAndNotEmpty($method, $element) {
+    if (isset($method[$element]) && $method[$element] !== '') {
+        return true;
+    }
+    return false;
+} // end isSetAndNotEmpty
 
 ?>

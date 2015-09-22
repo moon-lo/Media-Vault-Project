@@ -115,3 +115,7 @@
         .active:hover {
             background-color: #a7cfff;
         }
+
+.selectedFile {
+    background-color: #a7cfff;
+}
