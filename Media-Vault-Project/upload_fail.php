@@ -1,3 +1,11 @@
+<?php
+  $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	
+	session_start();
+	
+	$accountName = $_SESSION['isUser'];
+?>
 <!-- Author: Lok Sum (Moon) Lo -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -10,7 +18,7 @@
 <table width="100%" border="0" style="float: centre;">
   <tr>
     <td width="929"><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></td>
-    <td width="182">email@address.com</td>
+    <td width="182"><?php echo $accountName ?></td>
     <td width="119"><a href="index.html">Log out</a></td>
   </tr>
 </table>
