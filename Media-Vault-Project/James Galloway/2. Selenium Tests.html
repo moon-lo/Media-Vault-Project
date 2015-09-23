@@ -1,0 +1,1289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://54.206.80.50/" />
+<title>Rename-01</title>
+</head>
+<body>
+<h1>Upload Tests</h1>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 01/1 - Valid .txt file</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-text.txt was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=test-file-text.txt</td>
+	<td>test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 01/2 - Valid .pdf file</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-pdf.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-pdf.pdf was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=test-file-pdf.pdf</td>
+	<td>test-file-pdf.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-pdf.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 01/3 - Valid .doc file</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-doc.doc</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-doc.doc was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=test-file-doc.doc</td>
+	<td>test-file-doc.doc</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-doc.doc</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 01/4 - Valid .ppt file</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-powerpoint.ppt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-powerpoint.ppt was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=test-file-powerpoint.ppt</td>
+	<td>test-file-powerpoint.ppt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-powerpoint.ppt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 02/1 - Invalid extension .exe</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\upload-02-invalid-extension-1.exe</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>File is not of a valid type.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>upload-02-invalid-extension-1.exe</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 02/2 - Invalid extension .dll</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\upload-02-invalid-extension-2.dll</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>File is not of a valid type.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>upload-02-invalid-extension-2.dll</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 02/3 - Invalid extension .dmg</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\upload-02-invalid-extension-3.dmg</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>File is not of a valid type.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>upload-02-invalid-extension-3.dmg</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 02/4 - Invalid extension - no extension</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\upload-02-invalid-extension-4</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>File is not of a valid type.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>upload-02-invalid-extension-4</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 03/1 - Duplicate file</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-text.txt was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>File already exists.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 03/2 - Duplicate file</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-pdf.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-pdf.pdf was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-pdf.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>File already exists.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-pdf.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 03/3 - Duplicate file - different sizes</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-text.txt was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\duplicate-files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>File already exists.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload - 03/4 - Duplicate file - same name/different extension</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-doc.doc</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-doc.doc was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\test-file-powerpoint.ppt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>exact:File: test-file-powerpoint.ppt was successfully uploaded.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-doc.doc</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-powerpoint.ppt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+
+
+
+<h1>Rename Tests</h1>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Rename-01</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=newName</td>
+	<td>rename-test-new_name</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=newNameSet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=rename-test-new_name.txt</td>
+	<td>rename-test-new_name.txt</td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>link=test-file-text.txt</td>
+	<td>test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=rename-test-new_name.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Rename 01.2 - Simple Rename</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-pdf.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-pdf.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=newName</td>
+	<td>rename-test-RENAME__TEST2!</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=newNameSet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=rename-test-RENAME__TEST2!.pdf</td>
+	<td>rename-test-RENAME__TEST2!.pdf</td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>link=test-file-text.txt</td>
+	<td>test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=rename-test-RENAME__TEST2!.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Rename - 02.1 - Change Extension .pdf</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=newName</td>
+	<td>rename-test-new_extension.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=newNameSet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=rename-test-new_extension.pdf.txt</td>
+	<td>rename-test-new_extension.pdf.txt</td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>link=test-file-text.txt</td>
+	<td>test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=rename-test-new_extension.pdf.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Rename - 02.2 - Change Extension .exe</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=newName</td>
+	<td>rename-test-new_extension.exe</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=newNameSet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=rename-test-new_extension.exe.txt</td>
+	<td>rename-test-new_extension.exe.txt</td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>link=test-file-text.txt</td>
+	<td>test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=rename-test-new_extension.exe.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Rename - 03.1 - Rename to Existing File Name</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-text-02.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text-02.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=newName</td>
+	<td>test-file-text</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=newNameSet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>A file of that name already exists. Please choose a different name.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text-02.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Rename - 03.2 - Rename to Existing File Name</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-pdf.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-pdf-02.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-pdf-02.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=newName</td>
+	<td>test-file-pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=newNameSet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=p</td>
+	<td>A file of that name already exists. Please choose a different name.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-pdf.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-pdf-02.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+</tbody></table>
+<br><br>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Rename - 03.3 - Rename Different File Type to Same Name</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-text.txt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=file</td>
+	<td>C:\Users\Owner\Dropbox\Uni\IFB299\Dev\GitHub\Media-Vault-Project\test-files\files\test-file-pdf-02.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Directory</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-pdf-02.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=newName</td>
+	<td>rename-test-file</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=newNameSet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=test-file-text.txt</td>
+	<td>test-file-text.txt</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=test-file-pdf.pdf</td>
+	<td>test-file-pdf.pdf</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-text.txt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-file-pdf.pdf</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+</body>
+</html>
