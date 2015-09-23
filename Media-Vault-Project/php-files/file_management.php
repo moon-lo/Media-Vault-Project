@@ -1,5 +1,4 @@
 <?php
-
 	/**
 	 * Writes the entire contents of a given PDO to rows of a table.
 	 *
@@ -38,11 +37,8 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
             }
 	    }
     }
-
 } // end writeTable
-
 /** Upload Related Functions **/
-
 	/**
 	 * Upload file to server uploads folder
 	 *
@@ -81,7 +77,6 @@ function uploadFile() {
 		return false;
 	}
 } // end uploadFile
-
 /** Delete Related Functions **/
     
    	/**
@@ -106,7 +101,6 @@ function deleteFile($file, $currentDir) {
     }
 	return false;
 } // end deleteFile
-
 /** Rename Related Functions **/
     
     /**
@@ -126,7 +120,6 @@ function deleteFile($file, $currentDir) {
             </form>
         </div>";
     } // end writeRenameForm
-
     /**
      * Rename selected file.
      * 
@@ -137,12 +130,10 @@ function deleteFile($file, $currentDir) {
      */
 function renameFile($oldName, $newName) {
     $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
-
     if (file_exists(ROOT_DIR . '/uploads/' . $newName . '.' . $fileExtension)) {
         echo "<p>A file of that name already exists.  Please choose a different name.</p>";
         return false;
     }
-
     if (rename(ROOT_DIR . '/uploads/' . $oldName, ROOT_DIR . '/uploads/' . $newName . '.' . $fileExtension)) {
         echo "<p>File successfully renamed</p>";
         return true;
@@ -150,9 +141,7 @@ function renameFile($oldName, $newName) {
     echo "<p>There was an error in renaming the file.</p>";
     return false;
 } // end renameFile
-
 /** Create Folder Related Functions **/
-
     /**
      * Write input form for user to name new folder.
      *
@@ -168,7 +157,6 @@ function writeNewFolderForm($currentDir) {
             </form>
         </div>";
 } // end writeNewFolderForm
-
     /**
      * Create new folder in the /uploads/ directory.
      * * NOTE: Folder is currently created with widest possible privilege.
@@ -184,9 +172,7 @@ function newFolder($name, $currentDir) {
     }
     return false;
 } // end newFolder
-
 /** Move File Related Functions **/
-
     /**
      * Retrieve a list of valid folders from the database and write them
      * to a dropdown menu.
@@ -196,27 +182,17 @@ function newFolder($name, $currentDir) {
      *
      * @author Christian Ruiz 
      */
-function writeFolders($currentUserID, $selectedFile) {       
-    // Get valid folders.
-    $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    try {
-        $folders = $pdo->prepare('SELECT * FROM metadata WHERE filetype = "folder"');
-        $folders->execute();
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-    }
-
+function writeFolders($owner, $selectedFile) {       
+    $sql = 'SELECT * FROM metadata WHERE filetype = "folder" AND owner = "' . $owner . '"';
+    $folders = queryDB($sql);
     // Write dropdown menu.
     echo "<div class='simpleInputDiv'>
             <form action='' 'method='get' class='simpleInputForm'>
                 <input type='hidden' value='" . $selectedFile . "' name='selectedFile'>
                 <select name='folderMenu'>";
-
     foreach ($folders as $singleFolder) {
         echo '<option value="' . $singleFolder['filename'] . '">' . $singleFolder['filename'] . '</option>';
     }
-
     echo '          <option value="uploads">Uploads</option>";
                 </select>
                <input type="submit" name="selectFolderButton" value="Move">
@@ -224,8 +200,6 @@ function writeFolders($currentUserID, $selectedFile) {
             </form>
          </div>';
 } // end writeFolders
-
-
     /**
     * Moves file from current position to destination folder.
     *
@@ -239,7 +213,6 @@ function moveFile($file, $folder) {
     $sql = "SELECT * FROM metadata WHERE filename = '$file'";
     $tempPath = queryDB($sql);
     $filePath = ROOT_DIR . '/' . $tempPath[0]['location'];
-
     
     $sql = "SELECT location FROM metadata WHERE filename = '$folder'";
     $tempPath = queryDB($sql);
@@ -250,15 +223,12 @@ function moveFile($file, $folder) {
         $DBentry = $tempPath[0]['location'] . $folder . '/';
         $folderPath = ROOT_DIR . '/' . $DBentry;
     }
-
     if (rename($filePath . $file, $folderPath . $file)) {
         echo "<p>File: " . $file . " has been successfully moved to " . $folder . "</p>";
         return $DBentry;
     }
-
     return false;
 } // end moveFile
-
     /**
      * Simple helper method to determine whether a particular $_GET element is set and not empty.
      *
@@ -274,5 +244,4 @@ function isSetAndNotEmpty($method, $element) {
     }
     return false;
 } // end isSetAndNotEmpty
-
 ?>

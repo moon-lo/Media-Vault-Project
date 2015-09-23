@@ -1,5 +1,4 @@
 <?php 
-
 	/**
 	 * Establishes a connection with a database and returns the results of the specified query.
 	 *
@@ -20,7 +19,6 @@ function queryDB($sql) {
 	$pdo = null;
 	return $result->fetchAll();
 } // end queryDB
-
     /**
      * Establishes a connection with a database and executes the specificied prepared statement.
      * 
@@ -42,7 +40,6 @@ function alterDB($sql, $parameters) {
 	$stmt->execute($parameters);
 	$pdo = null;
 } // end alterTable
-
 	/**
 	 * Delete a file's associated record in the metadata table.
 	 *
@@ -57,7 +54,6 @@ function deleteFileRecord($file) {
     );
     alterDB($sql, $parameters);
 } // end deleteFileRecord
-
 	/**
 	 * Add file record to MySQL DB - 'metadata' table.
 	 * * Only includes file name, type and size at the moment *
@@ -76,8 +72,6 @@ function addUploadRecord($owner) {
     );
 	alterDB($sql, $parameters);
 } // end addUploadRecord
-
-
     /**
      * Rename a file's asscoiated record in the metadata table.
      * 
@@ -95,7 +89,6 @@ function renameFileRecord($oldName, $newName) {
     );
     alterDB($sql, $parameters);
 } // end renameFileRecord
-
     /**
      * Add record for new folder into metadata table.
      *
@@ -104,18 +97,18 @@ function renameFileRecord($oldName, $newName) {
      *
      * @author James Galloway
      */
-function newFolderRecord($name, $location) {
-	$sql = "INSERT INTO metadata (filename, filetype, filesize, location)
-			VALUES (:filename, :filetype, :filesize, :location)";
+function newFolderRecord($name, $location, $owner) {
+	$sql = "INSERT INTO metadata (filename, filetype, filesize, location, owner)
+			VALUES (:filename, :filetype, :filesize, :location, :owner)";
     $parameters = array(
         ':filename' => $name,
         ':filetype' => 'folder',
         ':filesize' => '0',
-        ':location' => $location
+        ':location' => $location,
+        ':owner' => $owner,
     );
     alterDB($sql, $parameters);
 } // end newFolderRecord
-
     /**
      * Alter table to reflect proper location of a file post-move.
      *
@@ -132,5 +125,4 @@ function renameFileLocationRecord($file, $newLocation) {
     );
     alterDB($sql, $parameters);
 } // end renameFileLocationRecord
-
 ?>

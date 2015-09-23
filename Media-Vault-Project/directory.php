@@ -1,15 +1,14 @@
 <?php
     // Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
-
     $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     session_start();
-    include ROOT_DIR . '/php-files/directory_header.php';
-    
+        
     //Determine the username of the account
     $accountName = $_SESSION['isUser'];
+    include ROOT_DIR . '/php-files/directory_header.php';
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
