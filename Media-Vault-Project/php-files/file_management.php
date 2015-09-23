@@ -196,9 +196,16 @@ function newFolder($name, $currentDir) {
      *
      * @author Christian Ruiz 
      */
-function writeFolders($owner, $selectedFile) {       
-    $sql = 'SELECT * FROM metadata WHERE filetype = "folder" AND owner = "' . $owner . '"';
-    $folders = queryDB($sql);
+function writeFolders($currentUserID, $selectedFile) {       
+    // Get valid folders.
+    $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        $folders = $pdo->prepare('SELECT * FROM metadata WHERE filetype = "folder"');
+        $folders->execute();
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
 
     // Write dropdown menu.
     echo "<div class='simpleInputDiv'>
