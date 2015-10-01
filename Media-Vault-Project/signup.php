@@ -51,7 +51,9 @@
 			$row = $stmt->rowCount();
 			if ($row > 0)
 			{
-				header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/index.php");
+                mkdir(dirname(__FILE__) . '/uploads/' . $username);
+				//header("Location: http://localhost/mediavault/directory.php");
+                header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/index.php");
 				exit();
 			}
 			else

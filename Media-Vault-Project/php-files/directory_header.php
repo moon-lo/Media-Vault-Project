@@ -10,7 +10,7 @@
     if (isSetAndNotEmpty($_GET, 'currentDir')) {
         $currentDir = $_GET['currentDir'];
     } else {
-        $currentDir = 'uploads/';
+        $currentDir = 'uploads/' . $accountName . '/';
     }
     // Process the file's DB record - set isFolder flag if file is folder
     if (isSetAndNotEmpty($_GET, 'selectedFile')) {
@@ -36,21 +36,28 @@
     // DELETE
     // Delete file if delete & file are set
     if (isset($_GET['delete'])) {
-        if (deleteFile($selectedFile, $currentDir)) {
-            deleteFileRecord($selectedFile);
+        writeDeleteConfirmation($selectedFile, $currentDir);
+    }
+    // Delete file if confirmed by the user.
+    if (isset($_GET['confirmDelete'])) {
+        if ($_GET['confirmDelete'] == 'Yes') {    
+            if (deleteFile($_GET['selectedFile'], $_GET['currentDir'])) {
+                    deleteFileRecord($selectedFile);
+            }
         }
     }
+
     // RENAME
     // Write rename form is edit & file are set
     if (isset($_GET['edit'])) {
-        writeRenameForm($selectedFile);
+        writeRenameForm($selectedFile, $currentDir);
     }
     // Rename file if new name & file are set
     if (isset($_GET['newNameSet'])) {
         if ($_GET['newNameSet'] == 'Rename') {
             $oldName = $_GET['oldName'];
             $newName = $_GET['newName'];
-                  if (renameFile($oldName, $newName)) {
+                  if (renameFile($oldName, $newName, $currentDir)) {
                     renameFileRecord($oldName, $newName);
                 }
         }
@@ -83,7 +90,7 @@
     }
     if (isset($_GET['selectFolderButton'])) {
         if ($_GET['selectFolderButton'] == 'Move') { // if the Move button was clicked (as opposed to 'Cancel')
-            if ($folderPath = moveFile($selectedFile, $_GET['folderMenu'])) {
+            if ($folderPath = moveFile($selectedFile, $_GET['folderMenu'], $accountName)) {
                 renameFileLocationRecord($selectedFile, $folderPath);
             }
         }

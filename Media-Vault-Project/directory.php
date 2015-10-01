@@ -32,7 +32,7 @@
 <hr>
 <table width="100%" border="0" style="float: centre;">
   <tr>
-    <td width="1053"><strong><a href="directory.php?currentDir=uploads/">Home</a></strong> <strong>&gt;</strong> [folder] <strong>&gt;</strong> [folder]</td>
+    <td width="1053"><strong><a href="<?php echo 'directory.php?currentDir=uploads/' . $accountName . '/'; ?>">Home</a></strong> <strong>&gt;</strong> [folder] <strong>&gt;</strong> [folder]</td>
     <td width="142"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
     <?php 
 	try {
@@ -65,7 +65,7 @@
     <form action="directory.php" method="post">
 	    <?php
 		    // Get metadata table info
-		    $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '"');
+		    $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
 		    // Define desired columns
 		    $columns = array('filename', 'filetype', 'timestamp', 'filesize');
 		    // Write to HTML table

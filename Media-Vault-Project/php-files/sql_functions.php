@@ -67,7 +67,7 @@ function addUploadRecord($owner) {
         ':filename' => $_FILES["file"]["name"],
         ':filetype' => $_FILES["file"]["type"],
         ':filesize' => $_FILES["file"]["size"],
-        ':location' => 'uploads/',
+        ':location' => 'uploads/' . $owner . '/',
         ':owner' => $owner,
     );
 	alterDB($sql, $parameters);

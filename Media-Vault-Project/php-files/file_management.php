@@ -1,4 +1,5 @@
 <?php
+
 	/**
 	 * Writes the entire contents of a given PDO to rows of a table.
 	 *
@@ -15,57 +16,85 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
         foreach ($pdo as $row) {
-		    if ($row['owner'] == $username) {
-                echo "<tr  id='listingRow'>";
-		        foreach ($columns as $column) {
-                        if ($column == 'timestamp') {
-                            $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
-                        }
-                        if ($column == 'filesize') {
-                            $row[$column] = round($row[$column] / 1024);
-                            $row[$column] = $row[$column] . " KB";
-                        }
-                        if ($row['filename'] == $selectedFile && $isFolder) {
-                            echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
-                        } else if ($row['filename'] == $selectedFile && !$isFolder) {
-				            echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
-                        } else {
-                            echo '<td><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
-                        }
-		        }
-		        echo "</tr>";
-            }
-	    }
+            echo "<tr  id='listingRow'>";
+		    foreach ($columns as $column) {
+                    if ($column == 'filetype') {
+                        $row[$column] = selectIcon($row[$column]);
+                    }
+                    if ($column == 'timestamp') {
+                        $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
+                    }
+                    if ($column == 'filesize') {
+                        $row[$column] = round($row[$column] / 1024);
+                        $row[$column] = $row[$column] . " KB";
+                    }
+                    if ($row['filename'] == $selectedFile && $isFolder) {
+                        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
+                    } else if ($row['filename'] == $selectedFile && !$isFolder) {
+				        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
+                    } else {
+                        echo '<td><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                    }
+		    }
+		    echo "</tr>";
+        }
     }
 } // end writeTable
+
+    /**
+     * Select the icon that applies to a particular file's type.
+     * 
+     * @return str - the string location of the appropriate icon.
+     */
+function selectIcon($type) {
+    if ($type == 'folder') {
+        $icon = 'folder.png';
+    } else if (strpos($type, 'application') !== false) {
+        $icon = 'executable.png';
+    } else if (strpos($type, 'image') !== false) {
+        $icon = 'image.png';
+    } else if (strpos($type, 'audio') !== false) {
+        $icon = 'audio.png';
+    } else if (strpos($type, 'text') !== false) {
+        $icon = 'text.png';
+    } else if (strpos($type, 'video') !== false) {
+        $icon = 'video.png';
+    } else if (strpos($type, 'zip') !== false || strpos($type, 'rar') !== false) {
+        $icon = 'zip.png';
+    } else {
+        $icon = 'unknown.png';
+    }
+
+     return $image = '<img src="images/' . $icon . '" width="30" height="40" alt="File type icon" />';
+} // end selectIcon
+
 /** Upload Related Functions **/
+
 	/**
 	 * Upload file to server uploads folder
 	 *
 	 * @author James Galloway
 	 */ 
-function uploadFile() {
-	$dir = ROOT_DIR . '/uploads/';
+function uploadFile($currentUser) {
+	$dir = ROOT_DIR . '/uploads/' . $currentUser . '/';
 	$file = $dir . basename($_FILES["file"]["name"]);
 	$fileExtension = pathinfo($file, PATHINFO_EXTENSION);
-	$validFile = true;
 	
-	// Check if file already exists
-	if (file_exists($file)) {
-		echo "<p>File already exists.</p>";
-		$validFile = false;
-	}
-	
-	// Check file extension against extension whitelist
-	$whitelist = file('file_extension_whitelist.txt', FILE_IGNORE_NEW_LINES);
-	if (!in_array($fileExtension, $whitelist)) {
-		echo "<p>File is not of a valid type.</p>";
-		$validFile = false;
-	}
-	
-	if (!$validFile) {
-		return false;
-	}
+    // Check to see if the user has selected a file.
+    if ($_FILES["file"]["error"] == 4) {
+        echo "<p>Please select a file.</p>";
+        return false;
+    }
+
+	// Check if user has a file of the same name in the uploads folder
+    $sql = 'SELECT * FROM metadata WHERE owner = "' . $currentUser . '" AND location = "uploads/' . $currentUser . '"';
+    $userFiles = queryDB($sql);
+    foreach ($userFiles as $userFile) {
+        if ($userFile['filename'] == $_FILES["file"]["name"]) {
+            echo "<p>A file of the same name already exists in your home directory.</p>";
+            return false;
+        }
+    }
 	
 	// Upload file
 	if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
@@ -77,8 +106,26 @@ function uploadFile() {
 		return false;
 	}
 } // end uploadFile
+
 /** Delete Related Functions **/
     
+    /**
+     * Simple function to echo the delete confirmation form.
+     *
+     * @author James Galloway
+     */
+function writeDeleteConfirmation($file, $currentDir) {
+    echo '<div class="simpleInputDiv">
+            <form action="" "method="get" class="simpleInputForm">
+                <p>Are you sure you want to delete ' . $file . '?</p>
+                <input type="hidden" value="' . $file . '" name="selectedFile">
+                <input type="hidden" value="' . $currentDir . '" name="currentDir">
+                <input type="submit" name="confirmDelete" value="Yes">
+                <input type="submit" name="confirmDelete" value="No">
+            </form>
+        </div>';
+} // end deleteConfirmation
+
    	/**
 	 * Delete selected file.
 	 *
@@ -101,6 +148,7 @@ function deleteFile($file, $currentDir) {
     }
 	return false;
 } // end deleteFile
+
 /** Rename Related Functions **/
     
     /**
@@ -110,16 +158,18 @@ function deleteFile($file, $currentDir) {
      *
      * @author James Galloway
      */
-    function writeRenameForm($selectedFile) {
-        echo "<div class='simpleInputDiv'>
-            <form action='' 'method='get' class='simpleInputForm'>
-                <input type='hidden' value='" . $selectedFile . "' name='oldName'>
-                <input type='text' name='newName'>
-                <input type='submit' name='newNameSet' value='Rename'>
-                <input type='submit' name='newNameSet' value='Cancel'>
-            </form>
-        </div>";
-    } // end writeRenameForm
+function writeRenameForm($selectedFile, $currentDir) {
+    echo "<div class='simpleInputDiv'>
+        <form action='' 'method='get' class='simpleInputForm'>
+            <input type='hidden' value='" . $selectedFile . "' name='oldName'>
+            <input type='hidden' value='" . $currentDir . "' name='currentDir'>
+            <input type='text' name='newName'>
+            <input type='submit' name='newNameSet' value='Rename'>
+            <input type='submit' name='newNameSet' value='Cancel'>
+        </form>
+    </div>";
+} // end writeRenameForm
+
     /**
      * Rename selected file.
      * 
@@ -128,20 +178,22 @@ function deleteFile($file, $currentDir) {
      * 
      * @author James Galloway
      */
-function renameFile($oldName, $newName) {
+function renameFile($oldName, $newName, $currentDir) {
     $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
     if (file_exists(ROOT_DIR . '/uploads/' . $newName . '.' . $fileExtension)) {
         echo "<p>A file of that name already exists.  Please choose a different name.</p>";
         return false;
     }
-    if (rename(ROOT_DIR . '/uploads/' . $oldName, ROOT_DIR . '/uploads/' . $newName . '.' . $fileExtension)) {
+    if (rename(ROOT_DIR . '/' . $currentDir . $oldName, ROOT_DIR . '/' . $currentDir . $newName . '.' . $fileExtension)) {
         echo "<p>File successfully renamed</p>";
         return true;
     }
     echo "<p>There was an error in renaming the file.</p>";
     return false;
 } // end renameFile
+
 /** Create Folder Related Functions **/
+
     /**
      * Write input form for user to name new folder.
      *
@@ -157,6 +209,7 @@ function writeNewFolderForm($currentDir) {
             </form>
         </div>";
 } // end writeNewFolderForm
+
     /**
      * Create new folder in the /uploads/ directory.
      * * NOTE: Folder is currently created with widest possible privilege.
@@ -172,12 +225,14 @@ function newFolder($name, $currentDir) {
     }
     return false;
 } // end newFolder
+
 /** Move File Related Functions **/
+
     /**
      * Retrieve a list of valid folders from the database and write them
      * to a dropdown menu.
      *
-     * @param $currentUserID - the $_SESSION ID of the current user. Used to compare table values.
+     * @param $owner - the $_SESSION ID of the current user. Used to compare table values.
      * @param $selectedFile - string name of the selected file.
      *
      * @author Christian Ruiz 
@@ -193,13 +248,14 @@ function writeFolders($owner, $selectedFile) {
     foreach ($folders as $singleFolder) {
         echo '<option value="' . $singleFolder['filename'] . '">' . $singleFolder['filename'] . '</option>';
     }
-    echo '          <option value="uploads">Uploads</option>";
+    echo '          <option value="uploads/' . $owner . '/">Home - ' . $owner . '</option>";
                 </select>
                <input type="submit" name="selectFolderButton" value="Move">
                <input type="submit" name="selectFolderButton" value="Cancel">
             </form>
          </div>';
 } // end writeFolders
+
     /**
     * Moves file from current position to destination folder.
     *
@@ -209,7 +265,7 @@ function writeFolders($owner, $selectedFile) {
     *
     * @author Christian Ruiz & James Galloway
     */
-function moveFile($file, $folder) {
+function moveFile($file, $folder, $currentUser) {
     $sql = "SELECT * FROM metadata WHERE filename = '$file'";
     $tempPath = queryDB($sql);
     $filePath = ROOT_DIR . '/' . $tempPath[0]['location'];
@@ -217,7 +273,7 @@ function moveFile($file, $folder) {
     $sql = "SELECT location FROM metadata WHERE filename = '$folder'";
     $tempPath = queryDB($sql);
     if ($tempPath == null) {
-        $DBentry = 'uploads/';
+        $DBentry = 'uploads/' . $currentUser . '/';
         $folderPath = ROOT_DIR . '/' . $DBentry;
     } else {
         $DBentry = $tempPath[0]['location'] . $folder . '/';
@@ -229,6 +285,7 @@ function moveFile($file, $folder) {
     }
     return false;
 } // end moveFile
+
     /**
      * Simple helper method to determine whether a particular $_GET element is set and not empty.
      *
@@ -244,4 +301,5 @@ function isSetAndNotEmpty($method, $element) {
     }
     return false;
 } // end isSetAndNotEmpty
+
 ?>
