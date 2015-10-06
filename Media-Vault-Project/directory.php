@@ -5,6 +5,12 @@
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     session_start();
+    //Determine if user is signed in. If not redirect them to a seperate page.
+    if (!isset($_SESSION['isUser']))
+	{
+		header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/logout.php");
+		exit();
+	}
         
     //Determine the username of the account
     $accountName = $_SESSION['isUser'];
