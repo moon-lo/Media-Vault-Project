@@ -4,6 +4,12 @@
 	
 	session_start();
 	
+	if (!isset($_SESSION['isUser']))
+	{
+		header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/logout.php");
+		exit();
+	}
+	
 	$accountName = $_SESSION['isUser'];
 ?>
 <!-- Author: Lok Sum (Moon) Lo -->
