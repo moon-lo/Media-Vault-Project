@@ -57,20 +57,21 @@ function ownFile($fileid, $id = NULL){
 * @author Benjamin McCloskey
 **/
 
-function downloadFile($filename, $location = NULL) {
+function downloadFile($filename, $currentDir) {
 	//if default location set to uploads folder.
-	if(is_null($location)){
-		$location = "/uploads/";
+	if(is_null($currentDir)){
+		echo "<p>File not found.</p>";
+        return false;
 	}
 	
 	//file info to get MIME_TYPE for setting Content-Type header.
 	$finfo = finfo_open(FILEINFO_MIME_TYPE);
-	$mType = finfo_file($finfo,ROOT_DIR.$location.$filename);
+	$mType = finfo_file($finfo,ROOT_DIR.$currentDir.$filename);
 	
 	//download file
 	header('Content-Type: '.$mType);
 	header('Content-Disposition: attachment; filename="'.$filename.'"');
-	readfile(ROOT_DIR.$location.$filename);
+	readfile(ROOT_DIR.$currentDir.$filename);
 	exit;
 	
 }

@@ -81,7 +81,7 @@
         //$fname = $_GET['filename'];
         $fname = $selectedFile;
         //$flocation = NULL;	
-        downloadFile($fname);
+        downloadFile($fname, $currentDir);
     }
     // MOVE FILE
     // If the 'move to...' button is clicked AND a file is selected
