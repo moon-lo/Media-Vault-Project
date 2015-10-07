@@ -71,7 +71,7 @@ function downloadFile($filename, $currentDir) {
 	//download file
 	header('Content-Type: '.$mType);
 	header('Content-Disposition: attachment; filename="'.$filename.'"');
-	readfile(ROOT_DIR.$currentDir.$filename);
+	readfile(ROOT_DIR.'/'.$currentDir.$filename);
 	exit;
 	
 }
