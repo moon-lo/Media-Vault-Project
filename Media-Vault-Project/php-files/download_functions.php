@@ -66,7 +66,7 @@ function downloadFile($filename, $currentDir) {
 	
 	//file info to get MIME_TYPE for setting Content-Type header.
 	$finfo = finfo_open(FILEINFO_MIME_TYPE);
-	$mType = finfo_file($finfo,ROOT_DIR.$currentDir.$filename);
+	$mType = finfo_file($finfo,ROOT_DIR.'/'. $currentDir.$filename);
 	
 	//download file
 	header('Content-Type: '.$mType);
