@@ -101,7 +101,18 @@
         <td id="descriptionTagCell" colspan="2"><strong>Description:</strong></td>
       </tr>
       <tr>
-        <td id="descriptionCell" colspan="2">[PLACEHOLDER DESC]</td>
+        <td id="descriptionCell" colspan="2">
+		<?php
+			$description = queryDB('SELECT description FROM metadata WHERE filename = "' . $selectedFile . '" AND owner = "' . $accountName . '"');
+			
+			if ($description == NULL) {
+				echo "No description avaliable.";
+			}
+			else {
+				echo $description;
+			}
+		?>
+		</td>
       </tr>
       <tr>
         <td id="colourTagCell" colspan="2"><strong>Colour tag:</strong></td>
