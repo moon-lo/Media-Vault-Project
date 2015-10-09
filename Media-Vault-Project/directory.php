@@ -56,29 +56,47 @@
 	<td width="135">Remaining space: <?php echo $space; ?> </td>
     <td width="88">View: List, Grid</td>
     <td width="235">
-  <input type="search" name="searchBar" value="" /><input type="button" name="searchButton" value="Search" /></td>
+    
+    <!-- Search Form -->
+    <form name="searchForm" action="" method="GET">
+			<input type="text" name="searchStr" value="">
+            <input type="submit" name="searchButton" value="Search">
+	</form>
+
+    </td>
   </tr>
 </table>
 
 <table class="directoryTable"  id="directoryTable" width="75%" border="1" style="float: left;">
   <thead>
       <tr>
-        <th width="25%" id="nameHead" onclick="orderTable(0, true)">Name</th>
-        <th width="25%" id="typeHead" onclick="orderTable(1, true)">Type</th>
-        <th width="25%" id="timeHead" onclick="orderTable(2, true)">Last Modified</th>
-        <th width="25%" id="sizeHead" onclick="orderTable(3, true)">Size</th>
+        <th id="nameHead" onclick="orderTable(0, true)">Name</th>
+        <th id="typeHead" onclick="orderTable(1, true)">Type</th>
+        <th id="timeHead" onclick="orderTable(2, true)">Last Modified</th>
+        <th id="sizeHead" onclick="orderTable(3, true)">Size</th>
+        <?php 
+            if ($searchStr) { 
+                echo '<th id="dirHead"  onclick="orderTable(4, true)">Directory</th>';
+            }
+        ?>
       </tr>
     </thead>
     <tbody>
         <!--File Selection Form -->
         <form action="directory.php" method="post">
 	        <?php
-		        // Get metadata table info
-		        $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
-		        // Define desired columns
-		        $columns = array('filename', 'filetype', 'timestamp', 'filesize');
-		        // Write to HTML table
-		        writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName);
+		        if (!$searchStr) {
+                    // Get metadata table info
+		            $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
+		            // Define desired columns
+		            $columns = array('filename', 'filetype', 'timestamp', 'filesize');
+                    // Write to HTML table
+		            writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName, $searchStr);
+                } else {
+		            $metadata = queryDB('SELECT * FROM metadata WHERE owner = "' . $accountName . '" AND filename LIKE "%' . $searchStr . '%" OR description LIKE "%' . $searchStr . '%" OR filetype LIKE "' . $searchStr . '"');
+		            $columns = array('filename', 'filetype', 'timestamp', 'filesize', 'location');
+                    writeSearchResults($metadata, $columns, $accountName);
+                }
 	        ?>
         </form>
     </tbody>

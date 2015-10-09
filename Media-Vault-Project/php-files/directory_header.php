@@ -1,12 +1,14 @@
 <?php
-    
     include ROOT_DIR . '/php-files/file_management.php';
     include ROOT_DIR . '/php-files/sql_functions.php';
 	include ROOT_DIR . '/php-files/download_functions.php';
+    
     $isSelected = false;
     $isFolder = false;
     $selectedFile = null;
     $selectedFolder = null;
+    $searchStr = false;
+
     if (isSetAndNotEmpty($_GET, 'currentDir')) {
         $currentDir = $_GET['currentDir'];
     } else {
@@ -95,5 +97,10 @@
             }
         }
     }
+
+	if (isSetAndNotEmpty($_GET, 'searchStr')) {
+		$searchStr = $_GET['searchStr'];
+	}
+
     echo $currentDir;
 ?>

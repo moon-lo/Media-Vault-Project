@@ -11,7 +11,7 @@
 	 *
 	 * @author James Galloway
 	 */
-function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $username) {
+function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $username, $searchStr) {
     if ($pdo == null) {
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
@@ -46,6 +46,45 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
         }
     }
 } // end writeTable
+
+
+/**
+ * Similar to writeTable.  The difference is in the href attribute values specified by each listing.  
+ */
+function writeSearchResults($pdo, $columns, $username) {
+    if ($pdo == null) {
+        echo "<tr id='listingRow'><td>No matches were found</td></tr>";
+    } else {
+        foreach ($pdo as $row) {
+            $dir = $row['location'];
+            echo '<tr class="listingRow">';
+		    foreach ($columns as $column) {
+                if ($column == 'filename') {
+                    $sortKey = strtolower(substr($row[$column], 0, 1));
+                }
+                if ($column == 'filetype') {
+                    $sortKey = substr($row[$column], 0, 1);
+                    $row[$column] = selectIcon($row[$column]);
+                }
+                if ($column == 'timestamp') {
+                    $sortKey = $row[$column];
+                    $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
+                }
+                if ($column == 'filesize') {
+                    $sortKey = $row[$column];
+                    $row[$column] = round($row[$column] / 1024);
+                    $row[$column] = $row[$column] . " KB";
+                }
+                if ($column == 'location') {
+                    $sortKey = count(explode("/", $row[$column]));
+                    $row[$column] = 'Home/' . substr($row[$column], strlen('uploads/' . $username . '/'), strlen($row[$column]));
+                }
+                echo '<td sortKey="' . $sortKey . '"><a href="directory.php?currentDir=' . $dir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+            }
+		}
+	    echo "</tr>";
+    }
+} // end writeSearchResults
 
     /**
      * Select the icon that applies to a particular file's type.
@@ -196,6 +235,13 @@ function writeRenameForm($selectedFile, $currentDir) {
         </form>
     </div>";
 } // end writeRenameForm
+
+function writeSearchForm() {
+    echo '<form name="searchForm" action="search.php" method="POST">
+		    <input type="text" name="searchStr" value="">
+            <input type="submit" name="searchButton" value="Search">
+	      </form>';
+} // end writeSearchForm
 
     /**
      * Rename selected file.
