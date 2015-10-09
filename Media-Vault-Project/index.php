@@ -38,8 +38,8 @@
 			{
 				session_start();
 				$_SESSION['isUser'] = $username;
-				header("Location: http://localhost/mediavault/directory.php");
-                //header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/directory.php");
+				//header("Location: http://localhost/mediavault/directory.php");
+                header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/directory.php");
 				exit();
 			}
 			else
