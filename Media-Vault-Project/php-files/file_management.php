@@ -12,28 +12,34 @@
 	 * @author James Galloway
 	 */
 function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $username) {
-	if ($pdo == null) {
+    if ($pdo == null) {
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
         foreach ($pdo as $row) {
-            echo "<tr  id='listingRow'>";
+            echo '<tr class="listingRow">';
 		    foreach ($columns as $column) {
+                    if ($column == 'filename') {
+                        $sortKey = strtolower(substr($row[$column], 0, 1));
+                    }
                     if ($column == 'filetype') {
+                        $sortKey = substr($row[$column], 0, 1);
                         $row[$column] = selectIcon($row[$column]);
                     }
                     if ($column == 'timestamp') {
+                        $sortKey = $row[$column];
                         $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
                     }
                     if ($column == 'filesize') {
+                        $sortKey = $row[$column];
                         $row[$column] = round($row[$column] / 1024);
                         $row[$column] = $row[$column] . " KB";
                     }
                     if ($row['filename'] == $selectedFile && $isFolder) {
-                        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
+                        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
                     } else if ($row['filename'] == $selectedFile && !$isFolder) {
-				        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
+				        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
                     } else {
-                        echo '<td><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                        echo '<td sortKey="' . $sortKey . '" ><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
                     }
 		    }
 		    echo "</tr>";
@@ -67,6 +73,27 @@ function selectIcon($type) {
 
      return $image = '<img src="images/' . $icon . '" width="30" height="40" alt="File type icon" />';
 } // end selectIcon
+
+///**
+// * Determine the correct sorting values for column heading links.
+// *
+// * @param str $heading - string name of the column to be sorted.
+// *
+// * @author James Galloway
+// */
+//function getSortURL($heading) {
+//    $url = $_SERVER['REQUEST_URI'];
+
+//    // Remove prior $_GET information if it exists
+//    if (strpos($url, '&sort=') !== false) {
+//        $url = substr($url, 0, strpos($url, '&sort'));
+//    }
+
+//    if (strpos($_SERVER['REQUEST_URI'], '&sort=' . $heading) !== false) {
+//        return $url = $url . '&sort=' . $heading . '&sortType=DESC';
+//    }
+//    return $url = $url . '&sort=' . $heading . '&sortType=ASC';
+//} // end getSortURL
 
 /** Upload Related Functions **/
 

@@ -8,6 +8,10 @@
 	
 }
 
+th {
+    height: 30px;
+}
+
 a:link, a:active, a:visited {
 	color:#78DECA;
 }
@@ -57,7 +61,7 @@ a:hover {
 		color:#114040;
     }
 
-        .directoryTable tr:nth-child(even) {
+        .directoryTable tr:nth-child(odd) {
             background-color:#EFFBBF;
 			border-color:6CC8C1;
 			color:#114040;

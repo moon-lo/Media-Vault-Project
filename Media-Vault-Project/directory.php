@@ -23,6 +23,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css">
     <script type="text/javascript" src="javascript/display_functions.js"></script>
+    <script type="text/javascript" src="javascript/jquery-1.11.3.js"></script>
 </head>
 
 <body>
@@ -60,26 +61,27 @@
 </table>
 
 <table class="directoryTable"  id="directoryTable" width="75%" border="1" style="float: left;">
-  <tr>
-    <th width="25%">Name</th>
-    <th width="25%">Type</th>
-    <th width="25%">Last modified</th>
-    <th width="25%">Size</th>
-  </tr>
-  
-    <!--File Selection Form -->
-    <form action="directory.php" method="post">
-	    <?php
-		    // Get metadata table info
-		    $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
-		    // Define desired columns
-		    $columns = array('filename', 'filetype', 'timestamp', 'filesize');
-		    // Write to HTML table
-		    writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName);
-	    ?>
-    </form>
-
-
+  <thead>
+      <tr>
+        <th width="25%" id="nameHead" onclick="orderTable(0, true)">Name</th>
+        <th width="25%" id="typeHead" onclick="orderTable(1, true)">Type</th>
+        <th width="25%" id="timeHead" onclick="orderTable(2, true)">Last Modified</th>
+        <th width="25%" id="sizeHead" onclick="orderTable(3, true)">Size</th>
+      </tr>
+    </thead>
+    <tbody>
+        <!--File Selection Form -->
+        <form action="directory.php" method="post">
+	        <?php
+		        // Get metadata table info
+		        $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
+		        // Define desired columns
+		        $columns = array('filename', 'filetype', 'timestamp', 'filesize');
+		        // Write to HTML table
+		        writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName);
+	        ?>
+        </form>
+    </tbody>
 </table>
 <div class="fileInfoDiv">
     <!--File Information Table -->
