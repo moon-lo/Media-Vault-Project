@@ -129,7 +129,7 @@
 				echo "No description avaliable.";
 			}
 			else {
-				echo $description;
+				echo $description['description'];
 			}
 		?>
 		</td>
