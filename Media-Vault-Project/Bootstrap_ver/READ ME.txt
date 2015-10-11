@@ -1,0 +1,4 @@
+Directory path for bootstrapped webpages:
+
+bootstrap-3.3.5 > docs > examples > dashboard
+
