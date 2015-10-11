@@ -66,8 +66,17 @@
     }
 	
 	// DESCRIPTION
-	// Add Description form is used
-	
+	// Display description form
+	if (isset($_GET['edit'])) {
+		writeDescriptionForm($selectedFile, $currentDir);
+	}
+	// Add description
+	/*if (isset($_POST['newDSet'])) {
+		if ($_POST['newDSet'] == 'Add description') {
+			$newDes = $_POST['newDescription'];
+			$editor = $_SESSION['isUser'];
+		}
+	}*/
 	
     // NEW FOLDER
     // Write folder naming form is create folder is set
