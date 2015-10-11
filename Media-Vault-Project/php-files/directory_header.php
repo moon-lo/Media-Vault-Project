@@ -64,6 +64,11 @@
                 }
         }
     }
+	
+	// DESCRIPTION
+	// Add Description form is used
+	
+	
     // NEW FOLDER
     // Write folder naming form is create folder is set
     if (isset($_GET['newFolder'])) {
