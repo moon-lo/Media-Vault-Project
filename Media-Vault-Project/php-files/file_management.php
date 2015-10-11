@@ -236,6 +236,25 @@ function writeRenameForm($selectedFile, $currentDir) {
     </div>";
 } // end writeRenameForm
 
+/**
+     * Function to create text input form onto page for user to add a description to their selected file.
+     *
+     * @param $selectedFile - string - file name of selected file - stored in hidden input
+     *
+     * @author Thomas Shortt
+     */
+function writeDescriptionForm($selectedFile, $currentDir) {
+    echo "<div class='simpleInputDiv'>
+        <form action='' 'method='POST' class='simpleInputForm'>
+            <input type='hidden' value='" . $selectedFile . "' name='oldName'>
+            <input type='hidden' value='" . $currentDir . "' name='currentDir'>
+            <input type='text' name='newDescription'>
+            <input type='submit' name='newDSet' value='Add description'>
+            <input type='submit' name='newDSet' value='Cancel'>
+        </form>
+    </div>";
+} // end writeDescriptionForm
+
 function writeSearchForm() {
     echo '<form name="searchForm" action="search.php" method="POST">
 		    <input type="text" name="searchStr" value="">
