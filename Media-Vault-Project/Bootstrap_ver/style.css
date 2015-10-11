@@ -59,12 +59,13 @@ body {
   padding-right: 20px;
   padding-left: 20px;
 }
-.nav-sidebar > .active > a,
+
+/* .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
   color: #fff;
   background-color: #428bca;
-}
+} */
 
 
 /*
@@ -84,22 +85,34 @@ body {
   margin-top: 0;
 }
 
+.list-group {
+	background-color:green;
+	float: right;
+	width: 30%;
+}
 
-/*
- * Placeholder dashboard ideas
- */
+.list-group-item {
+	color:grey;
+	text-shadow: none;
+}
 
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
+.list-group:after {
+	clear:both;
+	content:"";
+	display:table;
 }
-.placeholders h4 {
-  margin-bottom: 0;
+
+.panel:before {
+	clear:both;
+	content:"";
+	display:table;
 }
-.placeholder {
-  margin-bottom: 20px;
+
+.panel {
+	float: right;
+	width: 30%;
 }
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
-}
+
+
+
+
