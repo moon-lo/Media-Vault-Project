@@ -39,14 +39,15 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
                         $row[$column] = round($row[$column] / 1024);
                         $row[$column] = $row[$column] . " KB";
                     }
-                    if ($row['filename'] == $selectedFile && $isFolder) {
+					if ($column == 'colour'){
+						echo "<td $colourStyle>abc</td>";
+					}
+                    else if ($row['filename'] == $selectedFile && $isFolder) {
                         echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
                     } else if ($row['filename'] == $selectedFile && !$isFolder) {
 				        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>'; 		
                     } 
-					else if ($column == 'colour'){
-						echo "<td $colourStyle>abc</td>";
-					}
+					
 					else {
                         echo '<td sortKey="' . $sortKey . '" ><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
                     }
