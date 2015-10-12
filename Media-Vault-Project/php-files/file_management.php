@@ -18,7 +18,7 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
         foreach ($pdo as $row) {
 			$colour = $row['colour'];
 			if ($colour != null & $colour != ''){
-				echo "<tr class='listingRow' style='foreground-color: $colour'>";
+				echo "<tr class='listingRow' style='color: $colour'>";
 			}
 			else {
 				echo '<tr class="listingRow">';
