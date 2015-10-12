@@ -146,17 +146,17 @@
         <form action="directory.php" method="get" id="fileManForm">
             <input type="hidden" value="<?php if ($isSelected) { echo $selectedFile; } ?>" name="selectedFile" id="selectedFileHidden">
             <input type="hidden" value="<?php echo $currentDir; ?>" name="currentDir" id="currentDirHidden">
-			
-			<select name="colour">
+			<tr id="fileManButtons">
+			<td><div id="fileManDiv"><select name="colour">
 				<option value="none">None</option>
 				<option value="blue">Blue</option>
 				<option value="red">Red</option>
 				<option value="green">Green</option>
 				<option value="yellow">Yellow</option>
 				<option value="pink">Pink</option>
-			</select>
-			<input type="submit" name="colour_select">
-			
+				</select></div></td>
+				<td><div id="fileManDiv"><input type="submit" name="colour_select"></div></td>
+			</tr>
             <tr id="fileManButtons">
                 <td><div id="fileManDiv"><input type="submit" value="Download" name="download" id="fileManButton"></div></td>
                 <td><div id="fileManDiv"><input type="submit" value="Edit" name="edit" id="fileManButton"></div></td>
