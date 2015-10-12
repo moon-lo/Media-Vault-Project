@@ -16,12 +16,11 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
         foreach ($pdo as $row) {
+			echo '<tr class="listingRow">';
 			$colour = $row['colour'];
-			if ($colour != null & $colour != ''){
-				echo "<tr class='listingRow' style='color: $colour'>";
-			}
-			else {
-				echo '<tr class="listingRow">';
+			$colourStyle = '';
+			if ($colour != null && $colour != '' && $colour != 'none'){
+				$colourStyle = " style='background-colour:$colour' ";
 			}
 		    foreach ($columns as $column) {
                     if ($column == 'filename') {
@@ -41,11 +40,11 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
                         $row[$column] = $row[$column] . " KB";
                     }
                     if ($row['filename'] == $selectedFile && $isFolder) {
-                        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
+                        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
                     } else if ($row['filename'] == $selectedFile && !$isFolder) {
-				        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
+				        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
                     } else {
-                        echo '<td sortKey="' . $sortKey . '" ><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                        echo '<td sortKey="' . $sortKey . '" ><a ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
                     }
 		    }
 		    echo "</tr>";
