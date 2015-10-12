@@ -89,7 +89,7 @@
                     // Get metadata table info
 		            $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
 		            // Define desired columns
-		            $columns = array('filename', 'filetype', 'timestamp', 'filesize');
+		            $columns = array('colour', 'filename', 'filetype', 'timestamp', 'filesize');
                     // Write to HTML table
 		            writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName, $searchStr);
                 } else {

@@ -16,12 +16,11 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
         foreach ($pdo as $row) {
+			echo '<tr class="listingRow">';
 			$colour = $row['colour'];
-			if ($colour != null & $colour != ''){
-				echo "<tr class='listingRow' style='background-color:$colour'>";
-			}
-			else {
-				echo '<tr class="listingRow">';
+			$colourStyle = '';
+			if ($colour != null && $colour != '' && $colour != 'none'){
+				$colourStyle = " style='background-colour:$colour'";
 			}
 		    foreach ($columns as $column) {
                     if ($column == 'filename') {
@@ -43,8 +42,12 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
                     if ($row['filename'] == $selectedFile && $isFolder) {
                         echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
                     } else if ($row['filename'] == $selectedFile && !$isFolder) {
-				        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
-                    } else {
+				        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>'; 		
+                    } 
+					else if ($column == 'colour'){
+						echo "<td $colourStyle>abc</td>";
+					}
+					else {
                         echo '<td sortKey="' . $sortKey . '" ><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
                     }
 		    }
