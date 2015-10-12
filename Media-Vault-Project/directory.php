@@ -43,7 +43,7 @@
     <td width="142"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
     <?php 
 	try {
-		$result = $pdo->query("select current_storage, max_storage from users where username = '$accountName'");
+		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
 	} catch (PDOException $e) {
 		echo $e->getMessage();
 	}
@@ -51,7 +51,7 @@
 	$pdo = null;
 	$rows = $result->fetchAll();
 	$row = $rows[0];
-	$space = $row['current_storage'] . 'MB / ' . $row['max_storage'] . "MB";
+	$space = $row['current_storage1'] . 'MB / ' . $row['max_storage'] . "MB";
 	?>
 	<td width="135">Remaining space: <?php echo $space; ?> </td>
     <td width="88">View: List, Grid</td>
@@ -138,7 +138,19 @@
         <td id="colourTagCell" colspan="2"><strong>Colour tag:</strong></td>
       </tr>
       <tr>
-        <td id="tagCell" colspan="2">[PLACEHOLDER TAG]</td>
+        <td id="tagCell" colspan="2">
+		<form action="directory.php">
+			<select name="colour">
+				<option value="none">None</option>
+				<option value="blue">Blue</option>
+				<option value="red">Red</option>
+				<option value="green">Green</option>
+				<option value="yellow">Yellow</option>
+				<option value="pink">Pink</option>
+			</select>
+			<input type="submit" name="colour_select">
+		</form>
+		</td>
       </tr>
     
         <!--File Management Form -->
