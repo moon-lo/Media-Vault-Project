@@ -134,13 +134,13 @@
 		?>
 		</td>
       </tr>
-      <tr>
+     <!-- <tr>
         <td id="colourTagCell" colspan="2"><strong>Colour tag:</strong></td>
       </tr>
       <tr>
         <td id="tagCell" colspan="2">
 		</td>
-      </tr>
+      </tr> -->
     
         <!--File Management Form -->
         <form action="directory.php" method="get" id="fileManForm">
@@ -148,14 +148,14 @@
             <input type="hidden" value="<?php echo $currentDir; ?>" name="currentDir" id="currentDirHidden">
 			<tr id="fileManButtons">
 			<td><div id="fileManDiv"><select name="colour">
-				<option value="none">None</option>
+				<option value="none">No Colour</option>
 				<option value="blue">Blue</option>
 				<option value="red">Red</option>
 				<option value="green">Green</option>
 				<option value="yellow">Yellow</option>
 				<option value="pink">Pink</option>
 				</select></div></td>
-				<td><div id="fileManDiv"><input type="submit" name="colour_select"></div></td>
+				<td><div id="fileManDiv"><input type="submit" value="Change Colour" name="colour_select"></div></td>
 			</tr>
             <tr id="fileManButtons">
                 <td><div id="fileManDiv"><input type="submit" value="Download" name="download" id="fileManButton"></div></td>
