@@ -27,7 +27,7 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
-			<li><a href="#">Upload</a></li>
+			<li><a href="upload.html">Upload</a></li>
 			<li><a href="#">Username</a></li>
 			<li><a href="#">Log out</a></li>
 		  </ul>
@@ -51,24 +51,145 @@
 		<a href="#" class="list-group-item active">
 			<h4 class="list-group-item-heading">Filename</h4>
 			<li class="list-group-item">[Description]</li>
-			<li class="list-group-item">[Colour tag]</li><br>
+			<li class="list-group-item">[Colour tag]</li>
 		</a>
 	</div>
 	
 	<!-- FILE MANAGEMENT BUTTONS -->
-
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<button type="button" class="btn btn-default">New Folder</button>
-			
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="moveToMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				Move To...
+				<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="moveToMenu">
+					<li><a href="#">Folder</a></li>
+					<li><a href="#">Folder</a></li>
+					<li><a href="#">Folder</a></li>
+					<li><a href="#">Folder</a></li>
+				</ul>
+			</div>
+			<button type="button" class="btn btn-default">Download</button>
+			<button type="button" class="btn btn-default">Edit</button>
+			<button type="button" class="btn btn-default">Delete</button>
+			<button type="button" class="btn btn-default">Share</button>
 		</div>
 	</div>
 
-		
-
 	
-
-		
+	<!-- FILES TABLE -->
+	<div class="table-responsive">
+		<table class="table table-hover">
+		  <thead>
+			<tr>
+			  <th>Name</th>
+			  <th>Type</th>
+			  <th>Last modified</th>
+			  <th>Size</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+			  <td>1,001</td>
+			  <td>Lorem</td>
+			  <td>ipsum</td>
+			  <td>dolor</td>
+			</tr>
+			<tr>
+			  <td>1,002</td>
+			  <td>amet</td>
+			  <td>consectetur</td>
+			  <td>adipiscing</td>
+			</tr>
+			<tr>
+			  <td>1,003</td>
+			  <td>Integer</td>
+			  <td>nec</td>
+			  <td>odio</td>
+			</tr>
+			<tr>
+			  <td>1,003</td>
+			  <td>libero</td>
+			  <td>Sed</td>
+			  <td>cursus</td>
+			</tr>
+			<tr>
+			  <td>1,004</td>
+			  <td>dapibus</td>
+			  <td>diam</td>
+			  <td>Sed</td>
+			</tr>
+			<tr>
+			  <td>1,005</td>
+			  <td>Nulla</td>
+			  <td>quis</td>
+			  <td>sem</td>
+			</tr>
+			<tr>
+			  <td>1,006</td>
+			  <td>nibh</td>
+			  <td>elementum</td>
+			  <td>imperdiet</td>
+			</tr>
+			<tr>
+			  <td>1,007</td>
+			  <td>sagittis</td>
+			  <td>ipsum</td>
+			  <td>Praesent</td>
+			</tr>
+			<tr>
+			  <td>1,008</td>
+			  <td>Fusce</td>
+			  <td>nec</td>
+			  <td>tellus</td>
+			</tr>
+			<tr>
+			  <td>1,009</td>
+			  <td>augue</td>
+			  <td>semper</td>
+			  <td>porta</td>
+			</tr>
+			<tr>
+			  <td>1,010</td>
+			  <td>massa</td>
+			  <td>Vestibulum</td>
+			  <td>lacinia</td>
+			</tr>
+			<tr>
+			  <td>1,011</td>
+			  <td>eget</td>
+			  <td>nulla</td>
+			  <td>Class</td>
+			</tr>
+			<tr>
+			  <td>1,012</td>
+			  <td>taciti</td>
+			  <td>sociosqu</td>
+			  <td>ad</td>
+			</tr>
+			<tr>
+			  <td>1,013</td>
+			  <td>torquent</td>
+			  <td>per</td>
+			  <td>conubia</td>
+			</tr>
+			<tr>
+			  <td>1,014</td>
+			  <td>per</td>
+			  <td>inceptos</td>
+			  <td>himenaeos</td>
+			</tr>
+			<tr>
+			  <td>1,015</td>
+			  <td>sodales</td>
+			  <td>ligula</td>
+			  <td>in</td>
+			</tr>
+		  </tbody>
+		</table>
+    </div>
 		
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
