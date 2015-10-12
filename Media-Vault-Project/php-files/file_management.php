@@ -16,7 +16,13 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
         foreach ($pdo as $row) {
-            echo '<tr class="listingRow">';
+			$colour = $row['colour'];
+			if ($colour != null & $colour != ''){
+				echo "<tr class='listingRow' style='background-color:$colour'>";
+			}
+			else {
+				echo '<tr class="listingRow">';
+			}
 		    foreach ($columns as $column) {
                     if ($column == 'filename') {
                         $sortKey = strtolower(substr($row[$column], 0, 1));
