@@ -48,6 +48,10 @@
             }
         }
     }
+	
+	if (isset($_GET['colour_select'])) {
+		changeFileColour($_GET['selectedFile'], $_GET['colour']);
+	}
 
     // RENAME
     // Write rename form is edit & file are set

@@ -125,4 +125,13 @@ function renameFileLocationRecord($file, $newLocation) {
     );
     alterDB($sql, $parameters);
 } // end renameFileLocationRecord
+
+function changeFileColour($filename, $colour) {
+	$sql = "UPDATE metadata SET colour = :newColour WHERE filename = :file";
+    $parameters = array(
+        ':newColour' => $colour,
+        ':file' => $filename
+    );
+    alterDB($sql, $parameters);
+}
 ?>
