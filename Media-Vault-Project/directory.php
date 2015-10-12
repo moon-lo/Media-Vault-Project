@@ -129,7 +129,10 @@
 				echo "No description avaliable.";
 			}
 			else {
-				echo $description['description'];
+				foreach ($description as $item)
+				{
+					echo $item['description'];
+				}
 			}
 		?>
 		</td>
