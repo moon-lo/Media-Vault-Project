@@ -71,12 +71,24 @@
 		writeDescriptionForm($selectedFile, $currentDir);
 	}
 	// Add description
-	/*if (isset($_POST['newDSet'])) {
+	if (isset($_POST['newDSet'])) {
 		if ($_POST['newDSet'] == 'Add description') {
 			$newDes = $_POST['newDescription'];
 			$editor = $_SESSION['isUser'];
+			
+			try
+			{
+				$stmt = $pdo->prepare("INSERT INTO metadata (description) ".
+				"VALUES ('$newDes') ".
+				"WHERE owner = '$editor' AND filename = '$selectedFile'");
+				$stmt->execute();
+			}
+			catch (PDOException $e)
+			{
+				echo $e->getMessage();
+			}
 		}
-	}*/
+	}
 	
     // NEW FOLDER
     // Write folder naming form is create folder is set
