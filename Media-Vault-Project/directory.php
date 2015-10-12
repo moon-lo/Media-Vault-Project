@@ -53,7 +53,7 @@
 	$row = $rows[0];
 	$space = $row['current_storage1'] . 'KB / ' . $row['max_storage'] . "KB";
 	?>
-	<td width="135">Remaining space: <?php echo $space; ?> </td>
+	<td width="135">Current Storage Space: <?php echo $space; ?> </td>
     <td width="88">View: List, Grid</td>
     <td width="235">
     

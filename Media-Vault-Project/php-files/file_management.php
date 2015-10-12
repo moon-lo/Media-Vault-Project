@@ -166,6 +166,18 @@ function uploadFile($currentUser) {
             return false;
         }
     }
+	// try {
+		// $result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
+	// } catch (PDOException $e) {
+		// echo $e->getMessage();
+	// }
+	
+	// $pdo = null;
+	// $rows = $result->fetchAll();
+	// $row = $rows[0];
+	// $space = $row['current_storage1'] . 'KB / ' . $row['max_storage'] . "KB";
+	
+	
 	
 	// Upload file
 	if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {

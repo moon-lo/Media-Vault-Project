@@ -34,7 +34,7 @@
 			{
 				$randomSalt .= $chars[rand(0, $charsLength - 1)];
 			}
-			$max_storage = 50;
+			$max_storage = (50 * 1024);
 				
 			try
 			{
