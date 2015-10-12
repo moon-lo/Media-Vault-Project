@@ -38,8 +38,8 @@
 			try
 			{
 				//Use a prepared statement to insert the data into the users table.
-				$stmt = $pdo->prepare("INSERT INTO users (username, email, password, salt) ".
-				"VALUES ('$username','$email', SHA2(CONCAT('$newPassword', '$randomSalt'), 0), '$randomSalt')");
+				$stmt = $pdo->prepare("INSERT INTO users (username, email, password, salt, max_storage) ".
+				"VALUES ('$username','$email', SHA2(CONCAT('$newPassword', '$randomSalt'), 0), '$randomSalt', 50)");
 				$stmt->execute();
 			}
 			catch(PDOException $e)
