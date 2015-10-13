@@ -80,16 +80,7 @@
 			$newDes = $_POST['newDescription'];
 			$editor = $_SESSION['isUser'];
 			
-			try
-			{
-				$stmt = $pdo->prepare("UPDATE metadata SET description='$newDes' ".
-				"WHERE owner = '$editor' AND filename = '$selectedFile'");
-				$stmt->execute();
-			}
-			catch (PDOException $e)
-			{
-				echo $e->getMessage();
-			}
+			changeDescription($selectedFile, $newDes, $editor);
 		}
 	}
 	
