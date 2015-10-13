@@ -187,7 +187,9 @@ function uploadFile($currentUser) {
 	} catch (PDOException $e) {
 		echo $e->getMessage();
 	}
-	
+	$pdo = null;
+	$rows = $result->fetchAll();
+	$row = $rows[0];
 	if ((($_FILES["file"]["size"] + $row['current_storage1']) / 1024) > $row['max_storage']){
 		echo "<p>There was an error in uploading the file.</p>";
 		print_r(error_get_last());
