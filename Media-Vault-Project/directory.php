@@ -152,9 +152,9 @@
 			<tr id="fileManButtons">
 			<td><div id="fileManDiv"><select name="colour">
 				<option value="none">No Colour</option>
-				<option value="blue">Blue</option>
+				<option value="aqua">Blue</option>
 				<option value="red">Red</option>
-				<option value="green">Green</option>
+				<option value="lime">Green</option>
 				<option value="yellow">Yellow</option>
 				<option value="pink">Pink</option>
 				</select></div></td>
