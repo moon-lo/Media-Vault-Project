@@ -106,6 +106,14 @@
         //$flocation = NULL;	
         downloadFile($fname, $currentDir);
     }
+	
+	// SHARE
+	// Add file to downloads table and provide link to share
+	if(isset($_GET['share'])){
+		$link = prepareFileToShare($selectedFile, $currentDir);
+		echo 'your single use link is: '.$link;
+	}
+	
     // MOVE FILE
     // If the 'move to...' button is clicked AND a file is selected
     if(isset($_GET['moveTo']) && $isSelected) {
