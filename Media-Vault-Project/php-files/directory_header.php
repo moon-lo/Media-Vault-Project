@@ -55,7 +55,7 @@
 
     // RENAME
     // Write rename form is edit & file are set
-   /* if (isset($_GET['edit'])) {
+    if (isset($_GET['edit'])) {
         writeRenameForm($selectedFile, $currentDir);
     }
     // Rename file if new name & file are set
@@ -67,7 +67,7 @@
                     renameFileRecord($oldName, $newName);
                 }
         }
-    }*/
+    }
 	
 	// DESCRIPTION
 	// Display description form
