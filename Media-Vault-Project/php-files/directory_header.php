@@ -82,8 +82,7 @@
 			
 			try
 			{
-				$stmt = $pdo->prepare("INSERT INTO metadata (description) ".
-				"VALUES ('$newDes') ".
+				$stmt = $pdo->prepare("UPDATE metadata SET description='$newDes' ".
 				"WHERE owner = '$editor' AND filename = '$selectedFile'");
 				$stmt->execute();
 			}
