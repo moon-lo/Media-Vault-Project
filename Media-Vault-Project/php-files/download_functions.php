@@ -81,7 +81,7 @@ function prepareFileToShare($filename, $currentDir){
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
 	mysql_query("INSERT INTO downloads (filename, location) VALUES ({$filename}, {$currentDir})");
-	$share = mysql_query("SELECT fileId FROM downloads WHERE location = {$currentDir}";
+	$share = mysql_query("SELECT fileId FROM downloads WHERE location = {$currentDir}");
 	$row = mysql_fetch_row($share);
 	$shareId = $row[0];
 	$pdo = null;
