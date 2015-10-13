@@ -73,15 +73,15 @@ function addUploadRecord($owner) {
         ':owner' => $owner,
     );
 	try {
-		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
+		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$owner'");
 	} catch (PDOException $e) {
 		echo $e->getMessage();
 	}
 	
 	$pdo = null;
 	$rows = $result->fetchAll();
-	$row = $rows[0];
-	if (($FILES["file"]["size"] + ($row['current_storage1'] / 1024)) > $row['max_storage']){
+	//$row = $rows[0];
+	if (($_FILES["file"]["size"] + ($row['current_storage1'] / 1024)) > $row['max_storage']){
 		echo '<script language="javascript">';
 		echo 'alert("Not enough storage space left!")';
 		echo '</script>';
