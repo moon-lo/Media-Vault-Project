@@ -51,7 +51,7 @@
 	$pdo = null;
 	$rows = $result->fetchAll();
 	$row = $rows[0];
-	$space = $row['current_storage1'] / 1024 . 'KB / ' . $row['max_storage'] . "KB";
+	$space = round($row['current_storage1'] / 1024, 2) . 'KB / ' . $row['max_storage'] . "KB";
 	?>
 	<td width="135">Current Storage Space: <?php echo $space; ?> </td>
     <td width="88">View: List, Grid</td>
