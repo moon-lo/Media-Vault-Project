@@ -134,4 +134,14 @@ function changeFileColour($filename, $colour) {
     );
     alterDB($sql, $parameters);
 }
+
+function changeDescription($filename, $description, $editor) {
+	$sql = "UPDATE metadata SET description = :newDescription WHERE filename = :file AND owner = :editor";
+    $parameters = array(
+        ':newDescription' => $description,
+        ':file' => $filename,
+		':editor' => $editor
+    );
+    alterDB($sql, $parameters);
+}
 ?>
