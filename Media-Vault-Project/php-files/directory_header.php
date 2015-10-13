@@ -75,9 +75,9 @@
 		writeDescriptionForm($selectedFile, $currentDir);
 	}
 	// Add description
-	if (isset($_POST['newDSet'])) {
-		if ($_POST['newDSet'] == 'Add description') {
-			$newDes = $_POST['newDescription'];
+	if (isset($_GET['newDSet'])) {
+		if ($_GET['newDSet'] == 'Add description') {
+			$newDes = $_GET['newDescription'];
 			//$editor = $_SESSION['isUser'];
 			
 			changeDescription($selectedFile, $newDes);
