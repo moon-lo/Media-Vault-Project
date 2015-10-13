@@ -61,6 +61,8 @@ function deleteFileRecord($file) {
 	 * @author James Galloway
 	 */
 function addUploadRecord($owner) {	
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO metadata (filename, filetype, filesize, location, owner)
 	        VALUES (:filename, :filetype, :filesize, :location, :owner)";
     $parameters = array(
