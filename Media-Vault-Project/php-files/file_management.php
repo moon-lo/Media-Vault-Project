@@ -180,10 +180,24 @@ function uploadFile($currentUser) {
 	
 	
 	// Upload file
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$currentUser'");
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	
 	if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
 		echo "<p>File:  " . basename($_FILES["file"]["name"]) . " was successfully uploaded.</p>";
 		return true;
-	} else {
+	} 
+	else if ((($_FILES["file"]["size"] + $row['current_storage1']) / 1024) > $row['max_storage']){
+		echo "<p>There was an error in uploading the file.</p>";
+		print_r(error_get_last());
+		return false;
+	}
+	else {
 		echo "<p>There was an error in uploading the file.</p>";
 		print_r(error_get_last());
 		return false;
