@@ -78,9 +78,9 @@
 	if (isset($_POST['newDSet'])) {
 		if ($_POST['newDSet'] == 'Add description') {
 			$newDes = $_POST['newDescription'];
-			$editor = $_SESSION['isUser'];
+			//$editor = $_SESSION['isUser'];
 			
-			changeDescription($selectedFile, $newDes, $editor);
+			changeDescription($selectedFile, $newDes);
 		}
 	}
 	
