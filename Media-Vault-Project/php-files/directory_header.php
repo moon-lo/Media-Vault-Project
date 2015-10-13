@@ -78,9 +78,10 @@
 	if (isset($_GET['newDSet'])) {
 		if ($_GET['newDSet'] == 'Add description') {
 			$newDes = $_GET['newDescription'];
+			$fileName = $_GET['fileName'];
 			//$editor = $_SESSION['isUser'];
 			
-			changeDescription($selectedFile, $newDes);
+			changeDescription($fileName, $newDes);
 		}
 	}
 	
