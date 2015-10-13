@@ -262,7 +262,7 @@ function writeRenameForm($selectedFile, $currentDir) {
      */
 function writeDescriptionForm($selectedFile, $currentDir) {
     echo "<div class='simpleInputDiv'>
-        <form action='' 'method='get' class='simpleInputForm'>
+        <form action='' 'method='POST' class='simpleInputForm'>
             <input type='hidden' value='" . $selectedFile . "' name='fileName'>
             <input type='hidden' value='" . $currentDir . "' name='currentDir'>
             <input type='text' name='newDescription'>
