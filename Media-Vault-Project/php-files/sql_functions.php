@@ -81,7 +81,7 @@ function addUploadRecord($owner) {
 	$pdo = null;
 	$rows = $result->fetchAll();
 	$row = $rows[0];
-	if (($_FILES["file"]["size"] + ($row['current_storage1'] / 1024)) > $row['max_storage']){
+	if ((($_FILES["file"]["size"] + $row['current_storage1']) / 1024) > $row['max_storage']){
 		echo '<script language="javascript">';
 		echo 'alert("Not enough storage space left!")';
 		echo '</script>';
