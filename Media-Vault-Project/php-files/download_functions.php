@@ -89,7 +89,7 @@ function prepareFileToShare($filename, $currentDir){
     );
 	alterDB($query, $parameters);
 	
-	$shareQuery = 'SELECT fileId FROM downloads WHERE location = "'.$currentDir.'" AND filename = "'.$filename.'"'
+	$shareQuery = 'SELECT fileId FROM downloads WHERE location = "'.$currentDir.'" AND filename = "'.$filename.'"';
 	
 	$share = queryDB($shareQuery);
 	$shareId = $share[0]['fileId'];
