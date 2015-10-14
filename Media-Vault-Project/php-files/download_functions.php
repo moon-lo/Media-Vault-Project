@@ -1,6 +1,6 @@
 <?php
 
-	include ROOT_DIR . '/php-files/download_functions.php';
+	include ROOT_DIR . '/php-files/sql_functions.php';
 /** Download Related Functions **/
 
 /**
