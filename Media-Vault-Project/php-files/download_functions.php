@@ -85,7 +85,7 @@ function prepareFileToShare($filename, $currentDir){
 	$query = "INSERT INTO downloads (filename, location) VALUES (:filename, :currentDir)";
 	$parameters = array(
         ':filename' => $filename,
-		':currentDir' => $currentDir;
+		':currentDir' => $currentDir
     );
 	alterDB($query, $parameters);
 	
