@@ -2,8 +2,6 @@
 	include '/var/www/html/Media-Vault-Project/Media-Vault-Project/php-files/sql_functions.php';
 	include '/var/www/html/Media-Vault-Project/Media-Vault-Project/php-files/download_functions.php';
 
-	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	if(isset($_GET['shareId'])){
 		$fileId = (int)$_GET['shareId'];
