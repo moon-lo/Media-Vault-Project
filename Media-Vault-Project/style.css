@@ -62,7 +62,7 @@ a:hover {
     }
 
         .directoryTable tr:nth-child(odd) {
-            background-color:#EFFBBF;
+            background-color:#F7FDDD;
 			border-color:6CC8C1;
 			color:#114040;
         }
