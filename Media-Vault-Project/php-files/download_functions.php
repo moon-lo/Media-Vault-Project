@@ -1,4 +1,6 @@
 <?php
+
+	include ROOT_DIR . '/php-files/download_functions.php';
 /** Download Related Functions **/
 
 /**
@@ -80,13 +82,20 @@ function prepareFileToShare($filename, $currentDir){
 	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
-	mysql_query("INSERT INTO downloads (filename, location) VALUES ({$filename}, {$currentDir})");
-	$share = mysql_query("SELECT fileId FROM downloads WHERE location = {$currentDir}");
-	$row = mysql_fetch_row($share);
-	$shareId = $row[0];
+	$query = "INSERT INTO downloads (filename, location) VALUES (:filename, :currentDir)";
+	$parameters = array(
+        ':filename' => $filename,
+		':currentDir' => $currentDir;
+    );
+	alterDB($query, $parameters);
+	
+	$shareQuery = 'SELECT fileId FROM downloads WHERE location = "'.$currentDir.'"';
+	
+	$share = queryDB($shareQuery);
+	$shareId = $share[0]['fileId'];
 	$pdo = null;
 	
-	$link =ROOT_DIR.'/'.'share.php?shareId?={$shareId}';
+	$link ='54.206.80.50/Media-Vault-Project/Media-Vault-Project/share.php?shareId?="'.$shareId.'"';
 	return $link;
 }
 
