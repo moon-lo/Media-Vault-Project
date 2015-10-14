@@ -13,7 +13,7 @@
 		$results = queryDB($query);
 		
 		if(mysql_num_rows($results) != 1){
-			echo "file missing, or link expired."
+			echo "file missing, or link expired.";
 		}else{
 			$filename = $results[0]['filename'];
 			$location = $results[0]['location'];
