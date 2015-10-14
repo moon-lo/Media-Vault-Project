@@ -19,9 +19,11 @@
 			$location = $results[0]['location'];
 			downloadFile($filename, $location);
 			
-			$remove = "DELETE FROM downloads WHERE fileId = {$fileId}";
-			$stmnt = pdo->prepare($remove);
-			$stmnt->excecute();
+			$remove = 'DELETE FROM downloads WHERE fileId = :fileId';
+			$parameters = array(
+				':fileId' => $fileId
+			);
+			alterDB($remove, $parameters);
 		}
 		$pdo = null;
 
