@@ -3,7 +3,7 @@
 	include ROOT_DIR . '/php-files/sql_functions.php';
 	include ROOT_DIR . '/php-files/download_functions.php';
 
-
+	echo "here we are";
 	if(isset($_GET['shareId'])){
 		$fileId = (int)$_GET['shareId'];
 		
