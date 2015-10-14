@@ -1,6 +1,6 @@
 <?php
 	define('ROOT_DIR', dirname(__FILE__));
-	include ROOT_DIR . '/php-files/directory_header.php';
+	include ROOT_DIR . '/php-files/sql_functions.php';
 	include ROOT_DIR . '/php-files/download_functions.php';
 
 
