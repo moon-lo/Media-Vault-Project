@@ -1,6 +1,7 @@
 <?php
-	include '/var/www/html/Media-Vault-Project/Media-Vault-Project/php-files/sql_functions.php';
-	include '/var/www/html/Media-Vault-Project/Media-Vault-Project/php-files/download_functions.php';
+	define('ROOT_DIR', dirname(__FILE__));
+	include ROOT_DIR . '/php-files/directory_header.php';
+	include ROOT_DIR . '/php-files/download_functions.php';
 
 
 	if(isset($_GET['shareId'])){
