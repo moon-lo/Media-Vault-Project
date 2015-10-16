@@ -98,6 +98,18 @@ body {
 	background-color: #CCFF99;
 }
 
+.dirHref {
+    display: block;
+    color: inherit;
+}
+
+.selectedFile {
+    background-color: #CCFF99;
+}
+
+li {
+    padding: 5px;
+}
 
 <!-- UPLOAD -->
 
