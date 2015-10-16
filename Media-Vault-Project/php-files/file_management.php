@@ -11,35 +11,90 @@
 	 *
 	 * @author James Galloway
 	 */
-function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $username) {
-	if ($pdo == null) {
+function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $username, $searchStr) {
+    if ($pdo == null) {
         echo "<tr id='listingRow'><td>No files to display</td></tr>";
     } else {
         foreach ($pdo as $row) {
-            echo "<tr  id='listingRow'>";
+			echo '<tr class="listingRow">';
+			$colour = $row['colour'];
+			$colourStyle = '';
+			if ($colour != null && $colour != '' && $colour != 'none'){
+				$colourStyle = " style='background-color:$colour' ";
+			}
 		    foreach ($columns as $column) {
+                    if ($column == 'filename') {
+                        $sortKey = strtolower(substr($row[$column], 0, 1));
+                    }
                     if ($column == 'filetype') {
+                        $sortKey = substr($row[$column], 0, 1);
                         $row[$column] = selectIcon($row[$column]);
                     }
                     if ($column == 'timestamp') {
+                        $sortKey = $row[$column];
                         $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
                     }
                     if ($column == 'filesize') {
+                        $sortKey = $row[$column];
                         $row[$column] = round($row[$column] / 1024);
                         $row[$column] = $row[$column] . " KB";
                     }
                     if ($row['filename'] == $selectedFile && $isFolder) {
-                        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
+                        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
                     } else if ($row['filename'] == $selectedFile && !$isFolder) {
-				        echo '<td class="selectedFile"><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
+				        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
                     } else {
-                        echo '<td><a href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                        echo '<td sortKey="' . $sortKey . '" ><a ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
                     }
 		    }
 		    echo "</tr>";
         }
     }
 } // end writeTable
+
+
+/**
+ * Similar to writeTable.  The difference is in the href attribute values specified by each listing.  
+ */
+function writeSearchResults($pdo, $columns, $username) {
+    if ($pdo == null) {
+        echo "<tr id='listingRow'><td>No matches were found</td></tr>";
+    } else {
+        foreach ($pdo as $row) {
+            $dir = $row['location'];
+           	$colour = $row['colour'];
+			$colourStyle = '';
+			if ($colour != null && $colour != '' && $colour != 'none'){
+				$colourStyle = " style='background-color:$colour' ";
+			}
+            echo '<tr class="listingRow">';
+		    foreach ($columns as $column) {
+                if ($column == 'filename') {
+                    $sortKey = strtolower(substr($row[$column], 0, 1));
+                }
+                if ($column == 'filetype') {
+                    $sortKey = substr($row[$column], 0, 1);
+                    $row[$column] = selectIcon($row[$column]);
+                }
+                if ($column == 'timestamp') {
+                    $sortKey = $row[$column];
+                    $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
+                }
+                if ($column == 'filesize') {
+                    $sortKey = $row[$column];
+                    $row[$column] = round($row[$column] / 1024);
+                    $row[$column] = $row[$column] . " KB";
+                }
+                if ($column == 'location') {
+                    $sortKey = count(explode("/", $row[$column]));
+                    $row[$column] = 'Home/' . substr($row[$column], strlen('uploads/' . $username . '/'), strlen($row[$column]));
+                }
+                echo '<td sortKey="' . $sortKey . '"><a ' . $colourStyle . 'href="directory.php?currentDir=' . $dir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+            }
+		}
+	    echo "</tr>";
+    }
+} // end writeSearchResults
 
     /**
      * Select the icon that applies to a particular file's type.
@@ -68,6 +123,27 @@ function selectIcon($type) {
      return $image = '<img src="images/' . $icon . '" width="30" height="40" alt="File type icon" />';
 } // end selectIcon
 
+///**
+// * Determine the correct sorting values for column heading links.
+// *
+// * @param str $heading - string name of the column to be sorted.
+// *
+// * @author James Galloway
+// */
+//function getSortURL($heading) {
+//    $url = $_SERVER['REQUEST_URI'];
+
+//    // Remove prior $_GET information if it exists
+//    if (strpos($url, '&sort=') !== false) {
+//        $url = substr($url, 0, strpos($url, '&sort'));
+//    }
+
+//    if (strpos($_SERVER['REQUEST_URI'], '&sort=' . $heading) !== false) {
+//        return $url = $url . '&sort=' . $heading . '&sortType=DESC';
+//    }
+//    return $url = $url . '&sort=' . $heading . '&sortType=ASC';
+//} // end getSortURL
+
 /** Upload Related Functions **/
 
 	/**
@@ -95,12 +171,39 @@ function uploadFile($currentUser) {
             return false;
         }
     }
+	// try {
+		// $result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
+	// } catch (PDOException $e) {
+		// echo $e->getMessage();
+	// }
+	
+	// $pdo = null;
+	// $rows = $result->fetchAll();
+	// $row = $rows[0];
+	// $space = $row['current_storage1'] . 'KB / ' . $row['max_storage'] . "KB";
+	
+	
 	
 	// Upload file
-	if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$currentUser'");
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	$pdo = null;
+	$rows = $result->fetchAll();
+	$row = $rows[0];
+	if ((($_FILES["file"]["size"] + $row['current_storage1']) / 1024) > $row['max_storage']){
+		echo "<p>There is not enough storage space left for that file.</p>";
+		return true;
+	}
+	else if (move_uploaded_file($_FILES["file"]["tmp_name"], $file)) {
 		echo "<p>File:  " . basename($_FILES["file"]["name"]) . " was successfully uploaded.</p>";
 		return true;
-	} else {
+	} 
+	else {
 		echo "<p>There was an error in uploading the file.</p>";
 		print_r(error_get_last());
 		return false;
@@ -149,26 +252,39 @@ function deleteFile($file, $currentDir) {
 	return false;
 } // end deleteFile
 
-/** Rename Related Functions **/
-    
+/** Edit Related Functions **/
+
     /**
-     * Simple function to echo text input form onto page for user to input new file name.
+     * Function to create text input form onto page for user to add a description to their selected file.
      *
      * @param $selectedFile - string - file name of selected file - stored in hidden input
      *
-     * @author James Galloway
+     * @author Thomas Shortt
      */
-function writeRenameForm($selectedFile, $currentDir) {
+function writeEditForm($selectedFile, $currentDir) {
     echo "<div class='simpleInputDiv'>
         <form action='' 'method='get' class='simpleInputForm'>
-            <input type='hidden' value='" . $selectedFile . "' name='oldName'>
+            <br>
+            <input type='hidden' value='" . $selectedFile . "' name='fileName'>
             <input type='hidden' value='" . $currentDir . "' name='currentDir'>
+            <label for='newName'>Name: </label>
             <input type='text' name='newName'>
-            <input type='submit' name='newNameSet' value='Rename'>
-            <input type='submit' name='newNameSet' value='Cancel'>
+            <br><br>
+            <label for='newName'>Description: </label>
+            <input type='text' name='newDescription'>
+            <br><br>
+            <input type='submit' name='confirmEdit' value='Confirm'>
+            <input type='submit' name='cancelEdit' value='Cancel'>
         </form>
     </div>";
-} // end writeRenameForm
+} // end writeEditForm
+
+function writeSearchForm() {
+    echo '<form name="searchForm" action="search.php" method="POST">
+		    <input type="text" name="searchStr" value="">
+            <input type="submit" name="searchButton" value="Search">
+	      </form>';
+} // end writeSearchForm
 
     /**
      * Rename selected file.

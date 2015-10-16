@@ -1,12 +1,14 @@
 <?php
-    
     include ROOT_DIR . '/php-files/file_management.php';
     include ROOT_DIR . '/php-files/sql_functions.php';
 	include ROOT_DIR . '/php-files/download_functions.php';
+    
     $isSelected = false;
     $isFolder = false;
     $selectedFile = null;
     $selectedFolder = null;
+    $searchStr = false;
+
     if (isSetAndNotEmpty($_GET, 'currentDir')) {
         $currentDir = $_GET['currentDir'];
     } else {
@@ -46,22 +48,32 @@
             }
         }
     }
+	
+	if (isset($_GET['colour_select'])) {
+		changeFileColour($_GET['selectedFile'], $_GET['colour'], $accountName);
+	}
 
-    // RENAME
-    // Write rename form is edit & file are set
+    // EDIT
     if (isset($_GET['edit'])) {
-        writeRenameForm($selectedFile, $currentDir);
+        writeEditForm($selectedFile, $currentDir);
     }
-    // Rename file if new name & file are set
-    if (isset($_GET['newNameSet'])) {
-        if ($_GET['newNameSet'] == 'Rename') {
-            $oldName = $_GET['oldName'];
+    // Edit file name & description if 'confirm' is set
+    if (isset($_GET['confirmEdit'])) {
+        if (isSetAndNotEmpty($_GET, 'newDescription')) {
+            $newDes = $_GET['newDescription'];
+            $fileName = $_GET['fileName'];
+            //$editor = $_SESSION['isUser'];
+            changeDescription($fileName, $newDes, $accountName);
+        }
+        if (isSetAndNotEmpty($_GET, 'newName')) {
+            $oldName = $_GET['fileName'];
             $newName = $_GET['newName'];
-                  if (renameFile($oldName, $newName, $currentDir)) {
-                    renameFileRecord($oldName, $newName);
-                }
+            if (renameFile($oldName, $newName, $currentDir, $accountName)) {
+                renameFileRecord($oldName, $newName, $accountName);
+            }
         }
     }
+
     // NEW FOLDER
     // Write folder naming form is create folder is set
     if (isset($_GET['newFolder'])) {
@@ -81,8 +93,16 @@
         //$fname = $_GET['filename'];
         $fname = $selectedFile;
         //$flocation = NULL;	
-        downloadFile($fname);
+        downloadFile($fname, $currentDir);
     }
+	
+	// SHARE
+	// Add file to downloads table and provide link to share
+	if(isset($_GET['share'])){
+		$link = prepareFileToShare($selectedFile, $currentDir);
+		echo 'your single use link is: '.$link;
+	}
+	
     // MOVE FILE
     // If the 'move to...' button is clicked AND a file is selected
     if(isset($_GET['moveTo']) && $isSelected) {
@@ -95,5 +115,10 @@
             }
         }
     }
+
+	if (isSetAndNotEmpty($_GET, 'searchStr')) {
+		$searchStr = $_GET['searchStr'];
+	}
+
     echo $currentDir;
 ?>

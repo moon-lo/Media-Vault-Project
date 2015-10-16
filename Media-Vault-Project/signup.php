@@ -34,12 +34,13 @@
 			{
 				$randomSalt .= $chars[rand(0, $charsLength - 1)];
 			}
+			$max_storage = (50 * 1024);
 				
 			try
 			{
 				//Use a prepared statement to insert the data into the users table.
-				$stmt = $pdo->prepare("INSERT INTO users (username, email, password, salt) ".
-				"VALUES ('$username','$email', SHA2(CONCAT('$newPassword', '$randomSalt'), 0), '$randomSalt')");
+				$stmt = $pdo->prepare("INSERT INTO users (username, email, password, salt, max_storage) ".
+				"VALUES ('$username','$email', SHA2(CONCAT('$newPassword', '$randomSalt'), 0), '$randomSalt', $max_storage)");
 				$stmt->execute();
 			}
 			catch(PDOException $e)
@@ -69,7 +70,8 @@
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Sign up</title>
+<title>Sign up</title> 
+<!-- hello gibberish -->
 </head>
 
 <body class="indexPage">

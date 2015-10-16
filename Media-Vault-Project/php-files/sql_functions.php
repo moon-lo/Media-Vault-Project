@@ -61,6 +61,8 @@ function deleteFileRecord($file) {
 	 * @author James Galloway
 	 */
 function addUploadRecord($owner) {	
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO metadata (filename, filetype, filesize, location, owner)
 	        VALUES (:filename, :filetype, :filesize, :location, :owner)";
     $parameters = array(
@@ -70,7 +72,23 @@ function addUploadRecord($owner) {
         ':location' => 'uploads/' . $owner . '/',
         ':owner' => $owner,
     );
-	alterDB($sql, $parameters);
+	try {
+		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$owner'");
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	
+	$pdo = null;
+	$rows = $result->fetchAll();
+	$row = $rows[0];
+	if ((($_FILES["file"]["size"] + $row['current_storage1']) / 1024) > $row['max_storage']){
+		echo '<script language="javascript">';
+		echo 'alert("Not enough storage space left!")';
+		echo '</script>';
+	}
+	else {
+		alterDB($sql, $parameters);
+	}
 } // end addUploadRecord
     /**
      * Rename a file's asscoiated record in the metadata table.
@@ -80,12 +98,16 @@ function addUploadRecord($owner) {
      * 
      * @author James Galloway
      */
-function renameFileRecord($oldName, $newName) { 
-    $sql = "UPDATE metadata SET filename = :newName WHERE filename = :oldName";
+function renameFileRecord($oldName, $newName, $user) { 
+    $sql = "UPDATE metadata SET filename = :newName WHERE filename = :oldName AND owner = :user";
     $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
+    if ($fileExtension != '') {
+        $fileExtension = '.' . $fileExtension;
+    }
     $parameters = array(
-        ':newName' => $newName . '.' . $fileExtension,
-        ':oldName' => $oldName
+        ':newName' => $newName . $fileExtension,
+        ':oldName' => $oldName,
+        ':user' => $user
     );
     alterDB($sql, $parameters);
 } // end renameFileRecord
@@ -117,12 +139,34 @@ function newFolderRecord($name, $location, $owner) {
      *
      * @author James Galloway
      */
-function renameFileLocationRecord($file, $newLocation) {
-    $sql = "UPDATE metadata SET location = :newLocation WHERE filename = :file";
+function renameFileLocationRecord($file, $newLocation, $user) {
+    $sql = "UPDATE metadata SET location = :newLocation WHERE filename = :file AND owner = :user";
     $parameters = array(
         ':newLocation' => $newLocation,
-        ':file' => $file
+        ':file' => $file,
+        ':user' => $user
     );
     alterDB($sql, $parameters);
 } // end renameFileLocationRecord
+
+function changeFileColour($filename, $colour, $user) {
+	$sql = "UPDATE metadata SET colour = :newColour WHERE filename = :file AND owner = :user";
+    $parameters = array(
+        ':newColour' => $colour,
+        ':file' => $filename,
+        ':user' => $user
+    );
+    alterDB($sql, $parameters);
+}
+
+function changeDescription($filename, $description, $user) {
+	$sql = "UPDATE metadata SET description = :newDescription WHERE filename = :file AND owner = :user";
+    $parameters = array(
+        ':newDescription' => $description,
+        ':file' => $filename,
+        ':user' => $user
+		//':editor' => $editor
+    );
+    alterDB($sql, $parameters);
+}
 ?>

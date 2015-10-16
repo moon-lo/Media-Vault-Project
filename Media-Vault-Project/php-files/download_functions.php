@@ -1,4 +1,6 @@
 <?php
+
+	//include ROOT_DIR . '/php-files/sql_functions.php';
 /** Download Related Functions **/
 
 /**
@@ -57,22 +59,45 @@ function ownFile($fileid, $id = NULL){
 * @author Benjamin McCloskey
 **/
 
-function downloadFile($filename, $location = NULL) {
+function downloadFile($filename, $currentDir) {
 	//if default location set to uploads folder.
-	if(is_null($location)){
-		$location = "/uploads/";
+	if(is_null($currentDir)){
+		echo "<p>File not found.</p>";
+        return false;
 	}
 	
 	//file info to get MIME_TYPE for setting Content-Type header.
 	$finfo = finfo_open(FILEINFO_MIME_TYPE);
-	$mType = finfo_file($finfo,ROOT_DIR.$location.$filename);
+	$mType = finfo_file($finfo,ROOT_DIR.'/'. $currentDir.$filename);
 	
 	//download file
 	header('Content-Type: '.$mType);
 	header('Content-Disposition: attachment; filename="'.$filename.'"');
-	readfile(ROOT_DIR.$location.$filename);
+	readfile(ROOT_DIR.'/'.$currentDir.$filename);
 	exit;
 	
 }
+
+function prepareFileToShare($filename, $currentDir){
+	$pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	
+	$query = "INSERT INTO downloads (filename, location) VALUES (:filename, :currentDir)";
+	$parameters = array(
+        ':filename' => $filename,
+		':currentDir' => $currentDir
+    );
+	alterDB($query, $parameters);
+	
+	$shareQuery = 'SELECT fileId FROM downloads WHERE location = "'.$currentDir.'" AND filename = "'.$filename.'"';
+	
+	$share = queryDB($shareQuery);
+	$shareId = $share[0]['fileId'];
+	$pdo = null;
+	
+	$link ='54.206.80.50/Media-Vault-Project/Media-Vault-Project/share.php?shareId='.$shareId;
+	return $link;
+}
+
 
 ?>

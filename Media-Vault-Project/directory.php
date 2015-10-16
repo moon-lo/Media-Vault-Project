@@ -23,6 +23,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css">
     <script type="text/javascript" src="javascript/display_functions.js"></script>
+    <script type="text/javascript" src="javascript/jquery-1.11.3.js"></script>
 </head>
 
 <body>
@@ -32,7 +33,7 @@
     <p><strong><font size="+1">TEAM 12 MEDIA VAULT</font></strong></p></td>
     <td width="86"><p>&nbsp;</p>      <?php echo $accountName ?></td>
     <td width="66"><p>&nbsp;</p>
-    <p><a href="index.php">Log out</a></p></td>
+    <p><a href="logout.php">Log out</a></p></td>
   </tr>
 </table>
 <hr>
@@ -42,7 +43,7 @@
     <td width="142"><div align="center"><strong><a href="upload.php">Upload</a></strong></div></td>
     <?php 
 	try {
-		$result = $pdo->query("select current_storage, max_storage from users where username = '$accountName'");
+		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
 	} catch (PDOException $e) {
 		echo $e->getMessage();
 	}
@@ -50,36 +51,59 @@
 	$pdo = null;
 	$rows = $result->fetchAll();
 	$row = $rows[0];
-	$space = $row['current_storage'] . 'MB / ' . $row['max_storage'] . "MB";
+	$space = round($row['current_storage1'] / 1024, 2) . 'KB / ' . $row['max_storage'] . "KB";
 	?>
-	<td width="135">Remaining space: <?php echo $space; ?> </td>
+	<td width="135">Current Storage Space: <?php echo $space; ?> </td>
     <td width="88">View: List, Grid</td>
     <td width="235">
-  <input type="search" name="searchBar" value="" /><input type="button" name="searchButton" value="Search" /></td>
+    
+    <!-- Search Form -->
+    <form name="searchForm" action="" method="GET">
+			<input type="text" name="searchStr" value="">
+            <input type="submit" name="searchButton" value="Search">
+	</form>
+
+    </td>
   </tr>
 </table>
 
 <table class="directoryTable"  id="directoryTable" width="75%" border="1" style="float: left;">
-  <tr>
-    <th width="25%">Name</th>
-    <th width="25%">Type</th>
-    <th width="25%">Last modified</th>
-    <th width="25%">Size</th>
-  </tr>
-  
-    <!--File Selection Form -->
-    <form action="directory.php" method="post">
-	    <?php
-		    // Get metadata table info
-		    $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
-		    // Define desired columns
-		    $columns = array('filename', 'filetype', 'timestamp', 'filesize');
-		    // Write to HTML table
-		    writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName);
-	    ?>
-    </form>
-
-
+  <thead>
+      <tr>
+        <th id="nameHead" onclick="orderTable(0, true)">Name</th>
+        <th id="typeHead" onclick="orderTable(1, true)">Type</th>
+        <th id="timeHead" onclick="orderTable(2, true)">Last Modified</th>
+        <th id="sizeHead" onclick="orderTable(3, true)">Size</th>
+        <?php 
+            if ($searchStr) { 
+                echo '<th id="dirHead"  onclick="orderTable(4, true)">Directory</th>';
+            }
+        ?>
+      </tr>
+    </thead>
+    <tbody>
+        <!--File Selection Form -->
+        <form action="directory.php" method="post">
+	        <?php
+		        if (!$searchStr) {
+                    // Get metadata table info
+		            $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
+		            // Define desired columns
+		            $columns = array('filename', 'filetype', 'timestamp', 'filesize');
+                    // Write to HTML table
+		            writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName, $searchStr);
+                } else {
+		            $metadata = queryDB('SELECT * FROM metadata 
+                                WHERE owner = "' . $accountName . '" AND filename LIKE "%' . $searchStr . '" 
+                                OR owner = "' . $accountName . '" AND description LIKE "' . $searchStr . '%" 
+                                OR owner = "' . $accountName . '" AND filetype LIKE "%' . $searchStr . '%"');
+                    
+		            $columns = array('filename', 'filetype', 'timestamp', 'filesize', 'location');
+                    writeSearchResults($metadata, $columns, $accountName);
+                }
+	        ?>
+        </form>
+    </tbody>
 </table>
 <div class="fileInfoDiv">
     <!--File Information Table -->
@@ -101,20 +125,45 @@
         <td id="descriptionTagCell" colspan="2"><strong>Description:</strong></td>
       </tr>
       <tr>
-        <td id="descriptionCell" colspan="2">[PLACEHOLDER DESC]</td>
+        <td id="descriptionCell" colspan="2">
+		<?php
+			$description = queryDB('SELECT description FROM metadata WHERE filename = "' . $selectedFile . '" AND owner = "' . $accountName . '"');
+			
+			if ($description == NULL) {
+				echo "No description avaliable.";
+			}
+			else {
+				foreach ($description as $item)
+				{
+					echo $item['description'];
+				}
+			}
+		?>
+		</td>
       </tr>
-      <tr>
+     <!-- <tr>
         <td id="colourTagCell" colspan="2"><strong>Colour tag:</strong></td>
       </tr>
       <tr>
-        <td id="tagCell" colspan="2">[PLACEHOLDER TAG]</td>
-      </tr>
+        <td id="tagCell" colspan="2">
+		</td>
+      </tr> -->
     
         <!--File Management Form -->
         <form action="directory.php" method="get" id="fileManForm">
             <input type="hidden" value="<?php if ($isSelected) { echo $selectedFile; } ?>" name="selectedFile" id="selectedFileHidden">
             <input type="hidden" value="<?php echo $currentDir; ?>" name="currentDir" id="currentDirHidden">
-
+			<tr id="fileManButtons">
+			<td><div id="fileManDiv"><select name="colour">
+				<option value="none">No Colour</option>
+				<option value="aqua">Blue</option>
+				<option value="red">Red</option>
+				<option value="lime">Green</option>
+				<option value="yellow">Yellow</option>
+				<option value="pink">Pink</option>
+				</select></div></td>
+				<td><div id="fileManDiv"><input type="submit" value="Change Colour" name="colour_select"></div></td>
+			</tr>
             <tr id="fileManButtons">
                 <td><div id="fileManDiv"><input type="submit" value="Download" name="download" id="fileManButton"></div></td>
                 <td><div id="fileManDiv"><input type="submit" value="Edit" name="edit" id="fileManButton"></div></td>

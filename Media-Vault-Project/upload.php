@@ -9,6 +9,12 @@
     
     session_start();
     
+    if (!isset($_SESSION['isUser']))
+	{
+		header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/logout.php");
+		exit();
+	}
+    
     $accountName = $_SESSION['isUser'];
     
     // Check to see if file is set - Attempt to upload file - Add record upon success
