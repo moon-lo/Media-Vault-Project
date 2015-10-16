@@ -50,41 +50,30 @@
     }
 	
 	if (isset($_GET['colour_select'])) {
-		changeFileColour($_GET['selectedFile'], $_GET['colour']);
+		changeFileColour($_GET['selectedFile'], $_GET['colour'], $accountName);
 	}
 
-    // RENAME
-    // Write rename form is edit & file are set
+    // EDIT
     if (isset($_GET['edit'])) {
-        writeRenameForm($selectedFile, $currentDir);
+        writeEditForm($selectedFile, $currentDir);
     }
-    // Rename file if new name & file are set
-    if (isset($_GET['newNameSet'])) {
-        if ($_GET['newNameSet'] == 'Rename') {
-            $oldName = $_GET['oldName'];
+    // Edit file name & description if 'confirm' is set
+    if (isset($_GET['confirmEdit'])) {
+        if (isSetAndNotEmpty($_GET, 'newDescription')) {
+            $newDes = $_GET['newDescription'];
+            $fileName = $_GET['fileName'];
+            //$editor = $_SESSION['isUser'];
+            changeDescription($fileName, $newDes, $accountName);
+        }
+        if (isSetAndNotEmpty($_GET, 'newName')) {
+            $oldName = $_GET['fileName'];
             $newName = $_GET['newName'];
-                  if (renameFile($oldName, $newName, $currentDir)) {
-                    renameFileRecord($oldName, $newName);
-                }
+            if (renameFile($oldName, $newName, $currentDir, $accountName)) {
+                renameFileRecord($oldName, $newName, $accountName);
+            }
         }
     }
-	
-	// DESCRIPTION
-	// Display description form
-	if (isset($_GET['edit'])) {
-		writeDescriptionForm($selectedFile, $currentDir);
-	}
-	// Add description
-	if (isset($_GET['newDSet'])) {
-		if ($_GET['newDSet'] == 'Add description') {
-			$newDes = $_GET['newDescription'];
-			$fileName = $_GET['fileName'];
-			//$editor = $_SESSION['isUser'];
-			
-			changeDescription($fileName, $newDes);
-		}
-	}
-	
+
     // NEW FOLDER
     // Write folder naming form is create folder is set
     if (isset($_GET['newFolder'])) {

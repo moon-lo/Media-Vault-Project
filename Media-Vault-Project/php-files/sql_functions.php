@@ -98,12 +98,16 @@ function addUploadRecord($owner) {
      * 
      * @author James Galloway
      */
-function renameFileRecord($oldName, $newName) { 
-    $sql = "UPDATE metadata SET filename = :newName WHERE filename = :oldName";
+function renameFileRecord($oldName, $newName, $user) { 
+    $sql = "UPDATE metadata SET filename = :newName WHERE filename = :oldName AND owner = :user";
     $fileExtension = pathinfo($oldName, PATHINFO_EXTENSION);
+    if ($fileExtension != '') {
+        $fileExtension = '.' . $fileExtension;
+    }
     $parameters = array(
-        ':newName' => $newName . '.' . $fileExtension,
-        ':oldName' => $oldName
+        ':newName' => $newName . $fileExtension,
+        ':oldName' => $oldName,
+        ':user' => $user
     );
     alterDB($sql, $parameters);
 } // end renameFileRecord
@@ -135,29 +139,32 @@ function newFolderRecord($name, $location, $owner) {
      *
      * @author James Galloway
      */
-function renameFileLocationRecord($file, $newLocation) {
-    $sql = "UPDATE metadata SET location = :newLocation WHERE filename = :file";
+function renameFileLocationRecord($file, $newLocation, $user) {
+    $sql = "UPDATE metadata SET location = :newLocation WHERE filename = :file AND owner = :user";
     $parameters = array(
         ':newLocation' => $newLocation,
-        ':file' => $file
+        ':file' => $file,
+        ':user' => $user
     );
     alterDB($sql, $parameters);
 } // end renameFileLocationRecord
 
-function changeFileColour($filename, $colour) {
-	$sql = "UPDATE metadata SET colour = :newColour WHERE filename = :file";
+function changeFileColour($filename, $colour, $user) {
+	$sql = "UPDATE metadata SET colour = :newColour WHERE filename = :file AND owner = :user";
     $parameters = array(
         ':newColour' => $colour,
-        ':file' => $filename
+        ':file' => $filename,
+        ':user' => $user
     );
     alterDB($sql, $parameters);
 }
 
-function changeDescription($filename, $description) {
-	$sql = "UPDATE metadata SET description = :newDescription WHERE filename = :file";
+function changeDescription($filename, $description, $user) {
+	$sql = "UPDATE metadata SET description = :newDescription WHERE filename = :file AND owner = :user";
     $parameters = array(
         ':newDescription' => $description,
-        ':file' => $filename
+        ':file' => $filename,
+        ':user' => $user
 		//':editor' => $editor
     );
     alterDB($sql, $parameters);

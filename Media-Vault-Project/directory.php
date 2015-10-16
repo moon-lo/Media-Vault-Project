@@ -93,7 +93,11 @@
                     // Write to HTML table
 		            writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName, $searchStr);
                 } else {
-		            $metadata = queryDB('SELECT * FROM metadata WHERE owner = "' . $accountName . '" AND filename LIKE "%' . $searchStr . '%" OR description LIKE "%' . $searchStr . '%" OR filetype LIKE "' . $searchStr . '"');
+		            $metadata = queryDB('SELECT * FROM metadata 
+                                WHERE owner = "' . $accountName . '" AND filename LIKE "%' . $searchStr . '" 
+                                OR owner = "' . $accountName . '" AND description LIKE "' . $searchStr . '%" 
+                                OR owner = "' . $accountName . '" AND filetype LIKE "%' . $searchStr . '%"');
+                    
 		            $columns = array('filename', 'filetype', 'timestamp', 'filesize', 'location');
                     writeSearchResults($metadata, $columns, $accountName);
                 }

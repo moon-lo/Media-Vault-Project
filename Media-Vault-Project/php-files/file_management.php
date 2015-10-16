@@ -62,6 +62,11 @@ function writeSearchResults($pdo, $columns, $username) {
     } else {
         foreach ($pdo as $row) {
             $dir = $row['location'];
+           	$colour = $row['colour'];
+			$colourStyle = '';
+			if ($colour != null && $colour != '' && $colour != 'none'){
+				$colourStyle = " style='background-color:$colour' ";
+			}
             echo '<tr class="listingRow">';
 		    foreach ($columns as $column) {
                 if ($column == 'filename') {
@@ -84,7 +89,7 @@ function writeSearchResults($pdo, $columns, $username) {
                     $sortKey = count(explode("/", $row[$column]));
                     $row[$column] = 'Home/' . substr($row[$column], strlen('uploads/' . $username . '/'), strlen($row[$column]));
                 }
-                echo '<td sortKey="' . $sortKey . '"><a href="directory.php?currentDir=' . $dir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                echo '<td sortKey="' . $sortKey . '"><a ' . $colourStyle . 'href="directory.php?currentDir=' . $dir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
             }
 		}
 	    echo "</tr>";
@@ -247,45 +252,32 @@ function deleteFile($file, $currentDir) {
 	return false;
 } // end deleteFile
 
-/** Rename Related Functions **/
-    
-    /**
-     * Simple function to echo text input form onto page for user to input new file name.
-     *
-     * @param $selectedFile - string - file name of selected file - stored in hidden input
-     *
-     * @author James Galloway
-     */
-function writeRenameForm($selectedFile, $currentDir) {
-    echo "<div class='simpleInputDiv'>
-        <form action='' 'method='get' class='simpleInputForm'>
-            <input type='hidden' value='" . $selectedFile . "' name='oldName'>
-            <input type='hidden' value='" . $currentDir . "' name='currentDir'>
-            <input type='text' name='newName'>
-            <input type='submit' name='newNameSet' value='Rename'>
-            <input type='submit' name='newNameSet' value='Cancel'>
-        </form>
-    </div>";
-} // end writeRenameForm
+/** Edit Related Functions **/
 
-/**
+    /**
      * Function to create text input form onto page for user to add a description to their selected file.
      *
      * @param $selectedFile - string - file name of selected file - stored in hidden input
      *
      * @author Thomas Shortt
      */
-function writeDescriptionForm($selectedFile, $currentDir) {
+function writeEditForm($selectedFile, $currentDir) {
     echo "<div class='simpleInputDiv'>
         <form action='' 'method='get' class='simpleInputForm'>
+            <br>
             <input type='hidden' value='" . $selectedFile . "' name='fileName'>
             <input type='hidden' value='" . $currentDir . "' name='currentDir'>
+            <label for='newName'>Name: </label>
+            <input type='text' name='newName'>
+            <br><br>
+            <label for='newName'>Description: </label>
             <input type='text' name='newDescription'>
-            <input type='submit' name='newDSet' value='Add description'>
-            <input type='submit' name='newDSet' value='Cancel'>
+            <br><br>
+            <input type='submit' name='confirmEdit' value='Confirm'>
+            <input type='submit' name='cancelEdit' value='Cancel'>
         </form>
     </div>";
-} // end writeDescriptionForm
+} // end writeEditForm
 
 function writeSearchForm() {
     echo '<form name="searchForm" action="search.php" method="POST">
