@@ -3,7 +3,7 @@
 	define('ROOT_DIR', dirname(__FILE__));
 
     // TEMPORARY SET USER
-    $accountName = 'user1';
+    $accountName = 'testuser';
 
     include ROOT_DIR . '/php-files/directory_header.php';
 ?>
