@@ -17,35 +17,38 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
     } else {
         foreach ($pdo as $row) {
 			echo '<tr class="listingRow">';
-			$colour = $row['colour'];
-			$colourStyle = '';
-			if ($colour != null && $colour != '' && $colour != 'none'){
-				$colourStyle = " style='background-color:$colour' ";
-			}
-		    foreach ($columns as $column) {
-                    if ($column == 'filename') {
-                        $sortKey = strtolower(substr($row[$column], 0, 1));
-                    }
-                    if ($column == 'filetype') {
-                        $sortKey = substr($row[$column], 0, 1);
-                        $row[$column] = selectIcon($row[$column]);
-                    }
-                    if ($column == 'timestamp') {
-                        $sortKey = $row[$column];
-                        $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
-                    }
-                    if ($column == 'filesize') {
-                        $sortKey = $row[$column];
-                        $row[$column] = round($row[$column] / 1024);
-                        $row[$column] = $row[$column] . " KB";
-                    }
-                    if ($row['filename'] == $selectedFile && $isFolder) {
-                        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
-                    } else if ($row['filename'] == $selectedFile && !$isFolder) {
-				        echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
-                    } else {
-                        echo '<td sortKey="' . $sortKey . '" ><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
-                    }
+		    foreach ($columns as $column) {	
+                if ($column == 'colour') {
+                    $colour = $row['colour'];
+			        if ($colour != null && $colour != '' && $colour != 'none'){
+				        $colourStyle = " style='background-color:$colour' ";
+			        }
+                } else {
+                    $colourStyle = '';
+                }
+                if ($column == 'filename') {
+                    $sortKey = strtolower(substr($row[$column], 0, 1));
+                }
+                if ($column == 'filetype') {
+                    $sortKey = substr($row[$column], 0, 1);
+                    $row[$column] = selectIcon($row[$column]);
+                }
+                if ($column == 'timestamp') {
+                    $sortKey = $row[$column];
+                    $row[$column] = date("g:i a - d.m.y", strtotime($row[$column]));
+                }
+                if ($column == 'filesize') {
+                    $sortKey = $row[$column];
+                    $row[$column] = round($row[$column] / 1024);
+                    $row[$column] = $row[$column] . " KB";
+                }
+                if ($row['filename'] == $selectedFile && $isFolder) {
+                    echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
+                } else if ($row['filename'] == $selectedFile && !$isFolder) {
+				    echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
+                } else {
+                    echo '<td sortKey="' . $sortKey . '" ><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                }
 		    }
 		    echo "</tr>";
         }
@@ -158,7 +161,8 @@ function uploadFile($currentUser) {
 	
     // Check to see if the user has selected a file.
     if ($_FILES["file"]["error"] == 4) {
-        echo "<p>Please select a file.</p>";
+        $message = "Please select a file.";
+        writeMessage($message);
         return false;
     }
 
@@ -167,7 +171,8 @@ function uploadFile($currentUser) {
     $userFiles = queryDB($sql);
     foreach ($userFiles as $userFile) {
         if ($userFile['filename'] == $_FILES["file"]["name"]) {
-            echo "<p>A file of the same name already exists in your home directory.</p>";
+            $message = "A file of the same name already exists in your home directory.";
+            writeMessage($message);
             return false;
         }
     }
@@ -356,6 +361,7 @@ function writeFolders($owner, $selectedFile) {
         echo '<li><option value="' . $singleFolder['filename'] . '">' . $singleFolder['filename'] . '</option></li>';
     }
     echo '<li><option value="uploads/' . $owner . '/">Home Directory</option></li>';
+
 } // end writeFolders
 
     /**
@@ -402,5 +408,12 @@ function isSetAndNotEmpty($method, $element) {
     }
     return false;
 } // end isSetAndNotEmpty
+
+function writeMessage($message) {
+    echo '<div class="modal-header" id="messageFooter">
+        <a class="close" data-dismiss="modal">×</a>
+        <h4>' . $message . '</h4>
+    </div>';
+} // end writeMessage
 
 ?>

@@ -85,7 +85,9 @@
 	// Add file to downloads table and provide link to share
 	if(isset($_GET['share'])){
 		$link = prepareFileToShare($selectedFile, $currentDir);
-		echo 'your single use link is: '.$link;
+		$message = 'Your single use link is: '.$link;
+        writeMessage($message);
+        //echo 'your single use link is: '.$link;
 	}
 	
     // Move to...

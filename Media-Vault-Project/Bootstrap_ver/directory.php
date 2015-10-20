@@ -1,10 +1,19 @@
 <?php
     // Define root directory for use in strings later
 	define('ROOT_DIR', dirname(__FILE__));
-
-    // TEMPORARY SET USER
-    $accountName = 'testuser';
-
+    $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    session_start();
+    //Determine if user is signed in. If not redirect them to a seperate page.
+    if (!isset($_SESSION['isUser']))
+	{
+		header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/logout.php");
+		exit();
+	}
+        
+    //Determine the username of the account
+    $accountName = $_SESSION['isUser'];
     include ROOT_DIR . '/php-files/directory_header.php';
 ?>
 
@@ -24,7 +33,6 @@
 	</head>
 	
 	<body>
-	
 	<!-- NAVIGATION BAR -->
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="container-fluid">
@@ -132,7 +140,7 @@
 				        <span class="caret"></span>
 				    </button>
 				    <ul class="dropdown-menu" aria-labelledby="moveToMenu">
-                        
+                        <!-- TO FIX -->
                         <?php writeFolders($accountName, $selectedFile); ?>
 				    </ul>
 			    </div>
@@ -165,9 +173,11 @@
                 <th id="typeHead" onclick="orderTable(1, true)">Type</th>
                 <th id="timeHead" onclick="orderTable(2, true)">Last Modified</th>
                 <th id="sizeHead" onclick="orderTable(3, true)">Size</th>
+                <th id="colourHead" onclick="orderTable(4, true)">Colour</th>
+                <!-- TO FIX -->
                 <?php 
                     if ($searchStr) { 
-                        echo '<th id="dirHead"  onclick="orderTable(4, true)">Directory</th>';
+                        echo '<th id="dirHead"  onclick="orderTable(5, true)">Directory</th>';
                     }
                 ?>
               </tr>
@@ -180,7 +190,7 @@
                     // Get metadata table info
 		            $metadata = queryDB('SELECT * FROM metadata WHERE location = "' . $currentDir . '" AND owner = "' . $accountName . '"');
 		            // Define desired columns
-		            $columns = array('filename', 'filetype', 'timestamp', 'filesize');
+		            $columns = array('filename', 'filetype', 'timestamp', 'filesize', 'colour');
                     // Write to HTML table
 		            writeTable($metadata, $columns, $selectedFile, $isFolder, $currentDir, $accountName, $searchStr);
                 } else {
@@ -198,6 +208,7 @@
 		</table>
     </div>
 		
+
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	</body>

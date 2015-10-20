@@ -12,6 +12,11 @@ body {
  * Main content
  */
 
+#messageFooter {
+    position: absolute;
+    bottom: 0;
+}
+
 .main {
   padding: 20px;
 }
