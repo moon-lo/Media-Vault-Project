@@ -107,12 +107,23 @@ function resetHeaders() {
     }
 }
 
-function swapForm(form) {
-	if (form == document.getElementById("register-form-link")) {
-		form.style.display = "block";
-		document.getElementById("login-form-link").style.display = "none";
-	} else {
-		form.style.display = "block";
-		document.getElementById("register-form-link").style.display = "none";
-	}
-} // end swapForm
+// function swapForm(form) {
+// $(function() {
+
+    // $('#login-form-link').click(function(e) {
+		// $("#login-form").delay(100).fadeIn(100);
+ 		// $("#register-form").fadeOut(100);
+		// $('#register-form-link').removeClass('active');
+		// $(this).addClass('active');
+		// e.preventDefault();
+	// });
+	// $('#register-form-link').click(function(e) {
+		// $("#register-form").delay(100).fadeIn(100);
+ 		// $("#login-form").fadeOut(100);
+		// $('#login-form-link').removeClass('active');
+		// $(this).addClass('active');
+		// e.preventDefault();
+	// });
+
+// });
+// } // end swapForm

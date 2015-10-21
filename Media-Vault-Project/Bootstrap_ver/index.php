@@ -104,10 +104,10 @@
 						<div class="row">
 							<div class="col-xs-6">
 							<!-- temporary link to directory -->
-								<a href="directory.php" class="active" id="login-form-link" onClick="swapForm(this)">Login</a>
+								<a href="directory.php" class="active" id="login-form-link">Login</a>
 							</div>
 							<div class="col-xs-6">
-								<a href="#" id="register-form-link" onClick="swapForm(this)">Register</a>
+								<a href="#" id="register-form-link">Register</a>
 							</div>
 						</div>
 						<hr>
@@ -169,7 +169,27 @@
 	</div>
 		
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script>
+		$(function() {
+
+			$('#login-form-link').click(function(e) {
+				$("#login-form").delay(100).fadeIn(100);
+				$("#register-form").fadeOut(100);
+				$('#register-form-link').removeClass('active');
+				$(this).addClass('active');
+				e.preventDefault();
+			});
+			$('#register-form-link').click(function(e) {
+				$("#register-form").delay(100).fadeIn(100);
+				$("#login-form").fadeOut(100);
+				$('#login-form-link').removeClass('active');
+				$(this).addClass('active');
+				e.preventDefault();
+			});
+
+		});
+	</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	</body>
 
 </html>
