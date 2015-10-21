@@ -98,7 +98,7 @@
             </li>
 			<li class="list-group-item">Colour tag:<br>
 			<form action="directory.php" method="get" id="colourTagForm">
-				<input type="submit" name="red" value="images/red.png"></li>
+				<input type="image" name="red" src="images/red.png" alt="Red button"></li>
 			</form>
 		</a>
 	</div>
