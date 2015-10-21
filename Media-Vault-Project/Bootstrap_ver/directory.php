@@ -45,6 +45,7 @@
 		  </button>
 		  <a class="navbar-brand" href="#">Team 12 Media Vault</a>
 		</div>
+		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="upload.php">Upload</a></li>
@@ -96,7 +97,9 @@
 		    ?>
             </li>
 			<li class="list-group-item">Colour tag:<br>
-			<img src="images/red.png"></li>
+			<form action="directory.php" method="get" id="colourTagForm">
+				<input type="submit" name="red" value="images/red.png"></li>
+			</form>
 		</a>
 	</div>
 	
