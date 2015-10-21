@@ -95,7 +95,8 @@
 			    }
 		    ?>
             </li>
-			<li class="list-group-item">[Colour tag]</li>
+			<li class="list-group-item">Colour tag:<br>
+			<img src="images/red.png"></li>
 		</a>
 	</div>
 	
