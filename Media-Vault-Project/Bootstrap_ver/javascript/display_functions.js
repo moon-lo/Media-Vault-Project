@@ -106,3 +106,13 @@ function resetHeaders() {
         document.getElementById('directoryTable').rows[0].cells[4].innerHTML = 'Directory';
     }
 }
+
+function swapForm(form) {
+	if (form == document.getElementById("register-form-link")) {
+		form.style.display = "block";
+		document.getElementById("login-form-link").style.display = "none";
+	} else {
+		form.style.display = "block";
+		document.getElementById("register-form-link").style.display = "none";
+	}
+} // end swapForm

@@ -58,6 +58,7 @@
 	<head>
 		<title>Team 12 Media Vault</title>
 		<script type="text/javascript" src="javascript/jquery-1.11.3.js"></script>
+		<script type="text/javascript" src="javascript/display_functions.js"></script>
 
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -103,10 +104,10 @@
 						<div class="row">
 							<div class="col-xs-6">
 							<!-- temporary link to directory -->
-								<a href="directory.php" class="active" id="login-form-link">Login</a>
+								<a href="directory.php" class="active" id="login-form-link" onClick="swapForm(this)">Login</a>
 							</div>
 							<div class="col-xs-6">
-								<a href="#" id="register-form-link">Register</a>
+								<a href="#" id="register-form-link" onClick="swapForm(this)">Register</a>
 							</div>
 						</div>
 						<hr>
