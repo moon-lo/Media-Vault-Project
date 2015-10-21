@@ -49,7 +49,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="upload.php">Upload</a></li>
-			<li><a href="#">Username</a></li>
+			<li><a href="#"><?php echo $accountName ?></a></li>
 			<li><a href="#">Log out</a></li>
 		  </ul>
 		  <form class="navbar-form navbar-right" name="searchForm" action="" method="GET">
