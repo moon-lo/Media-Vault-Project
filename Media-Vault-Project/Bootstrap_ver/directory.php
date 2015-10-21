@@ -68,104 +68,103 @@
 	
 
 	<!-- SIDEBAR -->
-	<div class="list-group">
-		<a href="#" class="list-group-item active">
-			<h4 class="list-group-item-heading">        
-            <?php
-                echo "<b>";
-    	        if (isset($selectedFile)) {
-    		        echo $selectedFile;
-    	        } else {
-    		        echo "No file selected";
-    	        }
-                echo "</b>";
-            ?> 
-            </h4>
-			<li class="list-group-item">
-            <?php
-			    $description = queryDB('SELECT description FROM metadata WHERE filename = "' . $selectedFile . '" AND owner = "' . $accountName . '"');
-			
-                if ($description == NULL || $description[0]['description'] == NULL) {
-				    echo "No description avaliable.";
-			    } 
-                else { 
-				    foreach ($description as $item)
-				    {
-                        echo $item['description'];
-				    }
-			    }
-		    ?>
-            </li>
-			<li class="list-group-item">Colour tag:<br>
-			<form action="directory.php" method="get" id="colourTagForm" name="colourTagForm">
-				<button type="submit" name="colour" value="red"><img src="images/red.png"></button> 
-			</form>
-			</li>
-		</a>
-	</div>
-	
-	<!-- FILE MANAGEMENT BUTTONS -->
-	<div class="panel panel-default">
-		<div class="panel-body">
-            <form action="directory.php" method="get" id="fileManForm" name="fileManForm">
-                <input type="hidden" value="<?php if ($isSelected) { echo $selectedFile; } ?>" name="selectedFile" id="selectedFileHidden">
-                <input type="hidden" value="<?php echo $currentDir; ?>" name="currentDir" id="currentDirHidden">
-
-                <!-- New Folder -->
-			    <div class="dropdown">
-                    <button id="newFolderBtn" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				        New Folder
-				    </button>
-                    <ul class="dropdown-menu" aria-labelledby="newFolderMenu">
-                        <li><h4>New Folder</h4></li>
-                        <li><input type='text' name='folderName' placeholder="Name"></li>
-                        <li>
-                            <input class="btn btn-default dropdown-toggle" type='submit' name='confirmNewFolder' value='Create'>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Edit -->
-                <div class="dropdown">
-                <button id="editBtn" class="btn btn-default dropdown-toggle" type="button" id="editMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Edit
-                </button>
-                    <ul class='dropdown-menu' aria-labelledby='editButton'>
-                        <li><h4>Edit</h4></li>
-                        <li><input type='text' name='newName' placeholder="Name"></li>
-                        <li><input type='text' name='newDescription' placeholder="Description"></li>
-                        <li><input class="btn btn-default dropdown-toggle" type='submit' name='confirmEdit' value='Confirm'></li>
-                    </ul>
-                </div>
-			    
-                <!-- Move To... -->
-                <div class="dropdown">
-				    <button id="moveToBtn" class="btn btn-default dropdown-toggle" type="button" id="moveToMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				        Move To...
-				        <span class="caret"></span>
-				    </button>
-				    <ul class="dropdown-menu" aria-labelledby="moveToMenu">
-                        <!-- TO FIX -->
-                        <?php writeFolders($accountName, $selectedFile); ?>
-				    </ul>
-			    </div>
-			    
-                <input id="downloadBtn" type="submit" class="btn btn-default" value="Download" name="download" id="fileManButton">
-
-                <!-- Delete -->
-                <div class="dropdown">
-				    <button id="deleteBtn" class="btn btn-default dropdown-toggle" type="button" id="moveToMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				        Delete
-				    </button>
-                <ul class="dropdown-menu" aria-labelledby="moveToMenu">
-                    <li>Are you sure you want to delete this file?</li>
-                    <li><input class="btn btn-default dropdown-toggle" type="submit" name="confirmDelete" value="Yes"></li>
-                </div>
-
-			    <input  id="shareBtn" type="submit" class="btn btn-default" value="Share" name="share">
-            </form>
+	<form action="directory.php" method="get" id="fileManForm" name="fileManForm">
+		<div class="list-group">
+			<a href="#" class="list-group-item active">
+				<h4 class="list-group-item-heading">        
+				<?php
+					echo "<b>";
+					if (isset($selectedFile)) {
+						echo $selectedFile;
+					} else {
+						echo "No file selected";
+					}
+					echo "</b>";
+				?> 
+				</h4>
+				<li class="list-group-item">
+				<?php
+					$description = queryDB('SELECT description FROM metadata WHERE filename = "' . $selectedFile . '" AND owner = "' . $accountName . '"');
+				
+					if ($description == NULL || $description[0]['description'] == NULL) {
+						echo "No description avaliable.";
+					} 
+					else { 
+						foreach ($description as $item)
+						{
+							echo $item['description'];
+						}
+					}
+				?>
+				</li>
+					<li class="list-group-item">Colour tag:<br>
+						<button type="submit" name="colour" value="red"><img src="images/red.png"></button> 
+					</li>
+			</a>
 		</div>
-	</div>
+		
+		<!-- FILE MANAGEMENT BUTTONS -->
+		<div class="panel panel-default">
+			<div class="panel-body">
+				
+					<input type="hidden" value="<?php if ($isSelected) { echo $selectedFile; } ?>" name="selectedFile" id="selectedFileHidden">
+					<input type="hidden" value="<?php echo $currentDir; ?>" name="currentDir" id="currentDirHidden">
+
+					<!-- New Folder -->
+					<div class="dropdown">
+						<button id="newFolderBtn" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							New Folder
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="newFolderMenu">
+							<li><h4>New Folder</h4></li>
+							<li><input type='text' name='folderName' placeholder="Name"></li>
+							<li>
+								<input class="btn btn-default dropdown-toggle" type='submit' name='confirmNewFolder' value='Create'>
+							</li>
+						</ul>
+					</div>
+					
+					<!-- Edit -->
+					<div class="dropdown">
+					<button id="editBtn" class="btn btn-default dropdown-toggle" type="button" id="editMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						Edit
+					</button>
+						<ul class='dropdown-menu' aria-labelledby='editButton'>
+							<li><h4>Edit</h4></li>
+							<li><input type='text' name='newName' placeholder="Name"></li>
+							<li><input type='text' name='newDescription' placeholder="Description"></li>
+							<li><input class="btn btn-default dropdown-toggle" type='submit' name='confirmEdit' value='Confirm'></li>
+						</ul>
+					</div>
+					
+					<!-- Move To... -->
+					<div class="dropdown">
+						<button id="moveToBtn" class="btn btn-default dropdown-toggle" type="button" id="moveToMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							Move To...
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="moveToMenu">
+							<!-- TO FIX -->
+							<?php writeFolders($accountName, $selectedFile); ?>
+						</ul>
+					</div>
+					
+					<input id="downloadBtn" type="submit" class="btn btn-default" value="Download" name="download" id="fileManButton">
+
+					<!-- Delete -->
+					<div class="dropdown">
+						<button id="deleteBtn" class="btn btn-default dropdown-toggle" type="button" id="moveToMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							Delete
+						</button>
+					<ul class="dropdown-menu" aria-labelledby="moveToMenu">
+						<li>Are you sure you want to delete this file?</li>
+						<li><input class="btn btn-default dropdown-toggle" type="submit" name="confirmDelete" value="Yes"></li>
+					</div>
+
+					<input  id="shareBtn" type="submit" class="btn btn-default" value="Share" name="share">
+			</div>
+		</div>
+	</form>
     <script> setFileManButtons(<?php echo JSON_encode(!$isSelected); ?>); </script>
 
 	
