@@ -52,6 +52,61 @@
 			}
 		}
 	}
+	elseif (isset($_POST['register-submit']))
+	{
+		//Set the email, username and password values to a variable.
+		$email = $_POST['email'];
+		$username = $_POST['username'];
+		$newPassword = $_POST['password'];
+		$confirmPassword = $_POST['confirm-password'];
+		//Check all the fields have data in them.
+		if (empty($username) || empty($newPassword) || empty($email) || empty($confirmPassword))
+		{
+			$error = 'Invalid input. Please try again.';
+		}
+		//Determine if the confirmed password matches the original password.
+		elseif ($newPassword != $confirmPassword)
+		{
+			$error = 'Passwords do not match. Please try again';
+		}
+		//Place the data into the users table.
+		else
+		{	
+			//Generate random 10 characters for salt
+			$chars = '0123456789abcdefghijklmnopABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$charsLength = strlen($chars);
+			$randomSalt = "";
+			for($i = 0; $i < 13; $i++)
+			{
+				$randomSalt .= $chars[rand(0, $charsLength - 1)];
+			}
+				
+			try
+			{
+				//Use a prepared statement to insert the data into the users table.
+				$stmt = $pdo->prepare("INSERT INTO users (username, email, password, salt) ".
+				"VALUES ('$username','$email', SHA2(CONCAT('$newPassword', '$randomSalt'), 0), '$randomSalt')");
+				$stmt->execute();
+			}
+			catch(PDOException $e)
+			{
+				//Display an error if the data could not be added.
+				$error = 'Error creating account. The username you are trying to use may have been taken. Please try again.';
+			}
+			//Determine if the query created a row. If true then the user has successfully created an account. Otherwise return an error.
+			$row = $stmt->rowCount();
+			if ($row > 0)
+			{
+				$_SESSION['isUser'] = $username;
+				header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/directory.php");
+				exit();
+			}
+			else
+			{
+				$error = 'Error creating account. The username you are trying to use may have been taken. Please try again.';
+			}
+		}
+	}
 ?>
 <!doctype html>
 <html>
@@ -128,7 +183,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="Login" id="Login" tabindex="4" class="form-control btn btn-login" value="Login">
+												<input type="submit" name="Login" id="Login" tabindex="4" class="form-control btn btn-login" value="Log In">
 											</div>
 										</div>
 									</div>
