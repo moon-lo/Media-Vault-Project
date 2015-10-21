@@ -221,6 +221,7 @@
 				</div>
 			</div>
 		</div>
+		<span><?php echo $error ?></span>
 	</div>
 		
 	<!-- Latest compiled and minified JavaScript -->
