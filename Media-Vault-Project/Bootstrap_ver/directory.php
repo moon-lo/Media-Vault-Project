@@ -8,7 +8,7 @@
     //Determine if user is signed in. If not redirect them to a seperate page.
     if (!isset($_SESSION['isUser']))
 	{
-		header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/logout.php");
+		header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/logout.php");
 		exit();
 	}
         
@@ -50,7 +50,7 @@
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="upload.php">Upload</a></li>
 			<li><a href="#"><?php echo $accountName ?></a></li>
-			<li><a href="#">Log out</a></li>
+			<li><a href="logout.php">Log out</a></li>
 		  </ul>
 		  <form class="navbar-form navbar-right" name="searchForm" action="" method="GET">
                 <input type="text" name="searchStr" class="form-control" placeholder="Search...">
