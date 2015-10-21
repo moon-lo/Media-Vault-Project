@@ -41,8 +41,8 @@
 			{
 				session_start();
 				$_SESSION['isUser'] = $username;
-				header("Location: http://localhost/mediavault/Bootstrap_ver/directory.php");
-                //header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/directory.php");
+				//header("Location: http://localhost/mediavault/Bootstrap_ver/directory.php");
+                header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/directory.php");
 				exit();
 			}
 			else
