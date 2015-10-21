@@ -44,7 +44,7 @@
     }
 	
     // Colour
-	if (isset($_GET['colour_select'])) {
+	if (isset($_GET['colourTagForm'])) {
 		changeFileColour($_GET['selectedFile'], $_GET['colour'], $accountName);
 	}
 
