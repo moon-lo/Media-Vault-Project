@@ -7,16 +7,16 @@
     $pdo = new PDO('mysql:host=localhost;dbname=mediavault', 'root', 'password');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    session_start();
+    //session_start();
     
-    if (!isset($_SESSION['isUser']))
-    {
-        header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/logout.php");
-        exit();
-    }
+    //if (!isset($_SESSION['isUser']))
+    //{
+    //    header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/logout.php");
+    //    exit();
+    //}
     
-    $accountName = $_SESSION['isUser'];
-    //$accountName = 'testuser';
+    //$accountName = $_SESSION['isUser'];
+    $accountName = 'testuser';
     
     // Check to see if file is set - Attempt to upload file - Add record upon success
 	if (isset($_FILES['file'])) {
