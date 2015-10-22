@@ -56,8 +56,8 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
-			<li><a href="#">Username</a></li>
-			<li><a href="#">Log out</a></li>
+			<li><a href="#"><?php echo $accountName ?></a></li>
+			<li><a href="logout.php">Log out</a></li>
 		  </ul>
 		</div>
 	  </div>
