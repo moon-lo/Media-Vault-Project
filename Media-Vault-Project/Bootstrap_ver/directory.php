@@ -50,6 +50,7 @@
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="upload.php">Upload</a></li>
 			<li><a href="#"><?php echo $accountName ?></a></li>
+			<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Tooltip on bottom</button>
 			<li><a href="logout.php">Log out</a></li>
 		  </ul>
 		  <form class="navbar-form navbar-right" name="searchForm" action="" method="GET">
