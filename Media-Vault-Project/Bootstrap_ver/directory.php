@@ -136,7 +136,7 @@
 					</button>
 						<ul class='dropdown-menu' aria-labelledby='editButton'>
 							<li><h4>Edit</h4></li>
-							<li><input type='text' name='newName' placeholder="Name"></li>
+							<li><input type='text' name='newName' placeholder="File Name"></li>
 							<li><input type='text' name='newDescription' placeholder="Description"></li>
 							<li><input class="btn btn-default dropdown-toggle" type='submit' name='confirmEdit' value='Confirm'></li>
 						</ul>
