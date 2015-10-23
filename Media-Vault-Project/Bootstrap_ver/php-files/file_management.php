@@ -24,6 +24,7 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
 				        $colourStyle = " style='background-color:$colour'";
 			        }
                 } else {
+					$colour = '';
                     $colourStyle = '';
                 }
                 if ($column == 'filename') {
