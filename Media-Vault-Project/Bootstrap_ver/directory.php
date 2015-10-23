@@ -49,8 +49,8 @@
 		<div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="upload.php">Upload</a></li>
-			<li><a  class="bottom" title="" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Tooltip on bottom"><?php echo $accountName ?></a></li>
-			<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Hooray!" onclick='return confirm(\"Are you sure you want to delete this entry?\")'>Bottom</a></li>
+			<li><a  class="bottom" href="#" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom"><?php echo $accountName ?></a></li>
+			<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Hooray!">Bottom</a></li>
 			<li><a href="logout.php">Log out</a></li>
 		  </ul>
 		  <form class="navbar-form navbar-right" name="searchForm" action="" method="GET">
