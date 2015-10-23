@@ -43,6 +43,9 @@ body {
 .list-group-item {
 	color:grey;
 	text-shadow: none;
+	background: transparent;
+    border: none !important;
+	
 }
 
 .list-group:after {
