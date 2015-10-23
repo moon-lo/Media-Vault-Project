@@ -34,6 +34,18 @@
 	
 	<body>
 	<!-- NAVIGATION BAR -->
+	<?php 
+	try {
+		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	
+	$pdo = null;
+	$rows = $result->fetchAll();
+	$row = $rows[0];
+	$space = round($row['current_storage1'] / 1024, 2) . 'KB / ' . $row['max_storage'] . "KB";
+	?>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="container-fluid">
 		<div class="navbar-header">
@@ -49,8 +61,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="upload.php">Upload</a></li>
-			<li><a  class="bottom" href="#" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom"><?php echo $accountName ?></a></li>
-			<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Hooray!">Bottom</a></li>
+			<li><a  class="bottom" href="#" data-toggle="tooltip" data-placement="bottom" title="Current Storage Space: $space"><?php echo $accountName ?></a></li>
 			<li><a href="logout.php">Log out</a></li>
 		  </ul>
 		  <form class="navbar-form navbar-right" name="searchForm" action="" method="GET">
