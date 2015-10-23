@@ -21,11 +21,20 @@ html {
 
 .jumbotron p {
 	color:#9D9D9D;
+	font-size:large;
+}
+
+.jumbotron_logout {
+	padding: 5%;
 }
 
 .jumbotron_logout h1, a {
 	margin: 5% 0%;
 	color:white;
+}
+
+.jumbotron_logout p {
+	color:#DEDEDE;
 }
 
 .panel-login {
