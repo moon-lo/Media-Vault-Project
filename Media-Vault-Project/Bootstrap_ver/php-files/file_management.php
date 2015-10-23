@@ -21,7 +21,7 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
                 if ($column == 'colour') {
                     $colour = $row['colour'];
 			        if ($colour != null && $colour != '' && $colour != 'none'){
-				        $colourStyle = " style='background-color:$colour'" src=images/none.png;
+				        $colourStyle = " style='background-color:$colour'";
 			        }
                 } else {
                     $colourStyle = '';
@@ -68,7 +68,7 @@ function writeSearchResults($pdo, $columns, $username) {
            	$colour = $row['colour'];
 			$colourStyle = '';
 			if ($colour != null && $colour != '' && $colour != 'none'){
-				$colourStyle = " style='background-color:$colour' ";
+				$colourStyle = "style='background-color:$colour'";
 			}
             echo '<tr class="listingRow">';
 		    foreach ($columns as $column) {
