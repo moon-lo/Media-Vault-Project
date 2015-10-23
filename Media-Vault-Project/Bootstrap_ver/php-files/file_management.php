@@ -23,7 +23,11 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
 			        if ($colour != null && $colour != '' && $colour != 'none'){
 				        $colourStyle = " style='background-color:$colour'";
 			        }
+					if ($colour == 'red'){
+						$colour = <img src="images/red.png">;
+					}
                 } else {
+					$colour = '';
                     $colourStyle = '';
                 }
                 if ($column == 'filename') {
