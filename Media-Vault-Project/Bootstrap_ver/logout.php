@@ -39,7 +39,7 @@
 	
 		<div style="background-color:transparent !important" class="jumbotron_logout">
 		  <h1>Oops, looks like you've logged out.</h1><br>      
-		  <p>You must be signed in to access this page. To sign in with your account click <a href="index.php">here</a>. If you do not have an account you can sign up for one by clicking <a href="signup.php">here</a>.</p>
+		  <p>You must be signed in to access this page. To sign in with your account click <a href="index.php">here</a>. If you do not have an account you can sign up for one by clicking <a href="index.php">here</a>.</p>
 		</div>
 		
 	</body>
