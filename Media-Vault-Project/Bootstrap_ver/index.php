@@ -97,7 +97,8 @@
 			$row = $stmt->rowCount();
 			if ($row > 0)
 			{
-				$_SESSION['isUser'] = $username;
+				mkdir(dirname(__FILE__) . '/uploads/' . $username);
+                $_SESSION['isUser'] = $username;
 				header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/directory.php");
 				exit();
 			}
