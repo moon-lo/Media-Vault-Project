@@ -19,6 +19,7 @@
 		<script type="text/javascript" src="javascript/display_functions.js"></script>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="style2.css">
 	</head>
 	
 	<body>
@@ -34,10 +35,10 @@
 			  <a class="navbar-brand" href="#">Team 12 Media Vault</a>
 			</div>
 		  </div>
-		</nav>
+		</nav><br><br>
 	
 		<div style="background-color:transparent !important" class="jumbotron">
-		  <h1>Oops, looks like you've logged out.</h1>      
+		  <h1>Oops, looks like you've logged out.</h1><br>      
 		  <p>You must be signed in to access this page. To sign in with your account click <a href="index.php">here</a>. If you do not have an account you can sign up for one by clicking <a href="signup.php">here</a>.</p>
 		</div>
 		
