@@ -20,12 +20,10 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
 		    foreach ($columns as $column) {	
                 if ($column == 'colour') {
                     $colour = $row['colour'];
-			        if ($colour != null && $colour != '' && $colour != 'none'){
+			        if ($colour != null && $colour != '' && $colour != 'none' && $colour !='NULL'){
 				        $colourStyle = " style='background-color:$colour'";
-						$colour = "images/red.png";
 			        }
                 } else {
-					$colour = '';
                     $colourStyle = '';
                 }
                 if ($column == 'filename') {
