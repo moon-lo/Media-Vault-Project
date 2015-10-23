@@ -99,11 +99,11 @@
 				</li>
 					<li class="list-group-item">Colour tag:<br>
 						<button type="submit" name="colour" value="red"><img src="images/red.png"></button> 
-						<button type="submit" name="colour" value="aqua"><img src="images/red.png"></button> 
-						<button type="submit" name="colour" value="lime"><img src="images/red.png"></button> 
-						<button type="submit" name="colour" value="yellow"><img src="images/red.png"></button> 
-						<button type="submit" name="colour" value="pink"><img src="images/red.png"></button> 
-						<button type="submit" name="colour" value=NULL><img src="images/red.png"></button> 
+						<button type="submit" name="colour" value="aqua"><img src="images/aqua.png"></button> 
+						<button type="submit" name="colour" value="lime"><img src="images/lime.png"></button> 
+						<button type="submit" name="colour" value="yellow"><img src="images/yellow.png"></button> 
+						<button type="submit" name="colour" value="pink"><img src="images/pink.png"></button> 
+						<button type="submit" name="colour" value=NULL><img src="images/none.png"></button> 
 					</li>
 			</a>
 		</div>
