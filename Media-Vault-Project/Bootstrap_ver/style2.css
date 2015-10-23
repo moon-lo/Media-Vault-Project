@@ -21,7 +21,6 @@ html {
 
 .jumbotron p {
 	color:#9D9D9D;
-	font-size:large;
 }
 
 .jumbotron_logout {
@@ -34,7 +33,8 @@ html {
 }
 
 .jumbotron_logout p {
-	color:#DEDEDE;
+	color:#C2C2C2;
+	font-size:large;
 }
 
 .panel-login {
