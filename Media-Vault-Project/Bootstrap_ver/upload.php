@@ -24,12 +24,23 @@
 			addUploadRecord($accountName);
 		}
 	}
+	 
+	try {
+		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	
+	$pdo = null;
+	$rows = $result->fetchAll();
+	$row = $rows[0];
+	$space = round($row['current_storage1'] / 1024, 2) . 'KB / ' . $row['max_storage'] . "KB";
 ?>
 
 <!doctype html>
 <html>
 	<head>
-		<title href="directory.php">Team 12 Media Vault</title>
+		<title>Team 12 Media Vault</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
         <script type="text/javascript" src="javascript/jquery-1.11.3.js"></script>
 		
@@ -52,11 +63,11 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		  </button>
-		  <a class="navbar-brand" href="#">Team 12 Media Vault</a>
+		  <a class="navbar-brand" href="directory.php">Team 12 Media Vault</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
-			<li><a href="#"><?php echo $accountName ?></a></li>
+			<li><a class="bottom" href="#" data-toggle="tooltip" data-placement="bottom" title="Current Storage Space: <?php echo $space; ?>"><?php echo $accountName ?></a></li>
 			<li><a href="logout.php">Log out</a></li>
 		  </ul>
 		</div>
