@@ -55,7 +55,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		  </button>
-		  <a class="navbar-brand" href="#">Team 12 Media Vault</a>
+		  <a class="navbar-brand" href="directory.php">Team 12 Media Vault</a>
 		</div>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">

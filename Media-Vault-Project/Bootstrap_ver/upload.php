@@ -29,7 +29,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Team 12 Media Vault</title>
+		<title href="directory.php">Team 12 Media Vault</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
         <script type="text/javascript" src="javascript/jquery-1.11.3.js"></script>
 		
