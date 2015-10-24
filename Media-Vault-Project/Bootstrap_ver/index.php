@@ -194,6 +194,7 @@
 											</div>
 										</div>
 									</div>
+									<span><?php echo $error ?></span>
 								</form>
 								<form id="register-form" action="#" method="post" role="form" style="display: none;">
 									<div class="form-group">
@@ -215,6 +216,7 @@
 											</div>
 										</div>
 									</div>
+									<span><?php echo $error ?></span>
 								</form>
 							</div>
 						</div>
@@ -222,7 +224,6 @@
 				</div>
 			</div>
 		</div>
-		<span><?php echo $error ?></span>
 	</div>
 		
 	<!-- Latest compiled and minified JavaScript -->
