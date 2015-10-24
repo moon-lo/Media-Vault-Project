@@ -55,11 +55,11 @@
 	{
 		//Set the email, username and password values to a variable.
 		$email = $_POST['email'];
-		$username = $_POST['username'];
+		$usernameR = $_POST['username'];
 		$newPassword = $_POST['password'];
 		$confirmPassword = $_POST['confirm-password'];
 		//Check all the fields have data in them.
-		if (empty($username) || empty($newPassword) || empty($email) || empty($confirmPassword))
+		if (empty($usernameR) || empty($newPassword) || empty($email) || empty($confirmPassword))
 		{
 			$error = 'Invalid input. Please try again.';
 		}
@@ -85,7 +85,7 @@
 			{
 				//Use a prepared statement to insert the data into the users table.
 				$stmt = $pdo->prepare("INSERT INTO users (username, email, password, salt, max_storage) ".
-				"VALUES ('$username','$email', SHA2(CONCAT('$newPassword', '$randomSalt'), 0), '$randomSalt', '$max_storage')");
+				"VALUES ('$usernameR','$email', SHA2(CONCAT('$newPassword', '$randomSalt'), 0), '$randomSalt', '$max_storage')");
 				$stmt->execute();
 			}
 			catch(PDOException $e)
@@ -98,7 +98,7 @@
 			if ($row > 0)
 			{
 				mkdir(dirname(__FILE__) . '/uploads/' . $username);
-                $_SESSION['isUser'] = $username;
+                $_SESSION['isUser'] = $usernameR;
 				header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/directory.php");
 				exit();
 			}
