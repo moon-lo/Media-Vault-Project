@@ -18,15 +18,7 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
         foreach ($pdo as $row) {
 			echo '<tr class="listingRow">';
 		    foreach ($columns as $column) {	
-                if ($column == 'colour') {
-                    $colour = $row['colour'];
-			        if ($colour != null && $colour != '' && $colour != 'none' && $colour !='NULL'){
-				        $colourStyle = " style='background-color:$colour'";
-			        }
-                } else {
-					$colour = '';
-                    $colourStyle = '';
-                }
+                $colourStyle = '';
                 if ($column == 'filename') {
                     $sortKey = strtolower(substr($row[$column], 0, 1));
                 }
@@ -43,12 +35,20 @@ function writeTable($pdo, $columns, $selectedFile, $isFolder, $currentDir, $user
                     $row[$column] = round($row[$column] / 1024);
                     $row[$column] = $row[$column] . " KB";
                 }
+                if ($column == 'colour') {
+                    $sortKey = strtolower(substr($row[$column], 0, 1));
+                    if ($row[$column] != null && $row[$column] != '' && $row[$column] != 'NULL') {
+                        $colourStyle = " style='background-color:$row[$column]' ";
+                    } 
+                    $row[$column] = '';
+                }
+
                 if ($row['filename'] == $selectedFile && $isFolder) {
-                    echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
+                    echo '<td sortKey="' . $sortKey . '" ' . $colourStyle . ' class="selectedFile"><a class="dirHref" href="directory.php?currentDir=' . $currentDir . $row['filename'] . '/">' . $row[$column] . '</a></td>';
                 } else if ($row['filename'] == $selectedFile && !$isFolder) {
-				    echo '<td sortKey="' . $sortKey . '" class="selectedFile"><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
+				    echo '<td sortKey="' . $sortKey . '" ' . $colourStyle . ' class="selectedFile"><a class="dirHref" href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';    
                 } else {
-                    echo '<td sortKey="' . $sortKey . '" ><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                    echo '<td sortKey="' . $sortKey . '" ' . $colourStyle . '><a class="dirHref" href="directory.php?currentDir=' . $currentDir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
                 }
 		    }
 		    echo "</tr>";
@@ -73,6 +73,7 @@ function writeSearchResults($pdo, $columns, $username) {
 			}
             echo '<tr class="listingRow">';
 		    foreach ($columns as $column) {
+                $colourStyle = '';
                 if ($column == 'filename') {
                     $sortKey = strtolower(substr($row[$column], 0, 1));
                 }
@@ -89,11 +90,19 @@ function writeSearchResults($pdo, $columns, $username) {
                     $row[$column] = round($row[$column] / 1024);
                     $row[$column] = $row[$column] . " KB";
                 }
+                if ($column == 'colour') {
+                    $sortKey = strtolower(substr($row[$column], 0, 1));
+                    if ($row[$column] != null && $row[$column] != '' && $row[$column] != 'NULL') {
+                        $colourStyle = " style='background-color:$row[$column]' ";
+                    } 
+                    $row[$column] = '';
+                }
+
                 if ($column == 'location') {
                     $sortKey = count(explode("/", $row[$column]));
                     $row[$column] = 'Home/' . substr($row[$column], strlen('uploads/' . $username . '/'), strlen($row[$column]));
                 }
-                echo '<td sortKey="' . $sortKey . '"><a class="dirHref" ' . $colourStyle . 'href="directory.php?currentDir=' . $dir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
+                echo '<td sortKey="' . $sortKey . '" ' . $colourStyle . '><a class="dirHref" href="directory.php?currentDir=' . $dir . '&selectedFile=' . $row['filename'] . '">' . $row[$column] . '</a></td>';
             }
 		}
 	    echo "</tr>";
@@ -359,9 +368,9 @@ function writeFolders($owner, $selectedFile) {
     $folders = queryDB($sql);
     // Write dropdown menu
     foreach ($folders as $singleFolder) {
-        echo '<li><option value="' . $singleFolder['filename'] . '">' . $singleFolder['filename'] . '</option></li>';
+        echo '<li><input type="submit" name="moveTo" value="' . $singleFolder['filename'] . '"></li>';
     }
-    echo '<li><option value="uploads/' . $owner . '/">Home Directory</option></li>';
+    echo '<li><input type="submit"  name="moveTo" value="Home Directory"></li>';
 
 } // end writeFolders
 
@@ -375,11 +384,11 @@ function writeFolders($owner, $selectedFile) {
     * @author Christian Ruiz & James Galloway
     */
 function moveFile($file, $folder, $currentUser) {
-    $sql = "SELECT * FROM metadata WHERE filename = '$file'";
+    $sql = "SELECT * FROM metadata WHERE filename = '$file' AND owner = '$currentUser'";
     $tempPath = queryDB($sql);
     $filePath = ROOT_DIR . '/' . $tempPath[0]['location'];
     
-    $sql = "SELECT location FROM metadata WHERE filename = '$folder'";
+    $sql = "SELECT location FROM metadata WHERE filename = '$folder' AND owner = '$currentUser'";
     $tempPath = queryDB($sql);
     if ($tempPath == null) {
         $DBentry = 'uploads/' . $currentUser . '/';
@@ -416,5 +425,18 @@ function writeMessage($message) {
         <h4>' . $message . '</h4>
     </div>';
 } // end writeMessage
+
+function writeBreadcrumb($user, $dir) {
+    echo '<ol class="breadcrumb">';
+    $folders = explode("/", $dir);
+   
+    $url = $folders[0];
+    for ($i = 1; $i < count($folders); $i++) {
+        $url = $url . '/' . $folders[$i];
+        echo '<li><a href="directory.php?currentDir=' . $url . '/">' . $folders[$i] . '</a></li>';
+    }
+
+	echo '</ol>';
+} // end writeBreadcrumb
 
 ?>

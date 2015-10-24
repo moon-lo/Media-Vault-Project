@@ -102,8 +102,9 @@ function resetHeaders() {
     document.getElementById('directoryTable').rows[0].cells[1].innerHTML = 'Type';
     document.getElementById('directoryTable').rows[0].cells[2].innerHTML = 'Last Modified';
     document.getElementById('directoryTable').rows[0].cells[3].innerHTML = 'Size';
-    if (typeof document.getElementById('directoryTable').rows[0].cells[4] !== 'undefined') {
-        document.getElementById('directoryTable').rows[0].cells[4].innerHTML = 'Directory';
+    document.getElementById('directoryTable').rows[0].cells[4].innerHTML = 'Colour';
+    if (typeof document.getElementById('directoryTable').rows[0].cells[5] !== 'undefined') {
+        document.getElementById('directoryTable').rows[0].cells[5].innerHTML = 'Directory';
     }
 }
 

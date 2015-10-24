@@ -96,7 +96,7 @@ body {
 } 
 
 .table-hover thead th {
-	width: 25%;
+    width: 10%;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
@@ -119,6 +119,16 @@ body {
 
 li {
     padding: 5px;
+}
+
+#moveToList input {
+    background-color: white;
+    border: none;
+    width: 100%;
+}
+
+#moveToList input:hover{
+     background-color: lightgray;
 }
 
 <!-- UPLOAD -->

@@ -48,7 +48,6 @@
 			else
 			{
 				$error = 'Username or Password is invalid!';
-                writeMessage($error);
 			}
 		}
 	}

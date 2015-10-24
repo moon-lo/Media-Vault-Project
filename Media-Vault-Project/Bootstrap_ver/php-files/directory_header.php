@@ -91,9 +91,9 @@
 	}
 	
     // Move to...
-    if (isset($_GET['confirmMoveTo'])) {
-        if ($folderPath = moveFile($selectedFile, $_GET['folderMenu'], $accountName)) {
-            renameFileLocationRecord($selectedFile, $folderPath);
+    if (isset($_GET['moveTo'])) {
+        if ($folderPath = moveFile($selectedFile, $_GET['moveTo'], $accountName)) {
+            renameFileLocationRecord($selectedFile, $folderPath, $accountName);
         }
     }
 

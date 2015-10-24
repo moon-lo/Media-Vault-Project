@@ -35,16 +35,16 @@
 	<body>
 	<!-- NAVIGATION BAR -->
 	<?php 
-	try {
-		$result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
+	    try {
+		    $result = $pdo->query("select (select sum(filesize) from metadata where metadata.owner = users.username) current_storage1, max_storage from users where username = '$accountName'");
+	    } catch (PDOException $e) {
+		    echo $e->getMessage();
+	    }
 	
-	$pdo = null;
-	$rows = $result->fetchAll();
-	$row = $rows[0];
-	$space = round($row['current_storage1'] / 1024, 2) . 'KB / ' . $row['max_storage'] . "KB";
+	    $pdo = null;
+	    $rows = $result->fetchAll();
+	    $row = $rows[0];
+	    $space = round($row['current_storage1'] / 1024, 2) . 'KB / ' . $row['max_storage'] . "KB";
 	?>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="container-fluid">
@@ -57,8 +57,7 @@
 		  </button>
 		  <a class="navbar-brand" href="directory.php">Team 12 Media Vault</a>
 		</div>
-		</div>
-		<div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="upload.php">Upload</a></li>
 			<li><a  class="bottom" href="#" data-toggle="tooltip" data-placement="bottom" title="Current Storage Space: <?php echo $space; ?>"><?php echo $accountName ?></a></li>
@@ -67,17 +66,11 @@
 		  <form class="navbar-form navbar-right" name="searchForm" action="" method="GET">
                 <input type="text" name="searchStr" class="form-control" placeholder="Search...">
 		  </form>
-		</div>
+	    </div>
 	  </div>
 	</nav>
-		
-	<!-- BREADCRUMB -->
-	<ol class="breadcrumb">
-	  <li><a href="<?php echo 'directory.php?currentDir=uploads/' . $accountName . '/'; ?>">Username</a></li>
-	  <li><a href="#">Folder</a></li>
-	  <li class="active">Folder</li>
-	</ol>
 	
+    <?php writeBreadcrumb($accountName, $currentDir); ?>
 
 	<!-- SIDEBAR -->
 	<form action="directory.php" method="get" id="fileManForm" name="fileManForm">
@@ -160,8 +153,8 @@
 							Move To...
 							<span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu" aria-labelledby="moveToMenu">
-							<!-- TO FIX -->
+						<ul class="dropdown-menu" aria-labelledby="moveToMenu" id="moveToList">
+                            <li><h4>Move To...</h4></li>
 							<?php writeFolders($accountName, $selectedFile); ?>
 						</ul>
 					</div>
@@ -195,7 +188,6 @@
                 <th id="timeHead" onclick="orderTable(2, true)">Last Modified</th>
                 <th id="sizeHead" onclick="orderTable(3, true)">Size</th>
                 <th id="colourHead" onclick="orderTable(4, true)">Colour</th>
-                <!-- TO FIX -->
                 <?php 
                     if ($searchStr) { 
                         echo '<th id="dirHead"  onclick="orderTable(5, true)">Directory</th>';
@@ -220,7 +212,7 @@
                                 OR owner = "' . $accountName . '" AND description LIKE "' . $searchStr . '%" 
                                 OR owner = "' . $accountName . '" AND filetype LIKE "' . $searchStr . '"');
                     
-		            $columns = array('filename', 'filetype', 'timestamp', 'filesize', 'location');
+		            $columns = array('filename', 'filetype', 'timestamp', 'filesize', 'colour', 'location');
                     writeSearchResults($metadata, $columns, $accountName);
                 }
 	        ?>
