@@ -98,8 +98,7 @@
 			if ($row > 0)
 			{
 				mkdir(dirname(__FILE__) . '/uploads/' . $username);
-                $_SESSION['isUser'] = $username;
-				header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/directory.php");
+				header("Location: http://{$_SERVER['HTTP_HOST']}/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/index.php");
 				exit();
 			}
 			else
