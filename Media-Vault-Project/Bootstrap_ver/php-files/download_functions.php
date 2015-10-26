@@ -95,7 +95,7 @@ function prepareFileToShare($filename, $currentDir){
 	$shareId = $share[0]['fileId'];
 	$pdo = null;
 	
-	$link = ROOT_DIR.'/'.'share.php?shareId='.$shareId;
+	$link ='54.206.80.50/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/share.php?shareId='.$shareId;
 	return $link;
 }
 
