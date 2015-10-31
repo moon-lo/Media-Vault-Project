@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://54.206.80.50/" />
+<title>Colour Tagging</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Colour Tagging</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=username</td>
+	<td>ben</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>ben</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//a[contains(text(),'0 KB')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>document.fileManForm.colour[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table[@id='directoryTable']/tbody/tr[2]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=colour</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/Media-Vault-Project/Media-Vault-Project/Bootstrap_ver/directory.php?colour=red&amp;selectedFile=test1.txt&amp;currentDir=uploads%2Fben%2F&amp;folderName=&amp;newName=&amp;newDescription=</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
